@@ -15,6 +15,7 @@
 			from ( 
 				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '삽니다'
 			)
 		) 
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
@@ -27,6 +28,7 @@
 			from ( 
 				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '삽니다'
 			)
 		) 
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
@@ -39,6 +41,7 @@
 			from ( 
 				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '삽니다'
 			)
 		) 
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
