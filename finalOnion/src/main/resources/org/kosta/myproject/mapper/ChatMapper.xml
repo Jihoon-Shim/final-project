@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kosta.myproject.mapper.ChatMapper">
+<insert id="createChattingRoom" parameterType="string">
+	insert into CHATTINGROOM 
+	values(CHATTINGROOM_SEQ.nextval, #{myNick}||' and '||#{yourNick}, SYSDATE)
+</insert>
+<select id="checkChattingRoomNo" parameterType="string" resultType="int">
+	select CHATTINGROOM_NO from CHATTINGROOM where CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{yourNick}||'%'
+</select>
+<select id="findChattingRoom" parameterType="string" resultType="org.kosta.myproject.vo.ChattingRoomVO">
+	select * from CHATTINGROOM where CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{yourNick}||'%'
+</select>
+<insert id="recordChatting" parameterType="org.kosta.myproject.vo.ChattingRoomVO">
+	insert into CHATTING(CHATTING_NO, CHATTINGROOM_NO, CHATTING_DATE, RECEPTION, CHATTING, MEMBERID)
+	values(CHATTING_SEQ.nextval, #{chattingRoomVO.chattingRoomNo}, sysdate, 1, #{msg}, #{memberVO.memberId})
+</insert>
+
+
+
+
+
+</mapper>
