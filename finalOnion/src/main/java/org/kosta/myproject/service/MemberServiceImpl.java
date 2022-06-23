@@ -93,4 +93,10 @@ public class MemberServiceImpl implements MemberService {
 		memberVO.setMemberPassword(encodedPwd);
 		memberMapper.updatePassword(memberVO);
 	}
+	
+	@Override
+	public void registerMemberTemp(MemberVO memberVO) {
+		memberMapper.registerMemberTemp(memberVO);
+		
+	}
 }

@@ -28,4 +28,6 @@ public interface MemberService {
 	int findPasswordByIdTel(MemberVO vo);
 
 	void updatePassword(MemberVO memberVO);
+	
+	void registerMemberTemp(MemberVO memberVO);
 }

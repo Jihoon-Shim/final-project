@@ -138,6 +138,7 @@ public class MemberController {
 	@PostMapping("guest/registerMember")
 	public String register(MemberVO memberVO) {
 		memberService.registerMember(memberVO);//등록시 service에서 비밀번호를 암호화 한다 
+		memberService.registerMemberTemp(memberVO);
 		return "redirect:/guest/registerResultView?memberId=" + memberVO.getMemberId();
 	}
 
