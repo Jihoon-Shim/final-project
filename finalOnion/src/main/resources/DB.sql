@@ -105,7 +105,20 @@ ALTER TABLE CHATTING
 
         CREATE SEQUENCE CHATTING_SEQ
         DROP SEQUENCE CHATTING_SEQ
-        
+select chatting from chatting where CHATTINGROOM_NO = (
+	select CHATTINGROOM_NO from CHATTINGROOM where
+	CHATTINGROOM_TITLE LIKE '%양 파%' and  CHATTINGROOM_TITLE like '%아이유%'
+	)
+select c.chatting ,m.MEMBER_NICKNAME FROM chatting c, T_MEMBER m where CHATTINGROOM_NO = (
+   select CHATTINGROOM_NO from CHATTINGROOM where
+   CHATTINGROOM_TITLE LIKE '%아이유%' and  CHATTINGROOM_TITLE like '%양 파%'
+   )
+   AND
+   c.MEMBERID = m.MEMBERID
+   order by c.chatting_date
+select * from CHATTINGROOM
+select * from chatting
+
 
 -- ADMINBOARD Table Create SQL
 CREATE TABLE ADMINBOARD
