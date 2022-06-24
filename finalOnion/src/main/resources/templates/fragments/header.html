@@ -24,11 +24,12 @@
 				<th:block sec:authorize="isAuthenticated()">
 					<span sec:authentication="principal.memberName" style = "color:white"></span>
 					<h4 style = "color:white"> 님이 로그인 하셨습니다.</h4><br>
-					<a href="#" id="logoutAction" style = "color:white">로그아웃</a><br>	
+					<a href="#" id="logoutAction" style = "color:white">로그아웃</a><br>
 					<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none"></form>
-					<a th:href="@{/updateForm}" style = "color:white">회원정보수정</a><br>	
+					<a th:href="@{/updateForm}" style = "color:white">회원정보수정</a><br>
 					<a th:href="@{/enterCafe}" style = "color:white">카페가기</a><br>
-					<a th:href="@{/chat}">채팅목록 가보즈아</a><br>
+					
+					<a th:href="@{/profile?otherId=spring}">"강하늘" 프로필을 통한 채팅하기</a><br>
 					<a th:href="@{/admin/main}" sec:authorize="hasRole('ROLE_ADMIN')" style = "color:white">관리자모드</a><br>	
 				</th:block>		
 			</div>

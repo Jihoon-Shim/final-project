@@ -15,6 +15,15 @@
 	insert into CHATTING(CHATTING_NO, CHATTINGROOM_NO, CHATTING_DATE, RECEPTION, CHATTING, MEMBERID)
 	values(CHATTING_SEQ.nextval, #{chattingRoomVO.chattingRoomNo}, sysdate, 1, #{msg}, #{memberVO.memberId})
 </insert>
+<select id="getChattingList" parameterType="string" resultType="map">
+	select c.chatting ,m.MEMBER_NICKNAME FROM chatting c, T_MEMBER m where CHATTINGROOM_NO = (
+   select CHATTINGROOM_NO from CHATTINGROOM where
+   CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{otherNick}||'%'
+   )
+   AND
+   c.MEMBERID = m.MEMBERID
+   order by c.chatting_date
+</select>
 
 
 

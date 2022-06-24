@@ -1,5 +1,7 @@
 package org.kosta.myproject.service;
 
+import java.util.List;
+
 import org.kosta.myproject.mapper.ChatMapper;
 import org.kosta.myproject.vo.ChattingRoomVO;
 import org.kosta.myproject.vo.MemberVO;
@@ -28,6 +30,10 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public void recordChatting(MemberVO memberVO, ChattingRoomVO chattingRoomVO, String msg) {
 		chatMapper.recordChatting(memberVO, chattingRoomVO, msg);
+	}
+	@Override
+	public List<String> getChattingList(String myNick, String otherNick) {
+		return chatMapper.getChattingList(myNick, otherNick);
 	}
 
 	
