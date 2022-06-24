@@ -62,6 +62,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update T_MEMBER set MEMBER_PASSWORD=#{memberPassword}
 		where MEMBERID=#{memberId} AND MEMBER_TEL=#{memberTel}
 	</update>
+	
 </mapper>
 
 

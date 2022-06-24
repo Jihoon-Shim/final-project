@@ -1,7 +1,12 @@
 package org.kosta.myproject.controller;
 
+import java.util.ArrayList;
+
+import org.kosta.myproject.service.BoardService;
 import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.MemberVO;
+import org.kosta.myproject.vo.Pagination;
+import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,6 +24,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberController {
 	
 	private final MemberService memberService;
+	private final BoardService boardService;
 	//비인증 상태에서도 접근 가능하도록 /guest/ 이하로 url 등록 
 	//org.kosta.myproject.config.security.WebSecurityConfig 설정되어 있음 
 	@RequestMapping("guest/findMemberById")
@@ -89,6 +95,30 @@ public class MemberController {
 	public String enterCafe() {
 		return "member/ajax-cafe";
 	}
+	@RequestMapping("mypage")
+	public String mypage(Model model) {
+		ArrayList<TradingBoardVO> list1 = new ArrayList<TradingBoardVO>();
+		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
+		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
+		ArrayList<TradingBoardVO> list4 = new ArrayList<TradingBoardVO>();
+		String pageNo =(String) model.getAttribute("pageNo");
+		Pagination pagination = null;
+		if(pageNo==null) {
+			pagination = new Pagination(boardService.getTotalPostCount());
+		}else {
+			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
+		}
+		list1 = boardService.orderByDate1(pagination);
+		list2 = boardService.orderByDate2(pagination);
+		model.addAttribute("list1",list1);
+		model.addAttribute("list2",list2);
+		list3 = boardService.orderByDate3(pagination);
+		list4 = boardService.orderByDate4(pagination);
+		model.addAttribute("list3",list3);
+		model.addAttribute("list4",list4);
+		return "member/mypage.html";
+	}
+	
 	
 	@RequestMapping("guest/idcheckAjax")
 	@ResponseBody

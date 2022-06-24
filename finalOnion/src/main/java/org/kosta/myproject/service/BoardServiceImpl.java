@@ -28,10 +28,10 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<TradingBoardVO> orderByDate(Pagination pagination) {
-		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
-		list = boardmapper.orderByDate(pagination);
-		return list;
+	public ArrayList<TradingBoardVO> orderByDate1(Pagination pagination) {
+		ArrayList<TradingBoardVO> list1 = new ArrayList<TradingBoardVO>();
+		list1 = boardmapper.orderByDate1(pagination);
+		return list1;
 	}
 
 	@Override
@@ -40,4 +40,27 @@ public class BoardServiceImpl implements BoardService{
 		list = boardmapper.orderByPrice(pagination);
 		return list;
 	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate2(Pagination pagination) {
+		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
+		list2 = boardmapper.orderByDate2(pagination);
+		return list2;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate3(Pagination pagination) {
+		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
+		list3 = boardmapper.orderByDate3(pagination);
+		return list3;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate4(Pagination pagination) {
+		ArrayList<TradingBoardVO> list4 = new ArrayList<TradingBoardVO>();
+		list4 = boardmapper.orderByDate4(pagination);
+		return list4;
+	}
+
+	
 }

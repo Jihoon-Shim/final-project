@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<title>mypage</title>
+
+<body>
+	<div layout:fragment="main">
+		<!--/* ThymeLeaf Comment */-->
+		<h2>
+			<span sec:authentication="principal.memberName"></span> 님 나눔 온도는 <span
+				sec:authentication="principal.onionPoint" style="color: red">36.5</span>
+			도 입니다
+		</h2>
+		<br> <br>
+		<div class="row">
+			<div class="col-sm-3">
+				<h2 align="center">현재 구매 중</h2>
+				<table class="table table-bordered">
+					<thead>
+						<tr style="background-color: black">
+							<th style="color: white">NO</th>
+							<th style="color: white">제목</th>
+							<th style="color: white">거래 날짜</th>
+							<th style="color: white">가격</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="list1 : ${list1}">
+							<td th:text="${list1Stat.count}">0000</td>
+							<td th:text="${list1.boardTitle}" onclick = "location.href='/board/buylist/boardTitle'"></td>
+							<td th:text="${list1.boardDate}">2020.06.24</td>
+							<td th:text="${list1.tradePrice}">100</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-3">
+				<h2 align="center">현재 판매 중</h2>
+				<table class="table table-bordered">
+					<thead>
+						<tr style="background-color: black">
+							<th style="color: white">NO</th>
+							<th style="color: white">제목</th>
+							<th style="color: white">거래 날짜</th>
+							<th style="color: white">가격</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="list2 : ${list2}">
+							<td th:text="${list2Stat.count}">0000</td>
+							<td th:text="${list2.boardTitle}" onclick = "location.href='/board/salelist/boardTitle'">제목</td>
+							<td th:text="${list2.boardDate}">2020.06.24</td>
+							<td th:text="${list2.tradePrice}">100</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-3">
+				<h2 align="center">최근 구매 내역</h2>
+				<table class="table table-bordered">
+					<thead>
+						<tr style="background-color: black">
+							<th style="color: white">NO</th>
+							<th style="color: white">제목</th>
+							<th style="color: white">거래 날짜</th>
+							<th style="color: white">가격</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="list3 : ${list3}">
+							<td th:text="${list3Stat.count}">0000</td>
+							<td th:text="${list3.boardTitle}">제목</td>
+							<td th:text="${list3.boardDate}">2020.06.24</td>
+							<td th:text="${list3.tradePrice}">100</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-3">
+				<h2 align="center">최근 판매 내역</h2>
+				<table class="table table-bordered">
+					<thead>
+						<tr style="background-color: black">
+							<th style="color: white">NO</th>
+							<th style="color: white">제목</th>
+							<th style="color: white">거래 날짜</th>
+							<th style="color: white">가격</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="list4 : ${list4}">
+							<td th:text="${list4Stat.count}">0000</td>
+							<td th:text="${list4.boardTitle}">제목</td>
+							<td th:text="${list4.boardDate}">2020.06.24</td>
+							<td th:text="${list4.tradePrice}">100</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<script type="text/javascript">
+				
+			</script>
+
+		</div>
+
+	</div>
+</body>
+</html>

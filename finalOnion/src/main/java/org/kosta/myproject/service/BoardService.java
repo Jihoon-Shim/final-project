@@ -11,8 +11,14 @@ public interface BoardService {
 
 	ArrayList<TradingBoardVO> orderByTemp(Pagination pagination);
 
-	ArrayList<TradingBoardVO> orderByDate(Pagination pagination);
+	ArrayList<TradingBoardVO> orderByDate1(Pagination pagination);
 
 	ArrayList<TradingBoardVO> orderByPrice(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderByDate2(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderByDate3(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderByDate4(Pagination pagination);
 
 }

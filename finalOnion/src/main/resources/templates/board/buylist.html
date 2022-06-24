@@ -15,10 +15,13 @@
 <title>BuyList</title>
 </head>
  <div layout:fragment="main">
- 	<div align="left">
+ 	<div class = "row">
+ 
+ 	<div class = "col-sm-4" align="left">
  		<button type="button" th:onclick="|location.href='@{/board/postBuyForm}'|">글쓰기</button>
  	</div>
-	<div align="right">
+ 	<div class = "col-sm-4" align = "center"><h2>구매 게시판</h2></div>
+	<div class = "col-sm-4" align="right">
 		<select name="sort" id="sort"> 
 		<option value="no">--정렬 방식을 선택해 주세요.--</option> 
 		<option value="temp">나눔온도순</option> 
@@ -27,15 +30,16 @@
 		</select>
 		<button type="submit" th:onclick="|javascript:sort()|" class="btn btn-primary btn-outline-dark" >정렬하기</button>
 	</div>
+	</div>
 <table class="table table-bordered table-hover boardlist">
 	<thead>	
 		<tr style="background-color: #333333">
-            <th>NO</th>
-            <th>사진</th>
-            <th>제목</th>
-            <th>가격</th>           
-            <th>열람수</th>
-            <th>나눔온도</th>
+            <th style="color: white">NO</th>
+            <th style="color: white">사진</th>
+            <th style="color: white">제목</th>
+            <th style="color: white">가격</th>           
+            <th style="color: white">열람수</th>
+            <th style="color: white">나눔온도</th>
         </tr>
 	</thead>
 	<tbody>	

@@ -33,7 +33,7 @@ public class BoardController {
 			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
 		}
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
-		list = boardService.orderByDate(pagination);
+		list = boardService.orderByDate1(pagination);
 		model.addAttribute("pagination",pagination);
 		model.addAttribute("list",list);
 		return "board/buylist.html";
@@ -70,7 +70,7 @@ public class BoardController {
 		}else if(sort1.equals("price")) {
 			list = boardService.orderByPrice(pagination);
 		}else{
-			list = boardService.orderByDate(pagination);
+			list = boardService.orderByDate1(pagination);
 		}
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("list", list);
@@ -89,10 +89,10 @@ public class BoardController {
 			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
 		}
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
-		list = boardService.orderByDate(pagination);
+		list = boardService.orderByDate2(pagination);
 		model.addAttribute("pagination",pagination);
 		model.addAttribute("list",list);
-		return "board/buylist.html";
+		return "board/salelist.html";
 	}
 	@RequestMapping("/board/ordersaleList")
 	public String ordersaleList(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -126,12 +126,12 @@ public class BoardController {
 		}else if(sort1.equals("price")) {
 			list = boardService.orderByPrice(pagination);
 		}else{
-			list = boardService.orderByDate(pagination);
+			list = boardService.orderByDate2(pagination);
 		}
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("list", list);
 		request.setAttribute("url", "board/list.jsp");
-		return "board/buylist.html";
+		return "board/salelist.html";
 	}
 	
 	@RequestMapping("/board/chat")
