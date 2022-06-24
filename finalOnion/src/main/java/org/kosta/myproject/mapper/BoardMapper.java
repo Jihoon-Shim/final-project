@@ -17,4 +17,6 @@ public interface BoardMapper {
 
 	ArrayList<TradingBoardVO> orderByPrice(Pagination pagination);
 
+	void posting(TradingBoardVO tradingBoardVO);
+
 }

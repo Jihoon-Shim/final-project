@@ -40,4 +40,9 @@ public class BoardServiceImpl implements BoardService{
 		list = boardmapper.orderByPrice(pagination);
 		return list;
 	}
+
+	@Override
+	public void posting(TradingBoardVO tradingBoardVO) {
+		boardmapper.posting(tradingBoardVO);
+	}
 }

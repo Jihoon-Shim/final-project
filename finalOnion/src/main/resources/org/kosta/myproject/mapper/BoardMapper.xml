@@ -4,6 +4,7 @@
 	<resultMap type="org.kosta.myproject.vo.TradingBoardVO" id="tradingboardResultMap">
 		<result column="tem" property="memberVO.tempVO.temp"/>
 	</resultMap>
+	<parameterMap type="org.kosta.myproject.vo.TradingBoardVO" id=""></parameterMap>
 	<select id="getTotalPostCount" resultType="int">
 		SELECT COUNT(*) FROM TRADING_BOARD
 	</select>
@@ -45,5 +46,9 @@
 			)
 		) 
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
-	</select>
+	</select>	
+	<insert id="posting" parameterType="org.kosta.myproject.vo.TradingBoardVO">
+		INSERT INTO TRADING_BOARD(BOARD_NO,BOARD_TITLE,BOARD_CONTENT,BOARD_KIND,TRADE_STATUS,TRADE_PRICE,PRODUCT_PICTURE,HITS,MEMBERID,BOARD_DATE) 
+		VALUES(TRADING_BOARD_SEQ.nextval,#{boardTitle},#{boardContent},#{boardKind},1,#{tradePrice},'iu.jpg',0,#{memberVO.memberId},SYSDATE)
+	</insert>
 </mapper>

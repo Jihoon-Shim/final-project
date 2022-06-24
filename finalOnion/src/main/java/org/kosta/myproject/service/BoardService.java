@@ -15,4 +15,6 @@ public interface BoardService {
 
 	ArrayList<TradingBoardVO> orderByPrice(Pagination pagination);
 
+	void posting(TradingBoardVO tradingBoardVO);
+
 }

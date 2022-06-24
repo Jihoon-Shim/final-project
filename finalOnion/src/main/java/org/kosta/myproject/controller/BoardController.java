@@ -3,14 +3,16 @@ package org.kosta.myproject.controller;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.myproject.service.BoardService;
+import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
@@ -36,10 +38,11 @@ public class BoardController {
 		list = boardService.orderByDate(pagination);
 		model.addAttribute("pagination",pagination);
 		model.addAttribute("list",list);
-		return "board/buylist.html";
+		return "board/buylist";
 	}
+	
 	@RequestMapping("/board/orderbuyList")
-	public String orderbuyList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String orderbuyList(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession(false);
 		String sort = request.getParameter("sort1");
 		String sorton = request.getParameter("sorton");
@@ -74,9 +77,9 @@ public class BoardController {
 		}
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("list", list);
-		request.setAttribute("url", "board/list.jsp");
-		return "board/buylist.html";
+		return "board/buylist";
 	}
+	
 	@RequestMapping("/board/salelist")
 	public String salelist(Model model) {
 		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
@@ -92,10 +95,11 @@ public class BoardController {
 		list = boardService.orderByDate(pagination);
 		model.addAttribute("pagination",pagination);
 		model.addAttribute("list",list);
-		return "board/buylist.html";
+		return "board/buylist";
 	}
+	
 	@RequestMapping("/board/ordersaleList")
-	public String ordersaleList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String ordersaleList(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession(false);
 		String sort = request.getParameter("sort1");
 		String sorton = request.getParameter("sorton");
@@ -111,7 +115,6 @@ public class BoardController {
 		}
 		String sort1 =(String) session.getAttribute("sorting");
 		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
-		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
 		String pageNo = request.getParameter("pageNo");
 		Pagination pagination = null;
 		if(pageNo==null) {
@@ -130,14 +133,17 @@ public class BoardController {
 		}
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("list", list);
-		request.setAttribute("url", "board/list.jsp");
-		return "board/buylist.html";
+		return "board/buylist";
 	}
 	
-	@RequestMapping("/board/chat")
-	public String salelist() {
-		return"board/chat";
+	@PostMapping("/board/PostBuy")	
+	public String PostBuy(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO) throws Exception {
+		tradingBoardVO.setMemberVO(memberVO);
+		System.out.println(tradingBoardVO);
+		boardService.posting(tradingBoardVO);
+		return "board/PostBuy";
 	}
+	
 	@RequestMapping("/board/chatlist")
 	public String chatlist() {
 		return"board/chatlist";
