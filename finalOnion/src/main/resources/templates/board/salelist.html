@@ -30,7 +30,6 @@
 <table class="table table-bordered table-hover boardlist">
 	<thead>	
 		<tr style="background-color: #333333">
-            <th>NO</th>
             <th>사진</th>
             <th>제목</th>
             <th>가격</th>           
@@ -40,8 +39,9 @@
 	</thead>
 	<tbody>	
 		<tr th:each="list : ${list}">
-			<td th:text="${listStat.count}">인덱스</td>
-			<td><img th:src="@{/myweb/images/}+${list.productPicture}" height = "400" width = "400"></td>
+			<td><button type="button" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list.boardNo}|">
+			<img th:src="@{/myweb/images/}+${list.productPicture}" height = "400" width = "400">
+			</button></td>
 			<td th:text="${list.boardTitle}">제목</td>
 			<td th:text="${list.tradePrice}">가격</td>
 			<td th:text="${list.hits}">열람수</td>

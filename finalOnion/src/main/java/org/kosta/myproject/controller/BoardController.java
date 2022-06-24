@@ -87,12 +87,12 @@ public class BoardController {
 		String pageNo =(String) model.getAttribute("pageNo");
 		Pagination pagination = null;
 		if(pageNo==null) {
-			pagination = new Pagination(boardService.getTotalPostCount());
+			pagination = new Pagination(boardService.getTotalSalePostCount());
 		}else {
-			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
+			pagination=new Pagination(boardService.getTotalSalePostCount(),Integer.parseInt(pageNo));
 		}
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
-		list = boardService.orderByDate(pagination);
+		list = boardService.orderBySaleDate(pagination);
 		model.addAttribute("pagination",pagination);
 		model.addAttribute("list",list);
 		return "board/buylist";
@@ -118,18 +118,18 @@ public class BoardController {
 		String pageNo = request.getParameter("pageNo");
 		Pagination pagination = null;
 		if(pageNo==null) {
-			pagination = new Pagination(boardService.getTotalPostCount());
+			pagination = new Pagination(boardService.getTotalSalePostCount());
 		}else {
-			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
+			pagination=new Pagination(boardService.getTotalSalePostCount(),Integer.parseInt(pageNo));
 		}
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
 		
 		if(sort1.equals("temp")) {
-			list = boardService.orderByTemp(pagination);
+			list = boardService.orderBySaleTemp(pagination);
 		}else if(sort1.equals("price")) {
-			list = boardService.orderByPrice(pagination);
+			list = boardService.orderBySalePrice(pagination);
 		}else{
-			list = boardService.orderByDate(pagination);
+			list = boardService.orderBySaleDate(pagination);
 		}
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("list", list);
@@ -153,5 +153,12 @@ public class BoardController {
 	public String postBuyForm() {
 		System.out.println("hello");
 		return"board/postBuyForm";
+	}
+	@RequestMapping("/board/postdetail")
+	public String postdetail(int boardNo, Model model) {
+		TradingBoardVO tvo = new TradingBoardVO();  
+		tvo = boardService.postdetail(boardNo);
+		model.addAttribute("tvo",tvo);
+		return"board/postdetail";
 	}
 }

@@ -19,4 +19,14 @@ public interface BoardMapper {
 
 	void posting(TradingBoardVO tradingBoardVO);
 
+	int getTotalSalePostCount();
+
+	ArrayList<TradingBoardVO> orderBySaleDate(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderBySaleTemp(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderBySalePrice(Pagination pagination);
+
+	TradingBoardVO postdetail(int boardNo);
+
 }

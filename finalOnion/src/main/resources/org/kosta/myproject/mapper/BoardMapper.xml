@@ -2,11 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.myproject.mapper.BoardMapper">
 	<resultMap type="org.kosta.myproject.vo.TradingBoardVO" id="tradingboardResultMap">
+		<result column="MEMBER_NICKNAME" property="memberVO.memberNickname"/>
 		<result column="tem" property="memberVO.tempVO.temp"/>
 	</resultMap>
-	<parameterMap type="org.kosta.myproject.vo.TradingBoardVO" id=""></parameterMap>
 	<select id="getTotalPostCount" resultType="int">
-		SELECT COUNT(*) FROM TRADING_BOARD
+		SELECT COUNT(*) FROM TRADING_BOARD WHERE BOARD_KIND = '삽니다'
+	</select>
+	<select id="getTotalSalePostCount" resultType="int">
+		SELECT COUNT(*) FROM TRADING_BOARD WHERE BOARD_KIND = '팝니다'
 	</select>
 	<select id="orderByTemp" parameterType="org.kosta.myproject.vo.Pagination" resultMap="tradingboardResultMap">
 		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
@@ -37,7 +40,7 @@
 	<select id="orderByPrice" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
 		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
 		from( 
-			select ROW_NUMBER() OVER(ORDER BY TRADE_PRICE DESC) as rnum, 
+			select ROW_NUMBER() OVER(ORDER BY TRADE_PRICE ASC) as rnum, 
 			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
 			from ( 
 				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
@@ -47,8 +50,53 @@
 		) 
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>	
+	<select id="orderBySaleTemp" parameterType="org.kosta.myproject.vo.Pagination" resultMap="tradingboardResultMap">
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		from( 
+			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			from ( 
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '팝니다'
+			)
+		) 
+		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
+	</select>
+	<select id="orderBySaleDate" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		from( 
+			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			from ( 
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '팝니다'
+			)
+		) 
+		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
+	</select>
+	<select id="orderBySalePrice" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		from( 
+			select ROW_NUMBER() OVER(ORDER BY TRADE_PRICE ASC) as rnum, 
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			from ( 
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '팝니다'
+			)
+		) 
+		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
+	</select>	
 	<insert id="posting" parameterType="org.kosta.myproject.vo.TradingBoardVO">
 		INSERT INTO TRADING_BOARD(BOARD_NO,BOARD_TITLE,BOARD_CONTENT,BOARD_KIND,TRADE_STATUS,TRADE_PRICE,PRODUCT_PICTURE,HITS,MEMBERID,BOARD_DATE) 
 		VALUES(TRADING_BOARD_SEQ.nextval,#{boardTitle},#{boardContent},#{boardKind},1,#{tradePrice},'iu.jpg',0,#{memberVO.memberId},SYSDATE)
 	</insert>
+	<select id="postdetail" resultMap="tradingboardResultMap" parameterType="int">
+		SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_CONTENT, b.BOARD_KIND, b.TRADE_STATUS, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.HITS,
+		m.MEMBER_NICKNAME, b.BOARD_DATE
+		FROM TRADING_BOARD b, T_MEMBER m
+		WHERE b.BOARD_NO=#{value} AND b.MEMBERID = m.MEMBERID
+	</select>
 </mapper>
