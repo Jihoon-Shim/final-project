@@ -71,7 +71,7 @@
 					<tbody>
 						<tr th:each="list3 : ${list3}">
 							<td th:text="${list3Stat.count}">0000</td>
-							<td th:text="${list3.boardTitle}">제목</td>
+							<td th:text="${list3.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list3.boardNo}|">제목</td>
 							<td th:text="${list3.boardDate}">2020.06.24</td>
 							<td th:text="${list3.tradePrice}">100</td>
 						</tr>
@@ -92,7 +92,7 @@
 					<tbody>
 						<tr th:each="list4 : ${list4}">
 							<td th:text="${list4Stat.count}">0000</td>
-							<td th:text="${list4.boardTitle}">제목</td>
+							<td th:text="${list4.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list4.boardNo}|">제목</td>
 							<td th:text="${list4.boardDate}">2020.06.24</td>
 							<td th:text="${list4.tradePrice}">100</td>
 						</tr>
