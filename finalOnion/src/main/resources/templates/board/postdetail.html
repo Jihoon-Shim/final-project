@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layouts/layout}" 
+>
+<head>
+<title>BuyForm</title>
+</head>
+ <div layout:fragment="main">
+<table class="table" style="overflow:auto;">
+	<thead>
+		<tr bgcolor="#DDDDDD">
+			<td th:text="${tvo.boardTitle}">제목</td>	
+			<td th:text="${tvo.boardDate}">작성날짜</td>	
+			<td th:text="${tvo.tradePrice}">가격</td>	
+			<td th:text="${tvo.hits}">조회수</td>
+			<td th:text="${tvo.memberVO.memberNickname}">작성자</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr bgcolor="#FFFFFF">
+			<td><img th:src="@{/myweb/images/}+${tvo.productPicture}" width=100%;>	</td>
+			<td colspan="3"><pre><font size="4" ><span class="box" th:text=${tvo.boardContent}></span></font></pre></td>
+		</tr>
+	</tbody>
+</table>
+
+ </div>
+
+</html>

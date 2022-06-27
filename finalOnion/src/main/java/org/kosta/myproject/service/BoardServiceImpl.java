@@ -42,13 +42,6 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<TradingBoardVO> orderByDate2(Pagination pagination) {
-		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
-		list2 = boardmapper.orderByDate2(pagination);
-		return list2;
-	}
-
-	@Override
 	public ArrayList<TradingBoardVO> orderByDate3(Pagination pagination) {
 		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
 		list3 = boardmapper.orderByDate3(pagination);
@@ -62,5 +55,41 @@ public class BoardServiceImpl implements BoardService{
 		return list4;
 	}
 
-	
+	public void posting(TradingBoardVO tradingBoardVO) {
+		boardmapper.posting(tradingBoardVO);
+	}
+
+	@Override
+	public int getTotalSalePostCount() {
+		int result = boardmapper.getTotalSalePostCount();
+		return result;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderBySaleDate(Pagination pagination) {
+		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
+		list2 = boardmapper.orderBySaleDate(pagination);
+		return list2;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderBySaleTemp(Pagination pagination) {
+		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
+		list = boardmapper.orderBySaleTemp(pagination);
+		return list;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderBySalePrice(Pagination pagination) {
+		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
+		list = boardmapper.orderBySalePrice(pagination);
+		return list;
+	}
+
+	@Override
+	public TradingBoardVO postdetail(int boardNo) {
+		TradingBoardVO tvo = new TradingBoardVO();
+		tvo = boardmapper.postdetail(boardNo);
+		return tvo;
+	}
 }

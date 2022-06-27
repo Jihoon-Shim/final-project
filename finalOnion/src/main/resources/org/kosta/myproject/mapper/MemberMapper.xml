@@ -61,9 +61,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updatePassword" parameterType="org.kosta.myproject.vo.MemberVO">
 		update T_MEMBER set MEMBER_PASSWORD=#{memberPassword}
 		where MEMBERID=#{memberId} AND MEMBER_TEL=#{memberTel}
-	</update>
-	
-</mapper>
+	</update> 
+	<select id="findTempById" parameterType="org.kosta.myproject.vo.TempVO" resultType="float">
+		select ROUND(TEMP , 1) from TEMP where MEMBERID = #{memberId}
+	</select>
+</mapper> 
 
 
 

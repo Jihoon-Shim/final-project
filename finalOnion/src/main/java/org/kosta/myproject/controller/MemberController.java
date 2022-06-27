@@ -1,11 +1,13 @@
 package org.kosta.myproject.controller;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.kosta.myproject.service.BoardService;
 import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
+import org.kosta.myproject.vo.TempVO;
 import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -96,7 +98,7 @@ public class MemberController {
 		return "member/ajax-cafe";
 	}
 	@RequestMapping("mypage")
-	public String mypage(Model model) {
+	public String mypage(@AuthenticationPrincipal MemberVO memberVO , Model model) {
 		ArrayList<TradingBoardVO> list1 = new ArrayList<TradingBoardVO>();
 		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
 		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
@@ -109,16 +111,22 @@ public class MemberController {
 			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
 		}
 		list1 = boardService.orderByDate1(pagination);
-		list2 = boardService.orderByDate2(pagination);
+		list2 = boardService.orderBySaleDate(pagination);
 		model.addAttribute("list1",list1);
 		model.addAttribute("list2",list2);
 		list3 = boardService.orderByDate3(pagination);
 		list4 = boardService.orderByDate4(pagination);
 		model.addAttribute("list3",list3);
 		model.addAttribute("list4",list4);
+		
+		String id = memberVO.getMemberId();
+		float temp = (float)memberService.findTempById(id);
+		
+		
+		model.addAttribute("temp",temp);
+		
 		return "member/mypage.html";
 	}
-	
 	
 	@RequestMapping("guest/idcheckAjax")
 	@ResponseBody

@@ -5,6 +5,8 @@ import java.util.List;
 import org.kosta.myproject.mapper.MemberMapper;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.PowerVO;
+import org.kosta.myproject.vo.TempVO;
+import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,5 +100,10 @@ public class MemberServiceImpl implements MemberService {
 	public void registerMemberTemp(MemberVO memberVO) {
 		memberMapper.registerMemberTemp(memberVO);
 		
+	}
+
+	@Override
+	public float findTempById(String id) {
+		return memberMapper.findTempById(id);
 	}
 }

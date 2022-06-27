@@ -5,6 +5,8 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.PowerVO;
+import org.kosta.myproject.vo.TempVO;
+import org.kosta.myproject.vo.TradingBoardVO;
 @Mapper
 public interface MemberMapper {
 
@@ -33,4 +35,6 @@ public interface MemberMapper {
 	void updatePassword(MemberVO memberVO);
 
 	void registerMemberTemp(MemberVO memberVO);
+
+	float findTempById(String id);
 }

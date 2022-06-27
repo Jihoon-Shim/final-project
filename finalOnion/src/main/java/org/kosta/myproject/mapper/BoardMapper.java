@@ -17,10 +17,22 @@ public interface BoardMapper {
 
 	ArrayList<TradingBoardVO> orderByPrice(Pagination pagination);
 
-	ArrayList<TradingBoardVO> orderByDate2(Pagination pagination);
+
 
 	ArrayList<TradingBoardVO> orderByDate4(Pagination pagination);
 
 	ArrayList<TradingBoardVO> orderByDate3(Pagination pagination);
+	
+	void posting(TradingBoardVO tradingBoardVO);
+
+	int getTotalSalePostCount();
+
+	ArrayList<TradingBoardVO> orderBySaleDate(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderBySaleTemp(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderBySalePrice(Pagination pagination);
+
+	TradingBoardVO postdetail(int boardNo);
 
 }

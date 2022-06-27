@@ -1,12 +1,14 @@
 package org.kosta.myproject.controller;
 
+import java.util.List;
+
 import org.kosta.myproject.service.ChatService;
+import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.ChattingRoomVO;
 import org.kosta.myproject.vo.MemberVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -16,6 +18,22 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatController{
 	private final ChatService chatService;
+	private final MemberService memberService;
+	
+	@RequestMapping("profile")
+	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherId, Model model) {
+		String myNick = myMemberVO.getMemberNickname();
+		String otherNick = memberService.findMemberById(otherId).getMemberNickname();
+		ChattingRoomVO chattingRoomVO = chatService.findChattingRoom(myNick, otherNick);
+		if(chattingRoomVO==null) {
+			chatService.createChattingRoom(myNick, otherNick);
+			chattingRoomVO = chatService.findChattingRoom(myNick, otherNick);
+		}
+		model.addAttribute("chattingRoomVO", chattingRoomVO);
+		List<String> list = chatService.getChattingList(myNick, otherNick);
+		model.addAttribute("chattingList", list);
+		return "member/chat";
+	}
 	
 	@RequestMapping("/chatRecord")
 	@ResponseBody
@@ -24,18 +42,6 @@ public class ChatController{
 		return "";
 	}
 	
-	@GetMapping("/chat")
-    public String chatGET(@AuthenticationPrincipal MemberVO memberVO, String yourNick, Model model){
-		String myNick = memberVO.getMemberNickname();
-		yourNick = "손흥민";
-		ChattingRoomVO chattingRoomVO = chatService.findChattingRoom(myNick, yourNick);
-		if(chattingRoomVO==null) {
-			chatService.createChattingRoom(myNick, yourNick);
-			chattingRoomVO = chatService.findChattingRoom(myNick, yourNick);
-		}
-		model.addAttribute("chattingRoomVO", chattingRoomVO);
-        return "member/chat";
-    }
 	
 }
 
