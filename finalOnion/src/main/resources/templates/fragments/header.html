@@ -29,10 +29,6 @@
 					<a th:href="@{/updateForm}" style = "color:white">회원정보수정</a><br>
 					<a th:href="@{/enterCafe}" style = "color:white">카페가기</a><br>
 					<a th:href="@{/mypage}" style = "color:white">마이페이지 가기</a><br>
-					<a th:href="@{/chat}" style = "color:white">채팅목록 가보즈아</a><br>
-
-					
-					<a th:href="@{/profile?otherId=spring}" style = "color:white">"강하늘" 프로필을 통한 채팅하기</a><br>
 					<a th:href="@{/admin/main}" sec:authorize="hasRole('ROLE_ADMIN')" style = "color:white">관리자모드</a><br>	
 				</th:block>		
 			</div>
