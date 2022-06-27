@@ -21,12 +21,17 @@
 		<tr bgcolor="#FFFFFF">
 			<td><img th:src="@{/myweb/images/}+${tvo.productPicture}" width=100%;>	</td>
 			<td colspan="3"><pre><font size="4" ><span class="box" th:text=${tvo.boardContent}></span></font></pre>
-			
+			<form th:action="@{/profile}" method="post">
+				<input type="hidden" name="otherNick" th:value="${tvo.memberVO.memberNickname}">
+				<th:block th:if="${#authentication.getPrincipal().getMemberId()}!=${tvo.memberVO.memberId}">
+				<button type="submit" th:text="|${tvo.memberVO.memberNickname}님과 채팅|">작성자와 채팅</button>
+				</th:block>
+				
+			</form>
 			</td>
 		</tr>
 	</tbody>
 </table>
-
  </div>
 
 </html>

@@ -9,6 +9,7 @@ import org.kosta.myproject.vo.MemberVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,10 +21,9 @@ public class ChatController{
 	private final ChatService chatService;
 	private final MemberService memberService;
 	
-	@RequestMapping("profile")
-	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherId, Model model) {
+	@PostMapping("profile")
+	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherNick, Model model) {
 		String myNick = myMemberVO.getMemberNickname();
-		String otherNick = memberService.findMemberById(otherId).getMemberNickname();
 		ChattingRoomVO chattingRoomVO = chatService.findChattingRoom(myNick, otherNick);
 		if(chattingRoomVO==null) {
 			chatService.createChattingRoom(myNick, otherNick);

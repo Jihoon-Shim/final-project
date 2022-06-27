@@ -3,6 +3,7 @@
 <mapper namespace="org.kosta.myproject.mapper.BoardMapper">
 	<resultMap type="org.kosta.myproject.vo.TradingBoardVO" id="tradingboardResultMap">
 		<result column="MEMBER_NICKNAME" property="memberVO.memberNickname"/>
+		<result column="MEMBERID" property="memberVO.memberId"/>
 		<result column="tem" property="memberVO.tempVO.temp"/>
 	</resultMap>
 	<select id="getTotalPostCount" resultType="int">
@@ -95,7 +96,7 @@
 	</insert>
 	<select id="postdetail" resultMap="tradingboardResultMap" parameterType="int">
 		SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_CONTENT, b.BOARD_KIND, b.TRADE_STATUS, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.HITS,
-		m.MEMBER_NICKNAME, b.BOARD_DATE
+		m.MEMBER_NICKNAME, m.MemberId, b.BOARD_DATE
 		FROM TRADING_BOARD b, T_MEMBER m
 		WHERE b.BOARD_NO=#{value} AND b.MEMBERID = m.MEMBERID
 	</select>
