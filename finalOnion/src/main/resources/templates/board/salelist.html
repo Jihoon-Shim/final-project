@@ -50,7 +50,7 @@
 	</tbody>
 </table>	
 
-<a th:if="${pagination.previousPageGroup}" class="page-link" th:href="@{/board/orderbuyList?pageNo=}+${pagination.startPageOfPageGroup-1}">Previous</a>
+<a th:if="${pagination.previousPageGroup}" class="page-link" th:href="@{/board/ordersaleList?pageNo=}+${pagination.startPageOfPageGroup-1}">Previous</a>
 
 <li th:each="idx,iterStat : ${#numbers.sequence(pagination.startPageOfPageGroup,pagination.endPageOfPageGroup)}">
  	<span th:if="${idx==pagination.nowPage}" th:text="${idx}">
@@ -60,9 +60,9 @@
  	</span>
 </li>
 
-<a th:if="${pagination.nextPageGroup}" class="page-link" th:href="@{/board/orderbuyList?pageNo=}+${pagination.endPageOfPageGroup+1}">Next</a>
+<a th:if="${pagination.nextPageGroup}" class="page-link" th:href="@{/board/ordersaleList?pageNo=}+${pagination.endPageOfPageGroup+1}">Next</a>
 
-<form id="sorting" th:action="@{/board/orderbuyList}" method="post">
+<form id="sorting" th:action="@{/board/ordersaleList}" method="get">
 	<input type="hidden" name="sort1" value="">
 	<input type="hidden" name="sorton" value="on">
 </form>

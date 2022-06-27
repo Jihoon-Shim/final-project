@@ -65,9 +65,8 @@ public class BoardController {
 			pagination = new Pagination(boardService.getTotalPostCount());
 		}else {
 			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
-		}
+		}		
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
-
 		if(sort1.equals("temp")) {
 			list = boardService.orderByTemp(pagination);
 		}else if(sort1.equals("price")) {
@@ -95,7 +94,7 @@ public class BoardController {
 		list = boardService.orderBySaleDate(pagination);
 		model.addAttribute("pagination",pagination);
 		model.addAttribute("list",list);
-		return "board/buylist";
+		return "board/salelist";
 	}
 	
 	@RequestMapping("/board/ordersaleList")
@@ -122,8 +121,8 @@ public class BoardController {
 		}else {
 			pagination=new Pagination(boardService.getTotalSalePostCount(),Integer.parseInt(pageNo));
 		}
+		System.out.println("여긴오냐?2"+pagination);
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
-		
 		if(sort1.equals("temp")) {
 			list = boardService.orderBySaleTemp(pagination);
 		}else if(sort1.equals("price")) {
@@ -133,13 +132,12 @@ public class BoardController {
 		}
 		request.setAttribute("pagination", pagination);
 		request.setAttribute("list", list);
-		return "board/buylist";
+		return "board/salelist";
 	}
 	
 	@PostMapping("/board/PostBuy")	
 	public String PostBuy(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO) throws Exception {
 		tradingBoardVO.setMemberVO(memberVO);
-		System.out.println(tradingBoardVO);
 		boardService.posting(tradingBoardVO);
 		return "board/PostBuy";
 	}
@@ -151,7 +149,6 @@ public class BoardController {
 	
 	@RequestMapping("/board/postBuyForm")
 	public String postBuyForm() {
-		System.out.println("hello");
 		return"board/postBuyForm";
 	}
 	@RequestMapping("/board/postdetail")

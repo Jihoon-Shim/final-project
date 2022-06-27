@@ -62,7 +62,7 @@
 
 <a th:if="${pagination.nextPageGroup}" class="page-link" th:href="@{/board/orderbuyList?pageNo=}+${pagination.endPageOfPageGroup+1}">Next</a>
 
-<form id="sorting" th:action="@{/board/orderbuyList}" method="post">
+<form id="sorting" th:action="@{/board/orderbuyList}" method="get">
 	<input type="hidden" name="sort1" value="">
 	<input type="hidden" name="sorton" value="on">
 </form>
