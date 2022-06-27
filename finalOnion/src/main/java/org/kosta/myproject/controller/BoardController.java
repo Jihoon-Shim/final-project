@@ -141,7 +141,20 @@ public class BoardController {
 		boardService.posting(tradingBoardVO);
 		return "board/PostBuy";
 	}
-	
+
+	@RequestMapping("/board/updatePostForm")
+	public String updatePostForm(int boardNo, Model model) {
+		TradingBoardVO tvo = new TradingBoardVO();
+		tvo = boardService.findtradingboardbyno(boardNo);
+		model.addAttribute("tvo",tvo);
+		return "board/updatePostForm";
+	}
+	@PostMapping("/board/updatePost")	
+	public String updatePost(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO) throws Exception {
+		tradingBoardVO.setMemberVO(memberVO);
+		boardService.updating(tradingBoardVO);
+		return "board/updatePost";
+	}
 	@RequestMapping("/board/chatlist")
 	public String chatlist() {
 		return"board/chatlist";

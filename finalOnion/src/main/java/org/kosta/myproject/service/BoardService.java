@@ -26,5 +26,8 @@ public interface BoardService {
 	ArrayList<TradingBoardVO> orderBySalePrice(Pagination pagination);
 
 	TradingBoardVO postdetail(int boardNo);
+	
+	TradingBoardVO findtradingboardbyno(int boardNo);
 
+	void updating(TradingBoardVO tradingBoardVO);
 }

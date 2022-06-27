@@ -79,4 +79,16 @@ public class BoardServiceImpl implements BoardService{
 		tvo = boardmapper.postdetail(boardNo);
 		return tvo;
 	}
+	
+	@Override
+	public TradingBoardVO findtradingboardbyno(int boardNo) {
+		TradingBoardVO tvo = new TradingBoardVO();
+		tvo = boardmapper.findtradingboardbyno(boardNo);
+		return tvo;
+	}
+	
+	@Override
+	public void updating(TradingBoardVO tradingBoardVO) {
+		boardmapper.updating(tradingBoardVO);
+	}
 }

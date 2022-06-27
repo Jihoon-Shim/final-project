@@ -100,4 +100,12 @@
 		FROM TRADING_BOARD b, T_MEMBER m
 		WHERE b.BOARD_NO=#{value} AND b.MEMBERID = m.MEMBERID
 	</select>
+	<select id="findtradingboardbyno" resultType="org.kosta.myproject.vo.TradingBoardVO" parameterType="int">
+		SELECT * FROM TRADING_BOARD WHERE BOARD_NO=#{value}
+	</select>
+		<update id="updating" parameterType="org.kosta.myproject.vo.TradingBoardVO">
+		UPDATE TRADING_BOARD 
+		SET 	BOARD_TITLE=#{boardTitle}, BOARD_CONTENT=#{boardContent}, BOARD_KIND=#{boardKind},TRADE_PRICE=#{tradePrice}
+		WHERE BOARD_NO=#{boardNo}
+	</update>
 </mapper>
