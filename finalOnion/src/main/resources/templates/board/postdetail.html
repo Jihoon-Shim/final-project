@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
   layout:decorate="~{layouts/layout}" 
+  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
 <title>BuyForm</title>
@@ -27,14 +28,13 @@
 				<input type="hidden" name="otherNick" th:value="${tvo.memberVO.memberNickname}">
 				<th:block th:if="${#authentication.getPrincipal().getMemberId()}!=${tvo.memberVO.memberId}">
 				<button type="submit" th:text="|${tvo.memberVO.memberNickname}님과 채팅|">작성자와 채팅</button>
-				</th:block>
-				
+				</th:block>				
 			</form>
 			</td>
 		</tr>
 	</tbody>
 </table>
-<script type="text/javascript"  th:inline="javascript">
+<script  th:inline="javascript">
 	$(document).ready(function(){
 		let username = [[${#authentication.principal.memberId}]];
 		let postname = [[${tvo.memberVO.memberId}]];
@@ -44,15 +44,20 @@
 			}else{
 				location.href="/board/updatePostForm?boardNo="+[[${tvo.boardNo}]];
 			}
-		})
+		});//click
 		$("#delete").click(function(){
 			if(username!=postname){
 				alert("본인의 글만 삭제할 수 있습니다.");
-			}else{
-				location.href="/board/deletePost";
+				return false;
 			}
-		})
-	})
+			var result = confirm("정말로 삭제하시겠습니까?");
+			if(result){
+				location.href="/board/deletePost?boardNo="+[[${tvo.boardNo}]];
+			}else{
+			    alert("취소되었습니다.");
+			}//else
+		});//click
+	});//document.ready
 </script>
  </div>
 

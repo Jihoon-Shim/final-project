@@ -30,4 +30,6 @@ public interface BoardService {
 	TradingBoardVO findtradingboardbyno(int boardNo);
 
 	void updating(TradingBoardVO tradingBoardVO);
+
+	void deletePost(int boardNo);
 }

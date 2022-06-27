@@ -91,4 +91,10 @@ public class BoardServiceImpl implements BoardService{
 	public void updating(TradingBoardVO tradingBoardVO) {
 		boardmapper.updating(tradingBoardVO);
 	}
+
+	@Override
+	public void deletePost(int boardNo) {
+		boardmapper.deletePost(boardNo);
+		
+	}
 }

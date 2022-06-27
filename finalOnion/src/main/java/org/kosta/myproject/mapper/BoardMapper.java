@@ -33,4 +33,6 @@ public interface BoardMapper {
 	
 	void updating(TradingBoardVO tradingBoardVO);
 
+	void deletePost(int boardNo);
+
 }

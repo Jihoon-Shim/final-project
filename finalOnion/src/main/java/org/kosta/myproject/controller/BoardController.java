@@ -155,6 +155,11 @@ public class BoardController {
 		boardService.updating(tradingBoardVO);
 		return "board/updatePost";
 	}
+	@RequestMapping("/board/deletePost")
+	public String deletePost(int boardNo) {
+		boardService.deletePost(boardNo);
+		return"board/deletePost";
+	}
 	@RequestMapping("/board/chatlist")
 	public String chatlist() {
 		return"board/chatlist";
