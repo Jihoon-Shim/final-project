@@ -35,6 +35,14 @@ public class ChatServiceImpl implements ChatService {
 	public List<String> getChattingList(String myNick, String otherNick) {
 		return chatMapper.getChattingList(myNick, otherNick);
 	}
+	@Override
+	public List<ChattingRoomVO> findChattingRoomNoById(String memberId) {
+		return chatMapper.findChattingRoomNoById(memberId);
+	}
+	@Override
+	public String findOtherIdByChattingRoomNo(int chattingRoomNo, String memberId) {
+		return chatMapper.findOtherIdByChattingRoomNo(chattingRoomNo, memberId);
+	}
 
 	
 	

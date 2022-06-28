@@ -1,10 +1,11 @@
 package org.kosta.myproject.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kosta.myproject.service.ChatService;
-import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.ChattingRoomVO;
+import org.kosta.myproject.vo.ChattingVO;
 import org.kosta.myproject.vo.MemberVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatController{
 	private final ChatService chatService;
-	private final MemberService memberService;
 	
 	@PostMapping("profile")
 	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherNick, Model model) {
@@ -40,6 +40,24 @@ public class ChatController{
 	public String recordChatting(@AuthenticationPrincipal MemberVO memberVO, ChattingRoomVO chattingRoomVO, String msg) {
 		chatService.recordChatting(memberVO, chattingRoomVO, msg);
 		return "";
+	}
+	
+	@RequestMapping("/chattingRoomList")
+	public String chattingRoom(@AuthenticationPrincipal MemberVO memberVO, Model model) {
+		List<ChattingRoomVO> chattingRoomVOList = chatService.findChattingRoomNoById(memberVO.getMemberId());
+		List<ChattingVO> chattingVOList = new ArrayList<ChattingVO>();
+		ChattingVO chattingVO = null;
+		for(ChattingRoomVO chattingRoomVO : chattingRoomVOList) {
+			chattingVO = new ChattingVO();
+			chattingVO.setChattingRoomVO(chattingRoomVO);
+			String otherNick= chattingRoomVO.getChattingRoomTitle().replace(memberVO.getMemberNickname(), "").replace(" and ", "");
+			MemberVO otherMemberVO = new MemberVO();
+			otherMemberVO.setMemberNickname(otherNick);
+			chattingVO.setMemberVO(otherMemberVO);
+			chattingVOList.add(chattingVO);
+		}
+		model.addAttribute("chattingVOList",chattingVOList);
+		return "chat/chattingList";
 	}
 	
 	
