@@ -10,7 +10,6 @@ import org.kosta.myproject.vo.MemberVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ChatController{
 	private final ChatService chatService;
 	
-	@PostMapping("profile")
+	@RequestMapping("profile")
 	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherNick, Model model) {
 		String myNick = myMemberVO.getMemberNickname();
 		ChattingRoomVO chattingRoomVO = chatService.findChattingRoom(myNick, otherNick);
@@ -34,7 +33,6 @@ public class ChatController{
 		model.addAttribute("chattingList", list);
 		return "member/chat";
 	}
-	
 	@RequestMapping("/chatRecord")
 	@ResponseBody
 	public String recordChatting(@AuthenticationPrincipal MemberVO memberVO, ChattingRoomVO chattingRoomVO, String msg) {

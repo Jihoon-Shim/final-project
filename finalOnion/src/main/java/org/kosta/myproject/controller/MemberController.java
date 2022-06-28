@@ -1,13 +1,11 @@
 package org.kosta.myproject.controller;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 import org.kosta.myproject.service.BoardService;
 import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
-import org.kosta.myproject.vo.TempVO;
 import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
