@@ -5,8 +5,6 @@ import java.util.List;
 import org.kosta.myproject.mapper.MemberMapper;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.PowerVO;
-import org.kosta.myproject.vo.TempVO;
-import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

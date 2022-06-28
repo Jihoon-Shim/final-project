@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.PowerVO;
-import org.kosta.myproject.vo.TempVO;
-import org.kosta.myproject.vo.TradingBoardVO;
 
 public interface MemberService {
 	
