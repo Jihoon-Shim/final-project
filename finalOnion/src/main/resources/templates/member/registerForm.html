@@ -24,15 +24,15 @@
 <input type="submit" value="가입하기">
 </form>
 
-<div class="card-footer text-muted">
+<div class="card-footer text-muted" align = "center">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                <span class="input-group-text" id="inputGroupFileAddon01"></span>
             </div>
             <div class="custom-file">
                 <input accept="*" type="file" id="inputGroupFile01" name="file" class="custom-file-input"
                     aria-describedby="inputGroupFileAddon01" />
-                <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                <label class="custom-file-label" for="inputGroupFile01"></label>
             </div>
         </div>
         <div class="select_img">
@@ -59,7 +59,7 @@
 
 <script type="text/javascript">
  	$(document).ready(function(){
-		let checkResultId="";		
+		let checkResultId="memberId";		
 		$("#regForm").submit(function(){				
 			if(checkResultId=="memberId"){
 				alert("아이디 중복확인을 하세요");
@@ -68,7 +68,7 @@
 		});
 		$("#regForm :input[name=memberId]").keyup(function(){
 			let id=$(this).val().trim();
-			if(id.length<4 || i.length>10){
+			if(id.length<4 || id.length>10){
 				$("#idCheckView").html("아이디는 4자이상 10자 이하여야 함!").css(
 						"background","pink");
 				checkResultId="";

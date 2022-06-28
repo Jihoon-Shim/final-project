@@ -34,4 +34,7 @@ public interface MemberService {
 	void registerMemberTemp(MemberVO memberVO);
 
 	float findTempById(String id);
+
+	void deleteMember(String memberId);
+
 }

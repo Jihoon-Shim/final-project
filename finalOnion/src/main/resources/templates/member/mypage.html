@@ -8,6 +8,7 @@
 <body>
 	<div layout:fragment="main">
 		<!--/* ThymeLeaf Comment */-->
+		<th:block sec:authorize="isAuthenticated()">
 		<h2>
 			<span sec:authentication="principal.memberName"></span> 님 나눔 온도는 
 			<span th:href = "${temp}" th:text = "${temp}" style="color: red"></span> 도 입니다.
@@ -30,7 +31,7 @@
 						<tr th:each="list1 : ${list1}">
 							<td th:text="${list1Stat.count}">0000</td>
 							<td th:text="${list1.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list1.boardNo}|"></td>
-							<td th:text="${list1.boardDate}">2020.06.24</td>
+							<td th:text="${list1.boardDate}" th:onclick="|location.href='@{/profile?boardNo=}'+${list1.boardNo}|">2020.06.24</td>
 							<td th:text="${list1.tradePrice}">100</td>
 						</tr>
 					</tbody>
@@ -100,12 +101,9 @@
 				</table>
 			</div>
 
-			<script type="text/javascript">
-				
-			</script>
-
 		</div>
-
+	</th:block>
+	
 	</div>
 </body>
 </html>

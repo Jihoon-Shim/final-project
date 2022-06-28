@@ -37,4 +37,7 @@ public interface MemberMapper {
 	void registerMemberTemp(MemberVO memberVO);
 
 	float findTempById(String id);
+
+	void deleteMember(String memberId);
+
 }

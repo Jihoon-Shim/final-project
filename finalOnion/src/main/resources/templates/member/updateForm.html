@@ -17,5 +17,12 @@
 	<br>전화번호 : <input type="text" 	name="memberTel" 	th:value="${member.memberTel}" placeholder="전화번호" required="required"> 
 	<br><input type="submit" value="회원정보수정">
 </form>
+<form method="post" th:action="@{deleteMemberAction}">
+<button type="submit" >회원 탈퇴</button>
+</form>
+
+
+
+
 </div>
 </html>

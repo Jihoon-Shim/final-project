@@ -106,4 +106,10 @@ public class MemberServiceImpl implements MemberService {
 	public float findTempById(String id) {
 		return memberMapper.findTempById(id);
 	}
+
+	@Override
+	public void deleteMember(String memberId) {
+		memberMapper.deleteMember(memberId);
+	}
+
 }
