@@ -65,7 +65,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findTempById" parameterType="org.kosta.myproject.vo.TempVO" resultType="float">
 		select ROUND(TEMP , 1) from TEMP where MEMBERID = #{memberId}
 	</select>
-</mapper> 
+	<update id="deleteMember" parameterType="String">
+		update T_MEMBER set ENABLED = 0 where MEMBERID = #{value}
+	</update>
+</mapper>
 
 
 
