@@ -24,6 +24,14 @@
    c.MEMBERID = m.MEMBERID
    order by c.chatting_date
 </select>
+<select id="findChattingRoomNoById" parameterType="string" resultType="org.kosta.myproject.vo.ChattingRoomVO">
+	select chattingRoom_No, chattingRoom_title from chattingRoom
+	where chattingRoom_No in (
+	select distinct chattingRoom_No from chatting where memberId=#{value})
+</select>
+<select id="findOtherIdByChattingRoomNo" resultType="string">
+	select chattingRoom_title from chattingRoom where chattingRoom_no=#{chattingRoomNo}
+</select>
 
 
 

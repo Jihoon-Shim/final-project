@@ -14,9 +14,16 @@ CREATE TABLE T_MEMBER
     MEMBER_TEL         VARCHAR2(100)    NOT NULL, 
      PRIMARY KEY (MEMBERID)
 )
+select * from t_member
 
+select chattingRoom_No, chattingRoom_title from chattingRoom
+	where chattingRoom_No in (
+	select distinct chattingRoom_No from chatting where memberId='java')
+	
+select distinct * from (
+select memberId from chatting where chattingRoom_No=1) where memberId not in 'java'
 
-
+select chattingRoom_title from chattingRoom where chattingRoom_no=2
 -- TAG Table Create SQL
 CREATE TABLE TAG
 (
@@ -56,8 +63,9 @@ ALTER TABLE TRADING_BOARD
         CREATE SEQUENCE TRADING_BOARD_SEQ;
         DROP SEQUENCE TRADING_BOARD_SEQ;
 
-        
-        
+
+select * from chattingRoom
+select * from chatting
 -- CHATTINGROOM Table Create SQL
 CREATE TABLE CHATTINGROOM
 (

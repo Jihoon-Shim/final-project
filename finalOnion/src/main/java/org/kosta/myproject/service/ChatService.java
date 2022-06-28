@@ -17,6 +17,10 @@ public interface ChatService {
 
 	List<String> getChattingList(String myNick, String otherNick);
 
+	List<ChattingRoomVO> findChattingRoomNoById(String memberId);
+
+	String findOtherIdByChattingRoomNo(int chattingRoomNo, String memberId);
+
 
 	
 }
