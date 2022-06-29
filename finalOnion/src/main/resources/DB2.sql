@@ -223,7 +223,14 @@ ALTER TABLE REPORTINGBOARD
         DROP TABLE TAG
         DROP TABLE T_MEMBER
         
-        
+    CREATE TABLE FILE(
+    file_no         NUMBER           NOT NULL, 
+    file_name      VARCHAR2(100)    NOT NULL, 
+    content_type      VARCHAR2(100)         NOT NULL, 
+     PRIMARY KEY (file_no)
+	);
+	CREATE SEQUENCE FILE_SEQ
+
         select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
