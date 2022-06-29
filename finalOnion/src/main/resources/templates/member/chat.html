@@ -46,7 +46,7 @@ $(document).ready(function(){
     	send();
     });
 
-    const websocket = new WebSocket("ws://localhost:7777/ws/chat");
+    const websocket = new WebSocket("wss://d3myae3ux7.execute-api.ap-northeast-2.amazonaws.com/production");
 
     websocket.onmessage = onMessage;
     websocket.onopen = onOpen;

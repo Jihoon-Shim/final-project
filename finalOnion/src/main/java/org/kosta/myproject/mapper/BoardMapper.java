@@ -3,6 +3,7 @@ package org.kosta.myproject.mapper;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
 
@@ -40,5 +41,9 @@ public interface BoardMapper {
 	void updating(TradingBoardVO tradingBoardVO);
 
 	void deletePost(int boardNo);
+
+	void postpicture(FileVO fvo);
+
+	int currentseq();
 
 }

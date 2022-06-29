@@ -223,13 +223,23 @@ ALTER TABLE REPORTINGBOARD
         DROP TABLE TAG
         DROP TABLE T_MEMBER
         
-    CREATE TABLE FILE(
-    file_no         NUMBER           NOT NULL, 
-    file_name      VARCHAR2(100)    NOT NULL, 
-    content_type      VARCHAR2(100)         NOT NULL, 
+    CREATE TABLE FILEVO
+    (
+    file_no NUMBER NOT NULL, 
+    file_name VARCHAR2(100) NOT NULL, 
+    content_type VARCHAR2(100) NOT NULL, 
      PRIMARY KEY (file_no)
-	);
-	CREATE SEQUENCE FILE_SEQ
+	)
+	CREATE SEQUENCE FILE_NO_SEQ
+	DROP SEQUENCE FILE_NO_SEQ
+	
+	select FILE_NO_SEQ.currval from dual
+	select FILE_NO_SEQ.currval from dual
+	SELECT * FROM FILEVO
+	SELECT * FROM dual
+	
+	INSERT INTO FILEVO(file_no,file_name,content_type)
+		VALUES(FILE_NO_SEQ.nextval,'java','jpg')
 
         select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
 		from( 

@@ -3,6 +3,7 @@ package org.kosta.myproject.service;
 import java.util.ArrayList;
 
 import org.kosta.myproject.mapper.BoardMapper;
+import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.stereotype.Service;
@@ -109,5 +110,16 @@ public class BoardServiceImpl implements BoardService{
 	public void deletePost(int boardNo) {
 		boardmapper.deletePost(boardNo);
 		
+	}
+
+	@Override
+	public void postpicture(FileVO fvo) {
+		boardmapper.postpicture(fvo);		
+	}
+
+	@Override
+	public int currentseq() {
+		int seq = boardmapper.currentseq();
+		return seq;
 	}
 }
