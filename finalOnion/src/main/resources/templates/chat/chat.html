@@ -120,9 +120,6 @@ $(document).ready(function(){
     	var str = "<div class='col-6' align='left'>";
         str += "<div class='alert alert-warning'>";
         str += "<a href='/board/postdetail?boardNo="+boardNo+"'>제목 참조 : " + title + "</a>";
-       
-        
-        //str += "<a th:href='@{/board/postdetail?boardNo="+boardNo+"}'>제목 참조 : " + title + "</a>";
         str += "</div></div>";
         $("#msgArea").append(str);
 	});
