@@ -23,11 +23,10 @@ select chattingRoom_No, chattingRoom_title from chattingRoom
 	where chattingRoom_No in (
 	select distinct chattingRoom_No from chatting where memberId='java')
 	
-select chattingRoom_No, chatting from chatting where memberId ='javaking';
-	
 select distinct * from (
 select memberId from chatting where chattingRoom_No=1) where memberId not in 'java'
 
+<<<<<<< HEAD
 select * from TRADING_BOARD where memberId = 'java' and trade_status = 1;
 
 select distinct memberId from (
@@ -41,6 +40,9 @@ select chatting_no, chatting from chatting
 	) where rownum <=1
 	
 	
+=======
+select chattingRoom_title from chattingRoom where chattingRoom_no=2
+>>>>>>> branch 'main' of https://github.com/Jihoon-Shim/final-project.git
 -- TAG Table Create SQL
 CREATE TABLE TAG
 (
@@ -237,24 +239,7 @@ ALTER TABLE REPORTINGBOARD
         DROP TABLE TAG
         DROP TABLE T_MEMBER
         
-    CREATE TABLE FILEVO
-    (
-    file_no NUMBER NOT NULL, 
-    file_name VARCHAR2(100) NOT NULL, 
-    content_type VARCHAR2(100) NOT NULL, 
-     PRIMARY KEY (file_no)
-	)
-	CREATE SEQUENCE FILE_NO_SEQ
-	DROP SEQUENCE FILE_NO_SEQ
-	
-	select FILE_NO_SEQ.currval from dual
-	select FILE_NO_SEQ.currval from dual
-	SELECT * FROM FILEVO
-	SELECT * FROM dual
-	
-	INSERT INTO FILEVO(file_no,file_name,content_type)
-		VALUES(FILE_NO_SEQ.nextval,'java','jpg')
-
+        
         select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
