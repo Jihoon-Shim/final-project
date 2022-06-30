@@ -1,11 +1,21 @@
 package org.kosta.myproject.controller;
 
+import java.util.ArrayList;
+
+import org.kosta.myproject.service.BoardService;
+import org.kosta.myproject.vo.MemberVO;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
+	private final BoardService boardService;
 	/* 
 	 * @Secure 어노테이션: 인가 처리하는 어노테이션 - 권한이 부여된 사람들만 서비스를 제공받도록 설정한다 
 	 * @Secured("ROLE_ADMIN") -> ROLE_ADMIN 권한이 있는 접속자만 서비스를 받을 수 있다 
@@ -26,8 +36,51 @@ public class AdminController {
 	 */
 	@Secured("ROLE_ADMIN")
 	@RequestMapping("admin/main")
-	public String adminMain() {
+	public String adminMain(Model model) {
 		// 구현내용
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		ArrayList<MemberVO> blackList = new ArrayList<MemberVO>();
+		list = boardService.findAllList();
+		blackList = boardService.findAllBlackList();
+		
+		model.addAttribute("list",list);
+		model.addAttribute("blackList",blackList);
 		return "admin/main";
 	}
+	@Secured("ROLE_ADMIN")
+	@PostMapping("blackListForm")
+	  public String blackList(String memberId) {
+		boardService.blackListMember(memberId);
+		return "redirect:/blackList2";
+	  }
+	@Secured("ROLE_ADMIN")
+	@RequestMapping("/blackList2")
+	  public String blackList2(Model model) {
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		ArrayList<MemberVO> blackList = new ArrayList<MemberVO>();
+		list = boardService.findAllList();
+		blackList = boardService.findAllBlackList();
+		
+		model.addAttribute("list",list);
+		model.addAttribute("blackList",blackList);
+		return "admin/main";
+	  }
+	@Secured("ROLE_ADMIN")
+	@PostMapping("restoreListForm")
+	  public String restoreList(String memberId) { 
+		boardService.restoreMember(memberId);
+		 return "redirect:/restoreList2";
+	  }
+	@Secured("ROLE_ADMIN")
+	@RequestMapping("/restoreList2")
+	  public String restoreList2(Model model) {
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		ArrayList<MemberVO> blackList = new ArrayList<MemberVO>();
+		list = boardService.findAllList();
+		blackList = boardService.findAllBlackList();
+		
+		model.addAttribute("list",list);
+		model.addAttribute("blackList",blackList);
+		return "admin/main";
+	  }
 }

@@ -150,6 +150,29 @@
 	<delete id="deletePost" parameterType="int">
 	DELETE FROM TRADING_BOARD WHERE BOARD_NO=#{value}
 	</delete>
+	<select id="findAllList" resultType="org.kosta.myproject.vo.MemberVO">
+		select t.MEMBERID , t.MEMBER_NAME , t.MEMBER_ADDRESS , t.MEMBER_NICKNAME , t.MEMBER_TEL
+		from T_MEMBER t
+		inner join AUTHORITY a
+		on t.MEMBERID = a.MEMBERID
+		where a.AUTHORITY = 'ROLE_MEMBER'
+		and t.ENABLED = 1
+	</select>
+	<select id="findAllBlackList" resultType="org.kosta.myproject.vo.MemberVO">
+		select MEMBERID , MEMBER_NAME , MEMBER_ADDRESS , MEMBER_NICKNAME , MEMBER_TEL
+		from T_MEMBER
+		where ENABLED = 0
+	</select>
+	<update id="blackListMember" parameterType="org.kosta.myproject.vo.MemberVO">
+		UPDATE T_MEMBER 
+		SET 	ENABLED = 0
+		WHERE MEMBERID = #{memberId}
+	</update>
+	<update id="restoreMember" parameterType="org.kosta.myproject.vo.MemberVO">
+		UPDATE T_MEMBER 
+		SET 	ENABLED = 1
+		WHERE MEMBERID = #{memberId}
+	</update>
 	<insert id="postpicture" parameterType="org.kosta.myproject.vo.FileVO">
 		INSERT INTO FILEVO(file_no,file_name,content_type)
 		VALUES(FILE_NO_SEQ.nextval,#{fileName},#{contentType})
