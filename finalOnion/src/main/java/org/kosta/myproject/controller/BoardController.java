@@ -1,19 +1,25 @@
 package org.kosta.myproject.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.myproject.service.BoardService;
+import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.RequiredArgsConstructor;
 
@@ -141,9 +147,20 @@ public class BoardController {
 		return "board/salelist";
 
 	}
-	
+	@Transactional
 	@PostMapping("/board/PostBuy")	
-	public String PostBuy(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO) throws Exception {
+	public String PostBuy(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO,@RequestParam(value="file") MultipartFile[] file) 
+			throws IOException , IllegalStateException {		
+			if(!file[0].isEmpty()) {
+				FileVO fvo = new FileVO();
+				fvo.setContentType(file[0].getContentType());
+				fvo.setFileName(file[0].getOriginalFilename());
+				boardService.postpicture(fvo);
+				int seq = boardService.currentseq();
+				System.out.println(seq);
+				File newFileName =new File(File.separator+"board"+File.separator+seq+"_"+fvo.getFileName());
+				file[0].transferTo(newFileName);
+			}
 		tradingBoardVO.setMemberVO(memberVO);
 		boardService.posting(tradingBoardVO);
 		return "board/PostBuy";

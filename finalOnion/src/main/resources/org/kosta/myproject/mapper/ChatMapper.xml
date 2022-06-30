@@ -24,10 +24,10 @@
    c.MEMBERID = m.MEMBERID
    order by c.chatting_date
 </select>
-<select id="findChattingRoomNoById" parameterType="string" resultType="org.kosta.myproject.vo.ChattingRoomVO">
+<select id="findChattingRoomVOListByNickname" parameterType="string" resultType="org.kosta.myproject.vo.ChattingRoomVO">
 	select chattingRoom_No, chattingRoom_title from chattingRoom
 	where chattingRoom_No in (
-	select distinct chattingRoom_No from chatting where memberId=#{value})
+	select distinct chattingRoom_No from CHATTINGROOM where chattingRoom_title like '%'||#{value}||'%')
 </select>
 <select id="findOtherIdByChattingRoomNo" resultType="string">
 	select chattingRoom_title from chattingRoom where chattingRoom_no=#{chattingRoomNo}
