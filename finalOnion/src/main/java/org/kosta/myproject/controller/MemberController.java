@@ -175,7 +175,6 @@ public class MemberController {
 		return "redirect:index.html";
 	  }
 	 
-	
 	@GetMapping("updateResult")
 	public String updateResult(){
 		return "member/update_result";
