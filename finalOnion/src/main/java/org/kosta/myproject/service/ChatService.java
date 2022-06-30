@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.kosta.myproject.vo.ChattingRoomVO;
 import org.kosta.myproject.vo.MemberVO;
+import org.kosta.myproject.vo.TradingBoardVO;
 
 public interface ChatService {
 
@@ -19,7 +20,11 @@ public interface ChatService {
 
 	List<ChattingRoomVO> findChattingRoomVOListByNickname(String memberNickname);
 
-	String findOtherIdByChattingRoomNo(int chattingRoomNo, String memberId);
+	List<TradingBoardVO> getAllPostListNotSoldOutById(String otherId);
+
+	String getLastMessage(String otherMemberId);
+
+	String findChattingTitleByChattingNo(int chattingRoomNo);
 
 
 	

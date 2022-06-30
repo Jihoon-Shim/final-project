@@ -16,6 +16,9 @@ CREATE TABLE T_MEMBER
 )
 select * from t_member
 
+select * from chattingRoom
+select * from chatting
+
 select chattingRoom_No, chattingRoom_title from chattingRoom
 	where chattingRoom_No in (
 	select distinct chattingRoom_No from chatting where memberId='java')
@@ -25,9 +28,19 @@ select chattingRoom_No, chatting from chatting where memberId ='javaking';
 select distinct * from (
 select memberId from chatting where chattingRoom_No=1) where memberId not in 'java'
 
-select chattingRoom_title from chattingRoom where chattingRoom_no=22
+select * from TRADING_BOARD where memberId = 'java' and trade_status = 1;
 
-select chattingRoom_no from CHATTINGROOM where chattingRoom_title like '%아이유%'
+select distinct memberId from (
+	select distinct memberId from chatting where chattingRoom_title=4 )
+where not memberId = 'java'
+
+select * from (
+select chatting_no, chatting from chatting
+	where chattingRoom_No in (
+	select distinct chattingRoom_No from chatting where memberId='java') 
+	) where rownum <=1
+	
+	
 -- TAG Table Create SQL
 CREATE TABLE TAG
 (
@@ -67,9 +80,6 @@ ALTER TABLE TRADING_BOARD
         CREATE SEQUENCE TRADING_BOARD_SEQ;
         DROP SEQUENCE TRADING_BOARD_SEQ;
 
-
-select * from chattingRoom
-select * from chatting
 -- CHATTINGROOM Table Create SQL
 CREATE TABLE CHATTINGROOM
 (
