@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 public class ChatController{
 	private final ChatService chatService;
 	
-	@RequestMapping("profile")
+	@RequestMapping("goChat")
 	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherNick, Model model) {
 		String myNick = myMemberVO.getMemberNickname();
 		ChattingRoomVO chattingRoomVO = chatService.findChattingRoom(myNick, otherNick);
@@ -42,7 +42,7 @@ public class ChatController{
 	
 	@RequestMapping("/chattingRoomList")
 	public String chattingRoom(@AuthenticationPrincipal MemberVO memberVO, Model model) {
-		List<ChattingRoomVO> chattingRoomVOList = chatService.findChattingRoomNoById(memberVO.getMemberId());
+		List<ChattingRoomVO> chattingRoomVOList = chatService.findChattingRoomVOListByNickname(memberVO.getMemberNickname());
 		List<ChattingVO> chattingVOList = new ArrayList<ChattingVO>();
 		ChattingVO chattingVO = null;
 		for(ChattingRoomVO chattingRoomVO : chattingRoomVOList) {
