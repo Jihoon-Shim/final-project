@@ -19,7 +19,7 @@ public interface ChatMapper {
 
 	List<String> getChattingList(String myNick, String otherNick);
 
-	List<ChattingRoomVO> findChattingRoomNoById(String memberId);
+	List<ChattingRoomVO> findChattingRoomVOListByNickname(String memberNickname);
 
 	String findOtherIdByChattingRoomNo(int chattingRoomNo, String memberId);
 

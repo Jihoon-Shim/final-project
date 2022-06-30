@@ -4,27 +4,29 @@
 	layout:decorate="~{layouts/layout}"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	>
-	
 <head>
 <title>채팅</title>
 </head>
     <th:block layout:fragment="main"> 
         <div class="container">
             <div class="col-6">
-                <label><b>[ 채팅방 ]</b></label>
+                <label><b >[ 채팅방 ]</b></label>
             </div>
             <div>
                 <div id="msgArea" class="col" style="word-wrap: break-word; overflow-x:hidden; width:500px; height:400px">
-                <div class='col-6' th:each="chat:${chattingList}" >
-                <div class="alert alert-secondary">
+               <th:block th:each="chat:${chattingList}">
+                <div class='col-6'>
+                <div class="alert alert-info">
                 	<b th:text="|${chat.MEMBER_NICKNAME} : ${chat.CHATTING}|"></b>
-                </div></div></div> 
+                </div></div>
+                </th:block>
+                </div>
                 <div class="col-6">
                     <div class="input-group mb-3">
                       	 <input type="text" id="msg" name="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
-                         	<div class="input-group-append">
+                         	
                             <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
-                         	</div>
+                         	
                     </div>
                 </div>
             </div>
@@ -32,20 +34,13 @@
        
 <script type="text/javascript" >
 $(document).ready(function(){
-
     const username = "[[${#authentication.principal.memberNickname}]]";
     let msg = document.getElementById("msg");
-    
-
-    $("#disconn").on("click", (e) => {
-        disconnect();
-    })
     
     $("#button-send").on("click", (e) => {
     	recordMsg();
     	send();
     });
-
     const websocket = new WebSocket("wss://d3myae3ux7.execute-api.ap-northeast-2.amazonaws.com/production");
 
     websocket.onmessage = onMessage;
@@ -82,14 +77,14 @@ $(document).ready(function(){
         let focus = document.querySelector("#msgArea");
         //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
         if(sessionId == cur_session){
-            var str = "<div class='col-6'>";
-            str += "<div class='alert alert-secondary'>";
+            var str = "<div class='col-6' align='right'>";
+            str += "<div class='alert alert-info'>"; 
             str += "<b>" + sessionId + " : " + message + "</b>";
             str += "</div></div>";
             $("#msgArea").append(str);
         }
         else{
-            var str = "<div class='col-6'>";
+            var str = "<div class='col-6' align='left'>";
             str += "<div class='alert alert-warning'>";
             str += "<b>" + sessionId + " : " + message + "</b>";
             str += "</div></div>";
@@ -115,7 +110,6 @@ $(document).ready(function(){
     	});
     }
 })
-
 </script>
 </th:block>
 </html>
