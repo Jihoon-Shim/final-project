@@ -3,6 +3,9 @@ package org.kosta.myproject.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.kosta.myproject.service.ChatService;
 import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.ChattingRoomVO;
@@ -24,7 +27,7 @@ public class ChatController{
 	private final MemberService memberService;
 	
 	@RequestMapping("/goChat")
-	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherId, Model model) {
+	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherId, Model model, HttpServletRequest request) {
 		String myId = myMemberVO.getMemberId();
 		ChattingRoomVO chattingRoomVO = new ChattingRoomVO();
 		chattingRoomVO = chatService.findChattingRoom(myId, otherId);
@@ -39,6 +42,12 @@ public class ChatController{
 		List<TradingBoardVO> postVOList = chatService.getAllPostListNotSoldOutById(otherId);
 		model.addAttribute("postVOList", postVOList);
 		model.addAttribute("chattingList", chattingList);
+		//채팅 알림
+		if(myMemberVO!=null) {
+			int reception = chatService.isReadChattingRoom(myMemberVO.getMemberId());
+			HttpSession session = request.getSession();
+			session.setAttribute("reception", reception);
+		}
 		return "chat/chat";
 	}
 	@RequestMapping("/chatRecord")
@@ -78,10 +87,16 @@ public class ChatController{
 			chattingVOList.add(chattingVO);
 		}
 		
+		
 		model.addAttribute("chattingVOList",chattingVOList);
 		return "chat/chattingList";
 	}
-	
+	@RequestMapping("loginGo")
+	public String loginGo(String id, String password, Model model) {
+		model.addAttribute("id", id);
+		model.addAttribute("password", password);
+		return "/login";
+	}
 	
 }
 

@@ -30,6 +30,8 @@ public interface ChatService {
 
 	int isReadOtherChat(String myId, String otherMemberId);
 
+	int isReadChattingRoom(String myId);
+
 
 	
 }

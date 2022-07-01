@@ -1,18 +1,26 @@
 package org.kosta.myproject.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.kosta.myproject.service.ChatService;
+import org.kosta.myproject.vo.MemberVO;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
+@RequiredArgsConstructor
 public class HomeController {
-	
+	private final ChatService chatService;
 	@RequestMapping(value = {"/home","/"})
-	public String home(Authentication authentication,Model model){//Authentication : Spring Security의 인증객체 
+	public String home(Authentication authentication, @AuthenticationPrincipal MemberVO memberVO, Model model, HttpServletRequest request){//Authentication : Spring Security의 인증객체 
 		//Spring Security Authentication 인증객체는 아래처럼 SecurityContext 에 저장되어 있다 
 		//log.info("home "+SecurityContextHolder.getContext().getAuthentication().getPrincipal());	
 		//Principal(사전적 의미:본인 ) 객체는 인증된 회원 정보 객체를 말한다
@@ -21,7 +29,15 @@ public class HomeController {
 		  log.info("Home: 인증받은 사용자 {} ",authentication.getPrincipal());
 		else
 			log.info("Home: 인증받지 않은 사용자");
-		model.addAttribute("message", "SpringBoot Security Thymeleaf");
+		model.addAttribute("message", "SpringBoot Security Thymeleaf");	
+		
+		//채팅 알림
+		if(memberVO!=null) {
+			int reception = chatService.isReadChattingRoom(memberVO.getMemberId());
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("reception", reception);
+		}
 		return "index";
 	}
 	/*	

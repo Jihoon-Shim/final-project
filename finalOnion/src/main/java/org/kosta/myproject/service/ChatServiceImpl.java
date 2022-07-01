@@ -59,6 +59,10 @@ public class ChatServiceImpl implements ChatService {
 	public int isReadOtherChat(String myId, String otherMemberId) {
 		return chatMapper.isReadOtherChat(myId, otherMemberId);
 	}
+	@Override
+	public int isReadChattingRoom(String myId) {
+		return chatMapper.isReadChattingRoom(myId);
+	}
 
 	
 	
