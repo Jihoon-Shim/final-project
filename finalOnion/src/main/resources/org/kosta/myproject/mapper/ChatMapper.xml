@@ -35,14 +35,34 @@
 <select id="getLastMessage" parameterType="string" resultType="string">
 	<![CDATA[ 
 	select * from (
-	select chatting from chatting where chattingRoom_No in (
-	select distinct chattingRoom_No from chatting where memberId=#{value})) where rownum <=1
+	select chatting from chatting 
+	where chattingRoom_No in (
+	select distinct c.chattingRoom_No from chatting c, chattingRoom r where memberId= #{otherMemberId}
+	and chattingRoom_title like '%'||#{myId}||'%' and chattingRoom_title like '%'||#{otherMemberId}||'%'
+	and c.chattingRoom_no = r.chattingRoom_no)
+	order by chatting_no desc
+	) where rownum <=1
 	]]>
 </select>
 <select id="findChattingTitleByChattingNo" parameterType="int" resultType="string">
 	select chattingRoom_title from chattingRoom where chattingRoom_no = #{value}
 </select>
-
+<update id="readOtherChat" parameterType="string">
+	update (
+		select reception from (
+			select memberId, reception
+			FROM chatting
+			where CHATTINGROOM_NO = (
+			   select CHATTINGROOM_NO from CHATTINGROOM where
+			   chattingRoom_title like '%'||#{myId}||'%' and chattingRoom_title like '%'||#{otherId}||'%')
+		) where memberId= #{otherId} and reception = 1)
+	set reception = 0
+</update>
+<select id="isReadOtherChat" parameterType="string" resultType="int">
+	select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingRoom r 
+	where memberId= #{otherMemberId} and chattingRoom_title like '%'||#{myId}||'%' and chattingRoom_title like '%'||#{otherMemberId}||'%' 
+	and c.chattingRoom_no = r.chattingRoom_no and reception = 1
+</select>
 
 
 </mapper>

@@ -24,9 +24,13 @@ public interface ChatMapper {
 
 	List<TradingBoardVO> getAllPostListNotSoldOutById(String otherId);
 
-	String getLastMessage(String otherMemberId);
+	String getLastMessage(String myId, String otherMemberId);
 
 	String findChattingTitleByChattingNo(int chattingRoomNo);
+
+	void readOtherChat(String myId, String otherId);
+
+	int isReadOtherChat(String myId, String otherMemberId);
 
 
 }

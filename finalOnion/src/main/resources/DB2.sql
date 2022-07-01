@@ -26,7 +26,6 @@ select chattingRoom_No, chattingRoom_title from chattingRoom
 select distinct * from (
 select memberId from chatting where chattingRoom_No=1) where memberId not in 'java'
 
-<<<<<<< HEAD
 select * from TRADING_BOARD where memberId = 'java' and trade_status = 1;
 
 select distinct memberId from (
@@ -34,15 +33,29 @@ select distinct memberId from (
 where not memberId = 'java'
 
 select * from (
-select chatting_no, chatting from chatting
+select chatting from chatting 
 	where chattingRoom_No in (
-	select distinct chattingRoom_No from chatting where memberId='java') 
+	select distinct c.chattingRoom_No from chatting c, chattingRoom r where memberId='java'
+	and chattingRoom_title like '%java%' and chattingRoom_title like '%spring%'
+	and c.chattingRoom_no = r.chattingRoom_no)
+	order by chatting_no desc
 	) where rownum <=1
-	
-	
-=======
-select chattingRoom_title from chattingRoom where chattingRoom_no=2
->>>>>>> branch 'main' of https://github.com/Jihoon-Shim/final-project.git
+update chatting set reception = 1
+update (
+select reception from (
+select memberId, reception
+FROM chatting
+where CHATTINGROOM_NO = (
+   select CHATTINGROOM_NO from CHATTINGROOM where
+   CHATTINGROOM_TITLE LIKE '%java%' and  CHATTINGROOM_TITLE like '%bear%'))
+   where memberId= 'java' and reception = 1)
+set reception = 0
+
+
+select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingRoom r 
+where memberId= 'java' and chattingRoom_title = 'java and bear' 
+and c.chattingRoom_no = r.chattingRoom_no and reception = 1
+
 -- TAG Table Create SQL
 CREATE TABLE TAG
 (

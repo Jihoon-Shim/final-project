@@ -33,6 +33,8 @@ public class ChatController{
 			chattingRoomVO = chatService.findChattingRoom(myId, otherId);
 		}
 		model.addAttribute("chattingRoomVO", chattingRoomVO);
+		//상대 채팅 읽음 처리
+		chatService.readOtherChat(myId,otherId);
 		List<String> chattingList = chatService.getChattingList(myId, otherId);
 		List<TradingBoardVO> postVOList = chatService.getAllPostListNotSoldOutById(otherId);
 		model.addAttribute("postVOList", postVOList);
@@ -48,6 +50,7 @@ public class ChatController{
 	
 	@RequestMapping("/chattingRoomList")
 	public String chattingRoom(@AuthenticationPrincipal MemberVO memberVO, Model model) {
+		String myId = memberVO.getMemberId();
 		List<ChattingRoomVO> chattingRoomVOList = chatService.findChattingRoomVOListByNickname(memberVO.getMemberId());
 		List<ChattingVO> chattingVOList = new ArrayList<ChattingVO>();
 		ChattingVO chattingVO = null;
@@ -61,13 +64,20 @@ public class ChatController{
 			otherMemberVO = new MemberVO();
 			otherMemberVO = memberService.findMemberById(otherMemberId);
 			chattingVO.setMemberVO(otherMemberVO);
-			String lastMessage = chatService.getLastMessage(otherMemberId);
+			//마지막 채팅
+			String lastMessage = chatService.getLastMessage(myId, otherMemberId);
 			if(lastMessage==null) {
 				lastMessage="상대방의 채팅이 없습니다.";
 			}
 			chattingVO.setChatting(lastMessage);
+			//상대 채팅 읽음처리 확인
+			int reception = chatService.isReadOtherChat(myId, otherMemberId);
+			
+			chattingVO.setReception(reception);
+			
 			chattingVOList.add(chattingVO);
 		}
+		
 		model.addAttribute("chattingVOList",chattingVOList);
 		return "chat/chattingList";
 	}

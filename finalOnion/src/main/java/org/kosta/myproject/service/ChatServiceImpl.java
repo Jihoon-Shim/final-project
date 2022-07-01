@@ -44,12 +44,20 @@ public class ChatServiceImpl implements ChatService {
 		return chatMapper.getAllPostListNotSoldOutById(otherId);
 	}
 	@Override
-	public String getLastMessage(String otherMemberId) {
-		return chatMapper.getLastMessage(otherMemberId);
+	public String getLastMessage(String myId, String otherMemberId) {
+		return chatMapper.getLastMessage(myId, otherMemberId);
 	}
 	@Override
 	public String findChattingTitleByChattingNo(int chattingRoomNo) {
 		return chatMapper.findChattingTitleByChattingNo(chattingRoomNo);
+	}
+	@Override
+	public void readOtherChat(String myId, String otherId) {
+		chatMapper.readOtherChat(myId, otherId);
+	}
+	@Override
+	public int isReadOtherChat(String myId, String otherMemberId) {
+		return chatMapper.isReadOtherChat(myId, otherMemberId);
 	}
 
 	
