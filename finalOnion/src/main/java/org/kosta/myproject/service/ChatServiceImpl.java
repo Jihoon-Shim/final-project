@@ -5,6 +5,7 @@ import java.util.List;
 import org.kosta.myproject.mapper.ChatMapper;
 import org.kosta.myproject.vo.ChattingRoomVO;
 import org.kosta.myproject.vo.MemberVO;
+import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -39,8 +40,16 @@ public class ChatServiceImpl implements ChatService {
 		return chatMapper.findChattingRoomVOListByNickname(memberNickname);
 	}
 	@Override
-	public String findOtherIdByChattingRoomNo(int chattingRoomNo, String memberId) {
-		return chatMapper.findOtherIdByChattingRoomNo(chattingRoomNo, memberId);
+	public List<TradingBoardVO> getAllPostListNotSoldOutById(String otherId) {
+		return chatMapper.getAllPostListNotSoldOutById(otherId);
+	}
+	@Override
+	public String getLastMessage(String otherMemberId) {
+		return chatMapper.getLastMessage(otherMemberId);
+	}
+	@Override
+	public String findChattingTitleByChattingNo(int chattingRoomNo) {
+		return chatMapper.findChattingTitleByChattingNo(chattingRoomNo);
 	}
 
 	

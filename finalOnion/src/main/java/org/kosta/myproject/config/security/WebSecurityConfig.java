@@ -7,9 +7,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 //스프링 시큐리티 설정 클래스 
 @Configuration
 @EnableWebSecurity
+@EnableWebSocket
 //@EnableGlobalMethodSecurity 어노테이션은 @Secured @PreAuthorize, @PostAuthorize 애노테이션을 사용하여 인증,인가 처리를 하고 싶을때 사용하는 설정
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfig  {

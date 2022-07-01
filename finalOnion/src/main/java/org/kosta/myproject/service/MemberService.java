@@ -35,4 +35,5 @@ public interface MemberService {
 
 	void deleteMember(String memberId);
 
+
 }

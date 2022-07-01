@@ -9,27 +9,33 @@
 </head>
     <th:block layout:fragment="main"> 
         <div class="container">
-            <div class="col-6">
-                <label><b >[ 채팅방 ]</b></label>
-            </div>
-            <div>
-                <div id="msgArea" class="col" style="word-wrap: break-word; overflow-x:hidden; width:500px; height:400px">
-               <th:block th:each="chat:${chattingList}">
+            <div class="row"><label></label></div>
+             <div class="row">
+                <div id="msgArea" class="col-sm-6" style="word-wrap: break-word; overflow-x:hidden; width:500px; height:450px">
+             <th:block th:each="chat:${chattingList}">
                 <div class='col-6'>
                 <div class="alert alert-info">
                 	<b th:text="|${chat.MEMBER_NICKNAME} : ${chat.CHATTING}|"></b>
                 </div></div>
                 </th:block>
                 </div>
-                <div class="col-6">
-                    <div class="input-group mb-3">
+                <div class="col-sm-3 offset-sm-1">
+             	<select id ="title" >
+             		<option value="">상대방의 글 제목 불러오기</option>
+             		<th:block th:each="postVO:${postVOList}">
+             		<option th:value="${postVO.boardNo}" th:text="${postVO.boardTitle}"></option>
+             		</th:block>
+             	</select>
+             </div>
+             </div>
+                <div class="row">
+                    <div class="col-sm-6">
                       	 <input type="text" id="msg" name="msg" class="form-control" aria-label="Recipient's username" aria-describedby="button-addon2">
-                         	
-                            <button class="btn btn-outline-secondary" type="button" id="button-send">전송</button>
-                         	
+                    </div>
+                    <div class="col-sm-1"> <button class="btn btn-outline-secondary" type="button" id="button-send">보내기</button>
                     </div>
                 </div>
-            </div>
+            <div class="row"><label></label></div>
         </div>
        
 <script type="text/javascript" >
@@ -41,7 +47,7 @@ $(document).ready(function(){
     	recordMsg();
     	send();
     });
-    const websocket = new WebSocket("wss://d3myae3ux7.execute-api.ap-northeast-2.amazonaws.com/production");
+    const websocket = new WebSocket("ws://localhost:7777/ws/chat");
 
     websocket.onmessage = onMessage;
     websocket.onopen = onOpen;
@@ -52,15 +58,13 @@ $(document).ready(function(){
         msg.value = '';
     }
     
-    //채팅창에서 나갔을 때
-    function onClose(evt) {
-        var str = username + ": 님이 방을 나가셨습니다.";
-        websocket.send(str);
-    }
-    
     //채팅창에 들어왔을 때
     function onOpen(evt) {
         var str = username + ": 님이 입장하셨습니다.";
+        websocket.send(str);
+    }
+    function onClose(evt) {
+        var str = username + ": 님이 나가셨습니다.";
         websocket.send(str);
     }
 
@@ -96,6 +100,7 @@ $(document).ready(function(){
     	let chattingRoomNo = "[[${chattingRoomVO.chattingRoomNo}]]";
     	let chattingRoomTitle = "[[${chattingRoomVO.chattingRoomTitle}]]";
     	let chattingRoomDate = "[[${chattingRoomVO.chattingRoomDate}]]";
+    	
     	$.ajax({
     		type:"get",
     		url:"chatRecord",
@@ -109,6 +114,15 @@ $(document).ready(function(){
     		}
     	});
     }
+    $("#title").change(function() {
+    	var title = $('#title option:selected').text();
+    	let boardNo = $(this).val();
+    	var str = "<div class='col-6' align='left'>";
+        str += "<div class='alert alert-warning'>";
+        str += "<a href='/board/postdetail?boardNo="+boardNo+"'>제목 참조 : " + title + "</a>";
+        str += "</div></div>";
+        $("#msgArea").append(str);
+	});
 })
 </script>
 </th:block>

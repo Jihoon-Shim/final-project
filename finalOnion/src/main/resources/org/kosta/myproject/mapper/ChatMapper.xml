@@ -29,11 +29,19 @@
 	where chattingRoom_No in (
 	select distinct chattingRoom_No from CHATTINGROOM where chattingRoom_title like '%'||#{value}||'%')
 </select>
-<select id="findOtherIdByChattingRoomNo" resultType="string">
-	select chattingRoom_title from chattingRoom where chattingRoom_no=#{chattingRoomNo}
+<select id="getAllPostListNotSoldOutById" parameterType="string" resultType="org.kosta.myproject.vo.TradingBoardVO">
+	select * from TRADING_BOARD where memberId = #{value} and trade_status = 1
 </select>
-
-
+<select id="getLastMessage" parameterType="string" resultType="string">
+	<![CDATA[ 
+	select * from (
+	select chatting from chatting where chattingRoom_No in (
+	select distinct chattingRoom_No from chatting where memberId=#{value})) where rownum <=1
+	]]>
+</select>
+<select id="findChattingTitleByChattingNo" parameterType="int" resultType="string">
+	select chattingRoom_title from chattingRoom where chattingRoom_no = #{value}
+</select>
 
 
 

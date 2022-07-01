@@ -2,6 +2,8 @@ package org.kosta.myproject.service;
 
 import java.util.ArrayList;
 
+import org.kosta.myproject.vo.MemberVO;
+import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
 
@@ -37,4 +39,16 @@ public interface BoardService {
 	void updating(TradingBoardVO tradingBoardVO);
 
 	void deletePost(int boardNo);
+
+	ArrayList<MemberVO> findAllList();
+
+	ArrayList<MemberVO> findAllBlackList();
+
+	void blackListMember(String memberId);
+
+	void restoreMember(String memberId);
+
+	void postpicture(FileVO fvo);
+
+	int currentseq();
 }

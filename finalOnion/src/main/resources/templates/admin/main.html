@@ -1,13 +1,88 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-  layout:decorate="~{layouts/layout}" 
-  xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
->
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <title>관리자메인</title>
 </head>
 <div layout:fragment="main">
-<span sec:authentication="principal.name">강하늘</span>관리자님 Admin main입니다<br>
+	<th:block sec:authorize="isAuthenticated()">
+		<h3><span sec:authentication="principal.memberName" style = "color:steelblue">강하늘</span> 관리자님 Admin main 입니다<br>
+		이 페이지는 블랙 리스트 관리 페이지 입니다.</h3>
+	</th:block>
+	<form method = "post" th:action = "@{/blackListForm}"  id = "blackListForm" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">
+		<input type="text" size="20" name = "memberId" placeholder="블랙리스트 아이디 입력" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">
+		<button type="submit" id = "blackListAction" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">블랙 리스트 지정</button>
+	</form>
+	<form method = "post" th:action = "@{/restoreListForm}" id = "restoreListForm" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">
+		<input type="text" size="20" name = "memberId" placeholder="계정 복귀 아이디 입력" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">
+		<button type="submit" id = "restoreListAction" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">복귀 아이디 지정</button>
+	</form>
+	<script type="text/javascript">
+	$(function() {
+		$("#blackListAction").click(function() {
+			$("#blackListForm").submit();
+		});
+		$("#restoreListAction").click(function() {
+			$("#restoreListForm").submit();
+		});
+	});
+	
+	</script>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6">
+				<h2>전체 회원 리스트</h2>
+				<table class="table table-bordered">
+					<thead>
+						<tr style="background-color: black">
+							<th style="color: white">NO</th>
+							<th style="color: white">ID</th>
+							<th style="color: white">Name</th>
+							<th style="color: white">NickName</th>
+							<th style="color: white">Address</th>
+							<th style="color: white">Telephone</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="list : ${list}">
+							<td th:text="${listStat.count}">0000</td>
+							<td th:text="${list.memberId}">아이디</td>
+							<td th:text="${list.memberName}">이름</td>
+							<td th:text="${list.memberNickname}">닉네임</td>
+							<td th:text="${list.memberAddress}">주소</td>
+							<td th:text="${list.memberTel}">전화번호</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="col-sm-6">
+				<h2>블랙 리스트</h2>
+				<table class="table table-bordered">
+					<thead>
+						<tr style="background-color: black">
+							<th style="color: white">NO</th>
+							<th style="color: white">ID</th>
+							<th style="color: white">Name</th>
+							<th style="color: white">NickName</th>
+							<th style="color: white">Address</th>
+							<th style="color: white">Telephone</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="blackList : ${blackList}">
+							<td th:text="${blackListStat.count}">0000</td>
+							<td th:text="${blackList.memberId}">아이디</td>
+							<td th:text="${blackList.memberName}">이름</td>
+							<td th:text="${blackList.memberNickname}">닉네임</td>
+							<td th:text="${blackList.memberAddress}">주소</td>
+							<td th:text="${blackList.memberTel}">전화번호</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </div>
 </html>

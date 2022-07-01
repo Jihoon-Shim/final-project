@@ -3,6 +3,8 @@ package org.kosta.myproject.service;
 import java.util.ArrayList;
 
 import org.kosta.myproject.mapper.BoardMapper;
+import org.kosta.myproject.vo.MemberVO;
+import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.stereotype.Service;
@@ -109,5 +111,40 @@ public class BoardServiceImpl implements BoardService{
 	public void deletePost(int boardNo) {
 		boardmapper.deletePost(boardNo);
 		
+	}
+	
+	@Override
+	public ArrayList<MemberVO> findAllList() {
+		ArrayList<MemberVO> list = new ArrayList<MemberVO>();
+		list = boardmapper.findAllList();
+		return list;
+	}
+
+	@Override
+	public ArrayList<MemberVO> findAllBlackList() {
+		ArrayList<MemberVO> blackList = new ArrayList<MemberVO>();
+		blackList = boardmapper.findAllBlackList();
+		return blackList;
+	}
+
+	@Override
+	public void blackListMember(String memberId) {
+		boardmapper.blackListMember(memberId);
+	}
+
+	@Override
+	public void restoreMember(String memberId) {
+		boardmapper.restoreMember(memberId);
+	}
+
+	@Override
+	public void postpicture(FileVO fvo) {
+		boardmapper.postpicture(fvo);		
+	}
+
+	@Override
+	public int currentseq() {
+		int seq = boardmapper.currentseq();
+		return seq;
 	}
 }

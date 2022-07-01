@@ -17,8 +17,8 @@
       <tr th:each="chattingVO:${chattingVOList}" >
 	    <td th:text="${chattingVO.memberVO.memberNickname}">상대방닉네임</td>
 	    <td style="cursor:pointer;">
-	    	<a th:text="${chattingVO.chattingRoomVO.chattingRoomTitle}"
-			    th:href="|@{/goChat?otherNick=}${chattingVO.memberVO.memberNickname}|">채팅방제목</a>
+	    	<a th:text="|${chattingVO.chatting}|"
+			    th:href="|@{/goChat?otherId=}${chattingVO.memberVO.memberId}|">채팅방제목</a>
 	    </td>
       </tr>
     </tbody>
