@@ -17,7 +17,6 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public int checkChattingRoomNo(String myNick, String yourNick) {
 		return chatMapper.checkChattingRoomNo(myNick, yourNick);
-		
 	}
 	@Override
 	public void createChattingRoom(String myNick, String yourNick) {

@@ -30,6 +30,7 @@
 					<a th:href="@{/enterCafe}" style = "color:white">카페가기</a><br>
 					<a th:href="@{/mypage}" style = "color:white">마이페이지 가기</a><br>
 					<a th:href="@{/chattingRoomList}" style = "color:white">대화 목록</a><br>
+					
 					<a th:href="@{/admin/main}" sec:authorize="hasRole('ROLE_ADMIN')" style = "color:white">관리자모드</a><br>	
 				</th:block>
 			</div>
