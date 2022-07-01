@@ -32,5 +32,7 @@ public interface ChatMapper {
 
 	int isReadOtherChat(String myId, String otherMemberId);
 
+	int isReadChattingRoom(String myId);
+
 
 }

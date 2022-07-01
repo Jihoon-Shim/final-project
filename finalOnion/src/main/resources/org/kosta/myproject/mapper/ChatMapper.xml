@@ -63,6 +63,11 @@
 	where memberId= #{otherMemberId} and chattingRoom_title like '%'||#{myId}||'%' and chattingRoom_title like '%'||#{otherMemberId}||'%' 
 	and c.chattingRoom_no = r.chattingRoom_no and reception = 1
 </select>
+<select id="isReadChattingRoom" parameterType="string" resultType="int">
+	select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingRoom r 
+	where chattingRoom_title like '%'||#{myId}||'%' and memberId != #{myId} and reception = 1
+	and c.chattingRoom_no = r.chattingRoom_no 
+</select>
 
 
 </mapper>

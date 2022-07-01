@@ -51,10 +51,13 @@ where CHATTINGROOM_NO = (
    where memberId= 'java' and reception = 1)
 set reception = 0
 
-
 select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingRoom r 
 where memberId= 'java' and chattingRoom_title = 'java and bear' 
 and c.chattingRoom_no = r.chattingRoom_no and reception = 1
+
+select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingRoom r 
+where chattingRoom_title like '%bear%' and memberId != 'bear' and reception = 1
+and c.chattingRoom_no = r.chattingRoom_no 
 
 -- TAG Table Create SQL
 CREATE TABLE TAG
