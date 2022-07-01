@@ -54,5 +54,7 @@ public interface BoardMapper {
 	void postpicture(FileVO fvo);
 
 	int currentseq();
+	
+	int currentNo();
 
 }
