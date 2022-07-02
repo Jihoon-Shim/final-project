@@ -144,7 +144,7 @@
 	</select>
 		<update id="updating" parameterType="org.kosta.myproject.vo.TradingBoardVO">
 		UPDATE TRADING_BOARD 
-		SET 	BOARD_TITLE=#{boardTitle}, BOARD_CONTENT=#{boardContent}, BOARD_KIND=#{boardKind},TRADE_PRICE=#{tradePrice}
+		SET 	BOARD_TITLE=#{boardTitle}, BOARD_CONTENT=#{boardContent}, BOARD_KIND=#{boardKind},TRADE_PRICE=#{tradePrice},PRODUCT_PICTURE=#{productPicture}
 		WHERE BOARD_NO=#{boardNo}
 	</update>
 	<delete id="deletePost" parameterType="int">
@@ -176,7 +176,7 @@
 	<insert id="postpicture" parameterType="org.kosta.myproject.vo.FileVO">
 		INSERT INTO FILEVO(file_no,file_name,content_type)
 		VALUES(FILE_NO_SEQ.nextval,#{fileName},#{contentType})
-	</insert>
+	</insert>	
 	<select id="currentseq" resultType="int">
 		select FILE_NO_SEQ.currval from dual
 	</select>

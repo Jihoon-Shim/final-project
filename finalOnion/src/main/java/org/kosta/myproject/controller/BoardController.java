@@ -1,7 +1,6 @@
 package org.kosta.myproject.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -157,7 +156,8 @@ public class BoardController {
 			throws Exception {
 		File profile = new File(".");
         String rootPath = profile.getAbsolutePath().substring(0,profile.getAbsolutePath().length()-2);
-		String imgUploadPath = rootPath + File.separator +"src"+ File.separator +"main"+ File.separator +"resources"+ File.separator + "static" + File.separator + "myweb" + File.separator + "images" + File.separator + "board";  // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
+		String imgUploadPath = rootPath + File.separator +"src"+ File.separator +"main"+ File.separator +"resources"+ File.separator + "static" + File.separator + "myweb" + File.separator + "images" + File.separator + "board";  
+		// 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
 		 String fileName = null;  // 기본 경로와 별개로 작성되는 경로 + 파일이름
 		   
 		 if(file[0].getOriginalFilename() != null && !file[0].getOriginalFilename().equals("")) {
@@ -203,9 +203,30 @@ public class BoardController {
 		model.addAttribute("tvo",tvo);
 		return "board/updatePostForm";
 	}
+	@Transactional
 	@PostMapping("/board/updatePost")	
-	public String updatePost(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO) throws Exception {
+	public String updatePost(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO,@RequestParam(value="updatefile") MultipartFile[] newfile) throws Exception {
 		tradingBoardVO.setMemberVO(memberVO);
+		File profile = new File(".");
+        String rootPath = profile.getAbsolutePath().substring(0,profile.getAbsolutePath().length()-2);
+		String imgUploadPath = rootPath + File.separator +"src"+ File.separator +"main"+ File.separator +"resources"+ File.separator + "static" + File.separator + "myweb" + File.separator + "images" + File.separator + "board";
+		File file=new File(imgUploadPath+File.separator+tradingBoardVO.getProductPicture());
+		File thumbfile=new File(imgUploadPath+File.separator+"s"+File.separator+tradingBoardVO.getProductPicture());
+		String fileName=null;
+		System.out.println("여기까진오나?");
+		if(newfile[0]!=null) {
+			file.delete();
+			thumbfile.delete();
+			FileVO fvo = new FileVO();
+			fvo.setContentType(newfile[0].getContentType());
+			fvo.setFileName(newfile[0].getOriginalFilename());
+			boardService.postpicture(fvo);
+			int seq = boardService.currentseq();
+			String newfileName = File.separator+seq+"_"+fvo.getFileName();
+			fileName =  UpLoadFileUtils.fileUpload(imgUploadPath, newfileName, newfile[0].getBytes());
+			fileName = fileName.substring(1,fileName.length());
+			tradingBoardVO.setProductPicture( fileName);
+		}		
 		boardService.updating(tradingBoardVO);
 		return "board/updatePost";
 	}
