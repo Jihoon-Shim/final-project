@@ -18,4 +18,9 @@
 	<select id="findTagNoByTag" resultType="int" parameterType="string">
 		SELECT TAGID FROM TAG WHERE TAG=#{value}
 	</select>
+	<select id="findTagByBoardNo" parameterType="int" resultType="org.kosta.myproject.vo.TagVO">
+		SELECT t.TAGID,t.TAG,t.TAGHITS 
+		FROM BOARDTAG b	, TAG t
+		WHERE  b.TAGID=t.TAGID(+) AND b.BOARD_NO=#{value}
+	</select>
 </mapper>

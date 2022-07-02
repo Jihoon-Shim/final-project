@@ -1,6 +1,9 @@
 package org.kosta.myproject.service;
 
+import java.util.List;
+
 import org.kosta.myproject.mapper.TagMapper;
+import org.kosta.myproject.vo.TagVO;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -35,6 +38,11 @@ public class TagServiceImpl implements TagService{
 	@Override
 	public int findTagNoByTag(String tag) {
 		return tagMapper.findTagNoByTag(tag);
+	}
+
+	@Override
+	public List<TagVO> findTagByBoardNo(int boardNo) {
+		return tagMapper.findTagByBoardNo(boardNo);
 	}
 
 }

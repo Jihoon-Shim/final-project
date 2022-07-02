@@ -1,5 +1,9 @@
 package org.kosta.myproject.service;
 
+import java.util.List;
+
+import org.kosta.myproject.vo.TagVO;
+
 public interface TagService {
 
 	String tagCheck(String tag);
@@ -11,6 +15,8 @@ public interface TagService {
 	void relateTag(int tagNo, int currentNo) ;
 
 	int findTagNoByTag(String tag);
+
+	List<TagVO> findTagByBoardNo(int boardNo);
 
 		
 

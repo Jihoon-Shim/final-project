@@ -3,6 +3,7 @@ package org.kosta.myproject.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,6 +13,7 @@ import org.kosta.myproject.service.TagService;
 import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
+import org.kosta.myproject.vo.TagVO;
 import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -212,7 +214,10 @@ public class BoardController {
 	public String postdetail(int boardNo, Model model) {
 		TradingBoardVO tvo = new TradingBoardVO();  
 		tvo = boardService.postdetail(boardNo);
+		List<TagVO> tlist = new ArrayList<TagVO>(); 
+		tlist = tagService.findTagByBoardNo(boardNo);
 		model.addAttribute("tvo",tvo);
+		model.addAttribute("tlist",tlist);
 		return"board/postdetail";
 	}
 }

@@ -32,6 +32,14 @@
 			</form>
 			</td>
 		</tr>
+		<tr>
+			<td>태그명</td>
+			<td>빈도수</td>
+		</tr>
+		<tr th:each="tlist : ${tlist}">	
+			<td th:text="${tlist.tag}">태그명</td>
+			<td th:text="${tlist.tagHits}">사용된 횟수</td>
+		</tr>
 	</tbody>
 </table>
 <script  th:inline="javascript">
