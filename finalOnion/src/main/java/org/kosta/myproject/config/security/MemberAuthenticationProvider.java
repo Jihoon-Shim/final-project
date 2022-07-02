@@ -100,7 +100,7 @@ public class MemberAuthenticationProvider implements AuthenticationProvider{
 				
 		Authentication auth = new UsernamePasswordAuthenticationToken(member, password, authorities);
 		log.debug("MemberAuthenticationProvider 인증처리완료:{}",auth);
-		return auth;		
+		return auth;
 	}
 
 	@Override

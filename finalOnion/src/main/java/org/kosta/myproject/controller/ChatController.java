@@ -56,7 +56,6 @@ public class ChatController{
 		chatService.recordChatting(memberVO, chattingRoomVO, msg);
 		return "";
 	}
-	
 	@RequestMapping("/chattingRoomList")
 	public String chattingRoom(@AuthenticationPrincipal MemberVO memberVO, Model model) {
 		String myId = memberVO.getMemberId();
@@ -81,22 +80,14 @@ public class ChatController{
 			chattingVO.setChatting(lastMessage);
 			//상대 채팅 읽음처리 확인
 			int reception = chatService.isReadOtherChat(myId, otherMemberId);
-			
 			chattingVO.setReception(reception);
 			
 			chattingVOList.add(chattingVO);
 		}
-		
-		
 		model.addAttribute("chattingVOList",chattingVOList);
 		return "chat/chattingList";
 	}
-	@RequestMapping("loginGo")
-	public String loginGo(String id, String password, Model model) {
-		model.addAttribute("id", id);
-		model.addAttribute("password", password);
-		return "/login";
-	}
+	
 	
 }
 
