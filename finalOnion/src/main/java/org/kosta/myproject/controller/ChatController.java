@@ -40,6 +40,10 @@ public class ChatController{
 		chatService.readOtherChat(myId,otherId);
 		List<String> chattingList = chatService.getChattingList(myId, otherId);
 		List<TradingBoardVO> postVOList = chatService.getAllPostListNotSoldOutById(otherId);
+		MemberVO otherMemberVO = memberService.findMemberById(otherId);
+		float temp = memberService.findTempById(otherId);
+		model.addAttribute("otherMemberVO", otherMemberVO);
+		model.addAttribute("temp", temp);
 		model.addAttribute("postVOList", postVOList);
 		model.addAttribute("chattingList", chattingList);
 		//채팅 알림

@@ -20,8 +20,10 @@
                 </th:block>
                 </div>
                 <br><br>
-                <div class="col-sm-3">
-                	<button>상대 프로필 사진?</button>
+                <div class="col-sm-3" id="imgTitle">
+                	<img style="border: 3px solid gold; border-radius: 70px; -moz-border-radius: 70px;
+						-khtml-border-radius: 70px; -webkit-border-radius:70px;"
+						th:src="@{myweb/images/iu.jpg}" />
                 </div><br><br><br><br>
                 <div class="col-sm-3 offset-sm-1">
              	<select id ="title" >
@@ -127,7 +129,24 @@ $(document).ready(function(){
         str += "</div></div>";
         $("#msgArea").append(str);
 	});
-})
+    
+    $.ajax({
+    	type:"get",
+    	url:"",
+    	data:"",
+    	
+    });
+    
+    var imgTitle = document.getElementById("imgTitle");
+    imgTitle.addEventListener('mouseover', (event) => {
+    	var str = "닉네임 : "+"[[${otherMemberVO.memberNickname}]]";
+    	str += "\n나눔온도 : "+"[[${temp}]]"+" ℃";
+    	str += "\n주소 : "+"[[${otherMemberVO.memberAddress}]]";
+    	imgTitle.title = str;
+    });
+    
+    
+});
 </script>
 </th:block>
 </html>

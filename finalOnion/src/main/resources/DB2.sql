@@ -59,6 +59,7 @@ select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingR
 where chattingRoom_title like '%bear%' and memberId != 'bear' and reception = 1
 and c.chattingRoom_no = r.chattingRoom_no 
 
+select * from TRADING_BOARD
 -- TAG Table Create SQL
 CREATE TABLE TAG
 (

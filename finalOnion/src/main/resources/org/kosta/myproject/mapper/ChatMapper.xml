@@ -16,12 +16,10 @@
 	values(CHATTING_SEQ.nextval, #{chattingRoomVO.chattingRoomNo}, sysdate, 1, #{msg}, #{memberVO.memberId})
 </insert>
 <select id="getChattingList" parameterType="string" resultType="map">
-	select c.chatting ,m.MEMBER_NICKNAME FROM chatting c, T_MEMBER m where CHATTINGROOM_NO = (
-   select CHATTINGROOM_NO from CHATTINGROOM where
-   CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{otherNick}||'%'
-   )
-   AND
-   c.MEMBERID = m.MEMBERID
+	select c.chatting ,m.MEMBER_NICKNAME, t.temp, m.member_address FROM chatting c, T_MEMBER m, TEMP t
+	where CHATTINGROOM_NO = (select CHATTINGROOM_NO from CHATTINGROOM 
+	where CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{otherNick}||'%')
+   AND c.MEMBERID = m.MEMBERID AND c.MEMBERID = t.MEMBERID
    order by c.chatting_date
 </select>
 <select id="findChattingRoomVOListByNickname" parameterType="string" resultType="org.kosta.myproject.vo.ChattingRoomVO">

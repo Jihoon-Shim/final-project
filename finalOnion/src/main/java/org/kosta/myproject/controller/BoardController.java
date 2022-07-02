@@ -134,7 +134,6 @@ public class BoardController {
 		}else {
 			pagination=new Pagination(boardService.getTotalSalePostCount(),Integer.parseInt(pageNo));
 		}
-		System.out.println("여긴오냐?2"+pagination);
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
 		if(sort1.equals("temp")) {
 			list = boardService.orderBySaleTemp(pagination);
@@ -161,7 +160,6 @@ public class BoardController {
 				fvo.setFileName(file[0].getOriginalFilename());
 				boardService.postpicture(fvo);
 				int seq = boardService.currentseq();
-				System.out.println(seq);
 				File newFileName =new File(File.separator+"board"+File.separator+seq+"_"+fvo.getFileName());
 				file[0].transferTo(newFileName);
 			}
