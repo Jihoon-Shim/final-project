@@ -51,16 +51,21 @@
 	function removeDIV(result){
 		var delval = result.value;
 		var h1 = document.getElementById(delval);
-		//var parent = document.getElementById(delval).parentNode;
 		var children = document.getElementById(delval).parentNode.childNodes;
-		//alert(parent.innerHTML);
 		h1.parentNode.innerHTML="";
 		count=count-1;		
 	};//function removeDIV
 $(document).ready(function(){	
+	$("#mainform").submit(function(){
+		let bkind = document.getElementById("boardKind").value;
+		if(bkind=="no"){
+			alert("게시글 종류를 선택해주세요!");
+			return false;
+		}
+	});
 	let checkResultTag="tag";		
 	//$("#tagForm")
-	$("#tagForm").submit(function(){				
+	$("#tagForm").submit(function(){		
 		if(checkResultTag=="tag"){
 		alert("태그 중복확인을 하세요");
 		return false;
