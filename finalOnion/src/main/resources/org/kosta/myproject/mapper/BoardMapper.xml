@@ -180,4 +180,7 @@
 	<select id="currentseq" resultType="int">
 		select FILE_NO_SEQ.currval from dual
 	</select>
+	<select id="currentNo" resultType="int">
+		SELECT TRADING_BOARD_SEQ.currval FROM dual
+	</select>
 </mapper>

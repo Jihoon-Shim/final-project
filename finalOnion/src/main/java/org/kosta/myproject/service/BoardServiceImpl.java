@@ -147,4 +147,9 @@ public class BoardServiceImpl implements BoardService{
 		int seq = boardmapper.currentseq();
 		return seq;
 	}
+	
+	@Override
+	public int currentNo() {
+		return boardmapper.currentNo();
+	}
 }

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.myproject.service.BoardService;
+import org.kosta.myproject.service.TagService;
 import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
@@ -28,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class BoardController {
 	
 	private final BoardService boardService;
+	private final TagService tagService;
 	
 	@RequestMapping("/board/buylist")
 	public String buyList(Model model) {
@@ -149,7 +151,7 @@ public class BoardController {
 	}
 	@Transactional
 	@PostMapping("/board/PostBuy")	
-	public String PostBuy(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO,@RequestParam(value="file") MultipartFile[] file) 
+	public String PostBuy(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO,HttpServletRequest request,@RequestParam(value="file") MultipartFile[] file) 
 			throws IOException , IllegalStateException {		
 			if(!file[0].isEmpty()) {
 				FileVO fvo = new FileVO();
@@ -163,6 +165,19 @@ public class BoardController {
 			}
 		tradingBoardVO.setMemberVO(memberVO);
 		boardService.posting(tradingBoardVO);
+		for(int i=0;i<5;i++) {
+			String tag = request.getParameter(Integer.toString(i));
+			if(tag!=null) {
+				if(tagService.tagCheck(tag).equals("ok")) {
+					tagService.registTag(tag);
+				}else {
+					tagService.hitsTag(tag);
+				}
+				int currentNo = boardService.currentNo();
+				int tagNo = tagService.findTagNoByTag(tag);
+				tagService.relateTag(tagNo,currentNo);
+			}
+		}
 		return "board/PostBuy";
 	}
 

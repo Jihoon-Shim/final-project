@@ -51,4 +51,6 @@ public interface BoardService {
 	void postpicture(FileVO fvo);
 
 	int currentseq();
+	
+	int currentNo();
 }
