@@ -22,7 +22,7 @@
 	</thead>
 	<tbody>
 		<tr bgcolor="#FFFFFF">
-			<td><img th:src="@{/myweb/images/}+${tvo.productPicture}" width=100%;>	</td>
+			<td><img th:src="@{/myweb/images/board/}+${tvo.productPicture}" width=100%;>	</td>
 			<td colspan="3"><pre><font size="4" ><span class="box" th:text=${tvo.boardContent}></span></font></pre>
 			<form th:action="@{/goChat}" method="post">
 				<input type="hidden" name="otherId" th:value="${tvo.memberVO.memberId}">

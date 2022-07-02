@@ -15,6 +15,7 @@ import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TagVO;
 import org.kosta.myproject.vo.TradingBoardVO;
+import org.kosta.myproject.vo.UpLoadFileUtils;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -153,16 +154,30 @@ public class BoardController {
 	@Transactional
 	@PostMapping("/board/PostBuy")	
 	public String PostBuy(@AuthenticationPrincipal MemberVO memberVO,TradingBoardVO tradingBoardVO,HttpServletRequest request,@RequestParam(value="file") MultipartFile[] file) 
-			throws IOException , IllegalStateException {		
-			if(!file[0].isEmpty()) {
-				FileVO fvo = new FileVO();
-				fvo.setContentType(file[0].getContentType());
-				fvo.setFileName(file[0].getOriginalFilename());
-				boardService.postpicture(fvo);
-				int seq = boardService.currentseq();
-				File newFileName =new File(File.separator+"board"+File.separator+seq+"_"+fvo.getFileName());
-				file[0].transferTo(newFileName);
-			}
+			throws Exception {
+		File profile = new File(".");
+        String rootPath = profile.getAbsolutePath().substring(0,profile.getAbsolutePath().length()-2);
+		String imgUploadPath = rootPath + File.separator +"src"+ File.separator +"main"+ File.separator +"resources"+ File.separator + "static" + File.separator + "myweb" + File.separator + "images" + File.separator + "board";  // 이미지를 업로드할 폴더를 설정 = /uploadPath/imgUpload
+		 String fileName = null;  // 기본 경로와 별개로 작성되는 경로 + 파일이름
+		   
+		 if(file[0].getOriginalFilename() != null && !file[0].getOriginalFilename().equals("")) {
+			 FileVO fvo = new FileVO();
+			fvo.setContentType(file[0].getContentType());
+			fvo.setFileName(file[0].getOriginalFilename());
+			boardService.postpicture(fvo);
+			int seq = boardService.currentseq();
+			String newfileName = File.separator+seq+"_"+fvo.getFileName();
+			fileName =  UpLoadFileUtils.fileUpload(imgUploadPath, newfileName, file[0].getBytes());
+			fileName = fileName.substring(1,fileName.length());
+
+		  tradingBoardVO.setProductPicture( fileName);//imgUploadPath+ File.separator +
+		  // gdsThumbImg에 썸네일 파일 경로 + 썸네일 파일명 저장
+		 // vo.setGdsThumbImg(File.separator + "imgUpload" + ymdPath + File.separator + "s" + File.separator + "s_" + fileName);		  
+		 } else {  // 첨부된 파일이 없으면
+		  fileName =  "iu.jpg";	  //imgUploadPath +File.separator +
+		  tradingBoardVO.setProductPicture(fileName);
+		  //vo.setGdsThumbImg(fileName);
+		 }
 		tradingBoardVO.setMemberVO(memberVO);
 		boardService.posting(tradingBoardVO);
 		for(int i=0;i<5;i++) {

@@ -131,7 +131,7 @@
 	</select>	
 	<insert id="posting" parameterType="org.kosta.myproject.vo.TradingBoardVO">
 		INSERT INTO TRADING_BOARD(BOARD_NO,BOARD_TITLE,BOARD_CONTENT,BOARD_KIND,TRADE_STATUS,TRADE_PRICE,PRODUCT_PICTURE,HITS,MEMBERID,BOARD_DATE) 
-		VALUES(TRADING_BOARD_SEQ.nextval,#{boardTitle},#{boardContent},#{boardKind},1,#{tradePrice},'iu.jpg',0,#{memberVO.memberId},SYSDATE)
+		VALUES(TRADING_BOARD_SEQ.nextval,#{boardTitle},#{boardContent},#{boardKind},1,#{tradePrice},#{productPicture},0,#{memberVO.memberId},SYSDATE)
 	</insert>
 	<select id="postdetail" resultMap="tradingboardResultMap" parameterType="int">
 		SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_CONTENT, b.BOARD_KIND, b.TRADE_STATUS, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.HITS,
