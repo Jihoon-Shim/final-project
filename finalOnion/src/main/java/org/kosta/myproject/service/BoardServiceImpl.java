@@ -152,4 +152,58 @@ public class BoardServiceImpl implements BoardService{
 	public int currentNo() {
 		return boardmapper.currentNo();
 	}
+
+	@Override
+	public int getTotalPostCountBySearch(String searchword) {
+		int result = boardmapper.getTotalPostCountBySearch(searchword);
+		return result;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderByTempsearch(Pagination pagination) {
+		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
+		list = boardmapper.orderByTempsearch(pagination);
+		return list;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderByPricesearch(Pagination pagination) {
+		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
+		list = boardmapper.orderByPricesearch(pagination);
+		return list;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate1search(Pagination pagination) {
+		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
+		list = boardmapper.orderByDate1search(pagination);
+		return list;
+	}
+
+	@Override
+	public int getTotalSalePostCountBySearch(String searchword) {
+		int result = boardmapper.getTotalSalePostCountBySearch(searchword);
+		return result;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderBySaleTempsearch(Pagination pagination) {
+		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
+		list = boardmapper.orderBySaleTempsearch(pagination);
+		return list;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderBySalePricesearch(Pagination pagination) {
+		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
+		list = boardmapper.orderBySalePricesearch(pagination);
+		return list;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination) {
+		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
+		list = boardmapper.orderBySaleDatesearch(pagination);
+		return list;
+	}
 }

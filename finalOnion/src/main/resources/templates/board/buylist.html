@@ -20,9 +20,6 @@
  	<div class = "col-sm-4" align="left">
  		<button type="button" th:onclick="|location.href='@{/board/postBuyForm}'|">글쓰기</button>
  	</div>
- 	<div>
- 		<input type="text" placeholder="검색">
- 	</div>
  	<div class = "col-sm-4" align = "center"><h2>구매 게시판</h2></div>
 	<div class = "col-sm-4" align="right">
 		<select name="sort" id="sort"> 
@@ -31,6 +28,7 @@
 		<option value="date">작성날짜순</option> 
 		<option value="price">가격순</option> 
 		</select>
+		<input type="text" placeholder="검색어" id="searchword">
 		<button type="submit" th:onclick="|javascript:sort()|" class="btn btn-primary btn-outline-dark" >정렬하기</button>
 	</div>
 	</div>
@@ -73,15 +71,18 @@
 <form id="sorting" th:action="@{/board/orderbuyList}" method="get">
 	<input type="hidden" name="sort1" value="">
 	<input type="hidden" name="sorton" value="on">
+	<input type="hidden" name="searchword1" value="">
 </form>
 <script type="text/javascript">
 	function sort(){
 		var sort = $("#sort").val();
+		var searchword = $("#searchword").val();
 		if(sort=="no"){
 			alert("정렬 방식을 선택해 주세요.");
 			return false;
 		}
 		$('input[name=sort1]').attr('value',sort);
+		$('input[name=searchword1]').attr('value',searchword);
     document.getElementById("sorting").submit();
 }
 </script>

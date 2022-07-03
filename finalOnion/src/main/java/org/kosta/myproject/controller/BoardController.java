@@ -56,6 +56,7 @@ public class BoardController {
 		HttpSession session = request.getSession(false);
 		String sort = request.getParameter("sort1");
 		String sorton = request.getParameter("sorton");
+		String searchword = request.getParameter("searchword1");
 		if(session.getAttribute("sorting")==null) {
 			if(sorton!=null) {
 				session.setAttribute("sorting", sort);
@@ -71,22 +72,44 @@ public class BoardController {
 		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
 		String pageNo = request.getParameter("pageNo");
 		Pagination pagination = null;
-		if(pageNo==null) {
-			pagination = new Pagination(boardService.getTotalPostCount());
+		if(searchword==null) {
+			//검색어 미포함
+			if(pageNo==null) {
+				pagination = new Pagination(boardService.getTotalPostCount());
+			}else {
+				pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
+			}	
+			if(sort1.equals("temp")) {
+				list = boardService.orderByTemp(pagination);
+			}else if(sort1.equals("price")) {
+				list = boardService.orderByPrice(pagination);
+			}else{
+				list = boardService.orderByDate1(pagination);
+			}
+			request.setAttribute("pagination", pagination);
+			request.setAttribute("list", list);
+			return "board/buylist";
 		}else {
-			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
-		}		
-		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
-		if(sort1.equals("temp")) {
-			list = boardService.orderByTemp(pagination);
-		}else if(sort1.equals("price")) {
-			list = boardService.orderByPrice(pagination);
-		}else{
-			list = boardService.orderByDate1(pagination);
+			//검색어를 포함한다.
+			if(pageNo==null) {
+				pagination = new Pagination(boardService.getTotalPostCountBySearch(searchword),searchword);
+			}else {
+				pagination=new Pagination(boardService.getTotalPostCountBySearch(searchword),Integer.parseInt(pageNo),searchword);
+			}
+			if(sort1.equals("temp")) {
+				list = boardService.orderByTempsearch(pagination);
+			}else if(sort1.equals("price")) {
+				list = boardService.orderByPricesearch(pagination);
+			}else{
+				list = boardService.orderByDate1search(pagination);
+			}
+			request.setAttribute("pagination", pagination);
+			request.setAttribute("list", list);
+			return "board/buylist";
 		}
-		request.setAttribute("pagination", pagination);
-		request.setAttribute("list", list);
-		return "board/buylist";
+		
+		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
+		
 	}
 	
 	@RequestMapping("/board/salelist")
@@ -115,6 +138,7 @@ public class BoardController {
 		HttpSession session = request.getSession(false);
 		String sort = request.getParameter("sort1");
 		String sorton = request.getParameter("sorton");
+		String searchword = request.getParameter("searchword1");
 		if(session.getAttribute("sorting")==null) {
 			if(sorton!=null) {
 				session.setAttribute("sorting", sort);
@@ -129,26 +153,46 @@ public class BoardController {
 		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
 		String pageNo = request.getParameter("pageNo");
 		Pagination pagination = null;
-		if(pageNo==null) {
-			pagination = new Pagination(boardService.getTotalSalePostCount());
+		if(searchword==null) {
+			//검색어 미포함
+			if(pageNo==null) {
+				pagination = new Pagination(boardService.getTotalSalePostCount());
+			}else {
+				pagination=new Pagination(boardService.getTotalSalePostCount(),Integer.parseInt(pageNo));
+			}
+			//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
+			if(sort1.equals("temp")) {
+				list = boardService.orderBySaleTemp(pagination);
+			}else if(sort1.equals("price")) {
+				list = boardService.orderBySalePrice(pagination);
+			}else{
+				list = boardService.orderBySaleDate(pagination);
+			}
+			request.setAttribute("pagination", pagination);
+			request.setAttribute("list", list);
+			return "board/salelist";
 		}else {
-			pagination=new Pagination(boardService.getTotalSalePostCount(),Integer.parseInt(pageNo));
+			//검색어를 포함한다.
+			if(pageNo==null) {
+				pagination = new Pagination(boardService.getTotalSalePostCountBySearch(searchword),searchword);
+			}else {
+				pagination = new Pagination(boardService.getTotalSalePostCountBySearch(searchword),Integer.parseInt(pageNo),searchword);
+			}
+			//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
+			if(sort1.equals("temp")) {
+				list = boardService.orderBySaleTempsearch(pagination);
+			}else if(sort1.equals("price")) {
+				list = boardService.orderBySalePricesearch(pagination);
+			}else{
+				list = boardService.orderBySaleDatesearch(pagination);
+			}
+			request.setAttribute("pagination", pagination);
+			request.setAttribute("list", list);
+			return "board/salelist";
 		}
-		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
-		if(sort1.equals("temp")) {
-			list = boardService.orderBySaleTemp(pagination);
-		}else if(sort1.equals("price")) {
-			list = boardService.orderBySalePrice(pagination);
-		}else{
-
-			list = boardService.orderBySaleDate(pagination);
-
-		}
-		request.setAttribute("pagination", pagination);
-		request.setAttribute("list", list);
-
-		return "board/salelist";
-
+		////////////////////////////////
+		
+		///////////////////////////////
 	}
 	@Transactional
 	@PostMapping("/board/PostBuy")	

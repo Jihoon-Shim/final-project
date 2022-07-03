@@ -13,13 +13,23 @@ public class Pagination {
 	private int totalPostCount;//총 게시물 수 (DB에 저장되어있는)
 	private int startRowNumber;
 	private int endRowNumber;
+	private String searchword;
 	
 	public Pagination(int totalPostCount) {
 		this.totalPostCount=totalPostCount;
 	}
+	public Pagination(int totalPostCount,String searchword) {
+		this.totalPostCount=totalPostCount;
+		this.searchword=searchword;
+	}
 	public Pagination(int totalPostCount,int nowPage) {
 		this.totalPostCount=totalPostCount;
 		this.nowPage=nowPage;
+	}
+	public Pagination(int totalPostCount,int nowPage,String searchword) {
+		this.totalPostCount=totalPostCount;
+		this.nowPage=nowPage;
+		this.searchword=searchword;
 	}
 	public int getNowPage() {
 		return nowPage;
