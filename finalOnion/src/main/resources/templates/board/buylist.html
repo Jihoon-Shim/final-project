@@ -20,6 +20,9 @@
  	<div class = "col-sm-4" align="left">
  		<button type="button" th:onclick="|location.href='@{/board/postBuyForm}'|">글쓰기</button>
  	</div>
+ 	<div>
+ 		<input type="text" placeholder="검색">
+ 	</div>
  	<div class = "col-sm-4" align = "center"><h2>구매 게시판</h2></div>
 	<div class = "col-sm-4" align="right">
 		<select name="sort" id="sort"> 
@@ -34,9 +37,7 @@
 <table class="table table-bordered table-hover boardlist">
 	<thead>	
 		<tr style="background-color: #333333">
-
-            <th style="color: white">NO</th>
-            <th style="color: white">사진</th>
+            <th style="color: white">썸네일</th>
             <th style="color: white">제목</th>
             <th style="color: white">가격</th>           
             <th style="color: white">열람수</th>

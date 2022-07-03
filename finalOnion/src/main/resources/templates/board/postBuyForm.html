@@ -113,6 +113,26 @@ $(document).ready(function(){
 			url:"/guest/tagcheckAjax",				
 			data:"tag="+tag,	
 			success:function(data){
+				var datalength = data.length;
+				var alldata = "";
+				if(datalength==0){
+				$("#tagCheckView").html(tag+"관련 검색어가 없습니다.").css("background","lime");
+					checkResultTag=tag;
+				}else{					
+					for(var q=0;q<datalength;q++){
+						alldata += data[q] + "<br>";						
+					}
+					$("#tagCheckView").html(tag+"를 포함한 태그입니다!<br>"+alldata).css("background","yellow");
+					checkResultTag=tag;
+				}					
+			}//callback			
+		});//ajax
+		/*
+		$.ajax({
+			type:"get",
+			url:"/guest/tagcheckAjax",				
+			data:"tag="+tag,	
+			success:function(data){
 				if(data=="fail"){
 				$("#tagCheckView").html(tag+" 이미 있는 태그입니다!").css("background","lime");
 					checkResultTag=tag;
@@ -122,6 +142,7 @@ $(document).ready(function(){
 				}					
 			}//callback			
 		});//ajax
+		*/
 	});//keyup
 })//ready
 </script>

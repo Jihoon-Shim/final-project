@@ -1,5 +1,6 @@
 package org.kosta.myproject.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -8,7 +9,7 @@ import org.kosta.myproject.vo.TagVO;
 @Mapper
 public interface TagMapper {
 
-	int tagCheck(String tag);
+	ArrayList<String> tagCheck(String tag);
 
 	void registTag(String tag);
 

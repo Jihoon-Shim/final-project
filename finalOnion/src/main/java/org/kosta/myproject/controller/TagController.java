@@ -1,5 +1,7 @@
 package org.kosta.myproject.controller;
 
+import java.util.ArrayList;
+
 import org.kosta.myproject.service.TagService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +17,10 @@ public class TagController {
 	
 	@RequestMapping("guest/tagcheckAjax")
 	@ResponseBody
-	public String tagcheckAjax(String tag) {
-		return tagService.tagCheck(tag);
+	public ArrayList<String> tagcheckAjax(String tag) {
+		ArrayList<String> taglist = new ArrayList(); 
+		taglist = tagService.tagCheck(tag);
+		return taglist;
 	}
 	
 	@RequestMapping("guest/tagPlusAjax")

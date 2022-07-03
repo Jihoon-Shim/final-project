@@ -1,5 +1,6 @@
 package org.kosta.myproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kosta.myproject.mapper.TagMapper;
@@ -15,9 +16,14 @@ public class TagServiceImpl implements TagService{
 	private final TagMapper tagMapper;
 	
 	@Override
-	public String tagCheck(String tag) {		
+	public ArrayList<String> tagCheck(String tag) {
+		ArrayList<String> taglist =new ArrayList<String>(); 
+		taglist=tagMapper.tagCheck(tag);
+		return  taglist;
+		/*
 		int count = tagMapper.tagCheck(tag);
 		return (count == 0) ? "ok" : "fail";
+		*/
 	}
 
 	@Override

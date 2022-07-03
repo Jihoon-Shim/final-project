@@ -1,12 +1,13 @@
 package org.kosta.myproject.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kosta.myproject.vo.TagVO;
 
 public interface TagService {
 
-	String tagCheck(String tag);
+	ArrayList<String> tagCheck(String tag);
 
 	void registTag(String tag);
 
