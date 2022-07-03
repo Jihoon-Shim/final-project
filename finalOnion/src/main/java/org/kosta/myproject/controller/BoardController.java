@@ -213,7 +213,6 @@ public class BoardController {
 		File file=new File(imgUploadPath+File.separator+tradingBoardVO.getProductPicture());
 		File thumbfile=new File(imgUploadPath+File.separator+"s"+File.separator+tradingBoardVO.getProductPicture());
 		String fileName=null;
-		System.out.println("여기까진오나?");
 		if(newfile[0]!=null) {
 			file.delete();
 			thumbfile.delete();

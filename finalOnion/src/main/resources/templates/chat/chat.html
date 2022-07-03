@@ -23,7 +23,7 @@
                 <div class="col-sm-3" id="imgTitle">
                 	<img style="border: 3px solid gold; border-radius: 70px; -moz-border-radius: 70px;
 						-khtml-border-radius: 70px; -webkit-border-radius:70px;"
-						th:src="@{myweb/images/iu.jpg}" />
+						th:src="|@{myweb/images/member/}${otherMemberVO.memberPicture}|"/>
                 </div><br><br><br><br>
                 <div class="col-sm-3 offset-sm-1">
              	<select id ="title" >
@@ -130,13 +130,6 @@ $(document).ready(function(){
         $("#msgArea").append(str);
 	});
     
-    $.ajax({
-    	type:"get",
-    	url:"",
-    	data:"",
-    	
-    });
-    
     var imgTitle = document.getElementById("imgTitle");
     imgTitle.addEventListener('mouseover', (event) => {
     	var str = "닉네임 : "+"[[${otherMemberVO.memberNickname}]]";
@@ -144,8 +137,6 @@ $(document).ready(function(){
     	str += "\n주소 : "+"[[${otherMemberVO.memberAddress}]]";
     	imgTitle.title = str;
     });
-    
-    
 });
 </script>
 </th:block>

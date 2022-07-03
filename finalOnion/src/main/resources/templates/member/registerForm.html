@@ -13,7 +13,7 @@
 		
 */-->
  <div layout:fragment="main">
-<form method="post"  action="/guest/registerMember" th:action="@{/guest/registerMember}" id="regForm">
+<form method="post"  action="/guest/registerMember" th:action="@{/guest/registerMember}" id="regForm" enctype="multipart/form-data">
 <input type="text" name="memberId" id="memberId" placeholder="아이디"><span id="idCheckView"></span><br>
 <input type="password" name="memberPassword" placeholder="비밀번호" required="required"><br>
 <input type="text" name="memberName" placeholder="이름"  required="required"><br>
@@ -21,17 +21,16 @@
 <input type="text" name="memberNickname" placeholder="별명"  required="required"><br>
 <input type="text" name="memberTel" placeholder="전화번호"  required="required"><br>
 <input type="hidden" name="onionPoint" value="0">
+<input accept="*" type="file" id="inputGroupFile01" name="file" class="custom-file-input"
+                    aria-describedby="inputGroupFileAddon01" multiple="false"/>
 <input type="submit" value="가입하기">
 </form>
-
 <div class="card-footer text-muted" align = "center">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroupFileAddon01"></span>
             </div>
             <div class="custom-file">
-                <input accept="*" type="file" id="inputGroupFile01" name="file" class="custom-file-input"
-                    aria-describedby="inputGroupFileAddon01" />
                 <label class="custom-file-label" for="inputGroupFile01"></label>
             </div>
         </div>

@@ -38,9 +38,12 @@
 			$("#logoutAction").click(function() {
 				$("#logoutForm").submit();
 			});
-			let reception = "[[${session.reception}]]";
-			if(reception==0)
-				document.getElementById("alarm").style.display="none";
+			var user = "[[${#authentication.principal}]]";
+			if(user!=="anonymousUser"){
+				let reception = "[[${session.reception}]]";
+				if(reception==0)
+					document.getElementById("alarm").style.display="none";
+			}
 		});
 	</script>	
 </header>
