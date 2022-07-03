@@ -14,7 +14,8 @@ CREATE TABLE T_MEMBER
     MEMBER_TEL         VARCHAR2(100)    NOT NULL, 
      PRIMARY KEY (MEMBERID)
 )
-select * from t_member
+select * from t_member where memberId='test3'
+select * from FILEVO;
 
 select * from chattingRoom
 select * from chatting
@@ -26,7 +27,7 @@ select chattingRoom_No, chattingRoom_title from chattingRoom
 select distinct * from (
 select memberId from chatting where chattingRoom_No=1) where memberId not in 'java'
 
-select * from TRADING_BOARD where memberId = 'java' and trade_status = 1;
+select * from TRADING_BOARD where memberId = 'java' and trade_status = 1 and board_content like '%ㅇ%';
 
 select distinct memberId from (
 	select distinct memberId from chatting where chattingRoom_title=4 )
