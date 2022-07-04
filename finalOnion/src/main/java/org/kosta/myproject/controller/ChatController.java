@@ -72,10 +72,11 @@ public class ChatController{
 			chattingVO.setChattingRoomVO(chattingRoomVO);
 			int chattingRoomNo = chattingRoomVO.getChattingRoomNo();
 			String ChattingTitle = chatService.findChattingTitleByChattingNo(chattingRoomNo);
-			String otherMemberId= ChattingTitle.replace(" and ", "").replace(memberVO.getMemberId(), "");
+			String otherMemberId= ChattingTitle.replace(memberVO.getMemberId()+" and ", "").replace(" and "+memberVO.getMemberId(), "");
 			otherMemberVO = new MemberVO();
 			otherMemberVO = memberService.findMemberById(otherMemberId);
 			chattingVO.setMemberVO(otherMemberVO);
+			System.out.println(otherMemberVO);
 			//마지막 채팅
 			String lastMessage = chatService.getLastMessage(myId, otherMemberId);
 			if(lastMessage==null) {
@@ -85,7 +86,6 @@ public class ChatController{
 			//상대 채팅 읽음처리 확인
 			int reception = chatService.isReadOtherChat(myId, otherMemberId);
 			chattingVO.setReception(reception);
-			
 			chattingVOList.add(chattingVO);
 		}
 		model.addAttribute("chattingVOList",chattingVOList);
