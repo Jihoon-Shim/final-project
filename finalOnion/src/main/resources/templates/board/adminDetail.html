@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>AdminDetail</title>
+</head>
+<div layout:fragment="main">
+
+	<th:block th:if="${avo01}==${loginId}">
+		<button type="button" id="update"
+			th:onclick="|location.href='@{/board/updateAdminForm?adminBoardNo=}'+${avo00.adminBoardNo}|">수정</button>
+		<button type="button" id="delete"
+			th:onclick="|location.href='@{/board/deleteAdmin?adminBoardNo=}'+${avo00.adminBoardNo}|">삭제</button>
+	</th:block>
+	<th:block th:if="${adminManager}==${loginId}">
+		<button type="button" id="update"
+			th:onclick="|location.href='@{/board/updateAdminForm?adminBoardNo=}'+${avo00.adminBoardNo}|">수정</button>
+		<button type="button" id="delete"
+			th:onclick="|location.href='@{/board/deleteAdmin?adminBoardNo=}'+${avo00.adminBoardNo}|">삭제</button>
+	</th:block>
+	<br> <br>
+	<table class="table table-bordered" style="overflow: auto;">
+		<thead>
+		
+			<tr bgcolor="black" th:each="avo00 : ${avo00}">
+				<td th:text="|제목 : ${avo00.adminBoardTitle}|" style="color: white">제목</td>
+				<td th:text="|작성날짜 : ${avo00.adminBoardDate}|" style="color: white">작성날짜</td>
+				<td th:text="|글 종류 : ${avo00.adminBoardKind}|" style="color: white">글종류</td>
+			</tr>
+		</thead>
+		<tbody>
+		<tr bgcolor="black" th:each="avo01 : ${avo01}">
+				<td colspan="4" th:text="|아이디 : ${avo01}|" style="color: white">아이디</td>
+			</tr>
+			<tr bgcolor="#FFFFFF" th:each="avo00 : ${avo00}">
+				<td colspan="4"><pre><font size="4"><span class="box" th:text="|내용 : ${avo00.adminBoardContent}|"></span></font></pre>
+			</tr>
+		</tbody>
+	</table>
+	<div align="center">
+		<button type="button" th:onclick="|location.href='@{/board/contact}'|">뒤로가기</button>
+	</div>
+</div>
+
+</html>

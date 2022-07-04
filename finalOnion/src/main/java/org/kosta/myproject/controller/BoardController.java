@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.myproject.service.BoardService;
+import org.kosta.myproject.vo.AdminBoardVO;
 import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
@@ -16,6 +17,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -199,5 +201,180 @@ public class BoardController {
 		tvo = boardService.postdetail(boardNo);
 		model.addAttribute("tvo",tvo);
 		return"board/postdetail";
+	}
+	@RequestMapping("/board/contact")
+	public String contact(Model model) {
+		ArrayList<AdminBoardVO> list0 = new ArrayList<AdminBoardVO>();
+		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
+		String pageNo =(String) model.getAttribute("pageNo");
+		Pagination pagination = null;
+		if(pageNo==null) {
+			pagination = new Pagination(boardService.getTotalPostCount());
+		}else {
+			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
+		}
+		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
+		list0 = boardService.orderByDate1Contact(pagination);
+		model.addAttribute("pagination",pagination);
+		model.addAttribute("list0",list0);
+		return "board/contact";
+	}
+	@RequestMapping("/board/postContactForm")
+	public String postContactForm(Model model , @AuthenticationPrincipal MemberVO memberVO) {
+		model.addAttribute("id" , memberVO.getMemberId());
+		return "board/postContactForm";
+	}
+	@RequestMapping("/board/postAdmin")
+	public String postContact(AdminBoardVO adminVO , Model model , @AuthenticationPrincipal MemberVO memberVO) {
+		adminVO.setMemberVO(memberVO);
+		boardService.posting2(adminVO);
+		ArrayList<AdminBoardVO> list0 = new ArrayList<AdminBoardVO>();
+		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
+		String pageNo =(String) model.getAttribute("pageNo");
+		Pagination pagination = null;
+		if(pageNo==null) {
+			pagination = new Pagination(boardService.getTotalPostCount());
+		}else {
+			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
+		}
+		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
+		list0 = boardService.orderByDate1Contact(pagination);
+		model.addAttribute("pagination",pagination);
+		model.addAttribute("list0",list0);
+		return "/board/contact";
+	}
+	@RequestMapping("/board/adminDetail")
+	public String adminDetail(Model model , @AuthenticationPrincipal MemberVO memberVO , int adminBoardNo) {
+		model.addAttribute("loginId" , memberVO.getMemberId());
+		
+		
+		AdminBoardVO avo00 = new AdminBoardVO();
+		avo00 = boardService.findAdminBoardByNo(adminBoardNo);
+		model.addAttribute("avo00" , avo00);
+		
+		String avo01 = new MemberVO().getMemberId();
+		avo01 = boardService.findMemberIdByNo(adminBoardNo);
+		model.addAttribute("avo01" , avo01);
+		
+		String adminManager = new MemberVO().getMemberId();
+		adminManager = boardService.findManagerId();
+		model.addAttribute("adminManager" , adminManager);
+		
+		return "board/adminDetail";
+	}
+	@RequestMapping("/board/deleteAdmin")
+	public String deleteAdmin(int adminBoardNo , Model model) {
+		boardService.deleteAdmin(adminBoardNo);
+		ArrayList<AdminBoardVO> list0 = new ArrayList<AdminBoardVO>();
+		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
+		String pageNo =(String) model.getAttribute("pageNo");
+		Pagination pagination = null;
+		if(pageNo==null) {
+			pagination = new Pagination(boardService.getTotalPostCount());
+		}else {
+			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
+		}
+		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
+		list0 = boardService.orderByDate1Contact(pagination);
+		model.addAttribute("pagination",pagination);
+		model.addAttribute("list0",list0);
+		return "/board/contact";
+	}
+	@RequestMapping("/board/orderAdmin")
+	public String orderAdmin(HttpServletRequest request) throws Exception {
+		HttpSession session = request.getSession(false);
+		String sort = request.getParameter("sort1");
+		String sorton = request.getParameter("sorton");
+		if(session.getAttribute("sorting")==null) {
+			if(sorton!=null) {
+				session.setAttribute("sorting", sort);
+			}else{
+				session.setAttribute("sorting", "date");
+			}
+		}
+		if(sorton!=null) {
+			session.setAttribute("sorting", sort);
+		}
+		String sort1 =(String) session.getAttribute("sorting");
+		ArrayList<AdminBoardVO> list0 = new ArrayList<AdminBoardVO>();
+		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
+		String pageNo = request.getParameter("pageNo");
+		Pagination pagination = null;
+		if(pageNo==null) {
+			pagination = new Pagination(boardService.getTotalPostCount());
+		}else {
+			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
+		}		
+		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
+		if(sort1.equals("id")) {
+			list0 = boardService.orderAdminById(pagination);
+		}else if(sort1.equals("title")) {
+			list0 = boardService.orderAdminByTitle(pagination);
+		}else if(sort1.equals("date")){
+			list0 = boardService.orderAdminByDate(pagination);
+		}
+		request.setAttribute("pagination", pagination);
+		request.setAttribute("list0", list0);
+		return "/board/contact";
+	}
+	@RequestMapping("/board/updateAdminForm")
+	public String updateAdminForm( int adminBoardNo, Model model) {
+		AdminBoardVO avo = new AdminBoardVO();
+		avo = boardService.findAdminBoardByNo(adminBoardNo);
+		model.addAttribute("avo",avo);
+		
+		String avo01 = new MemberVO().getMemberId();
+		avo01 = boardService.findMemberIdByNo(adminBoardNo);
+		model.addAttribute("avo01" , avo01);
+		
+		return "board/updateAdminForm";
+	}
+	@PostMapping("/board/updateAdmin")	
+	public String updateAdmin(AdminBoardVO adminBoardVO) {
+		adminBoardVO.setAdminBoardNo(adminBoardVO.getAdminBoardNo());
+		adminBoardVO.setAdminBoardTitle(adminBoardVO.getAdminBoardTitle());
+		adminBoardVO.setAdminBoardContent(adminBoardVO.getAdminBoardContent());
+		adminBoardVO.setAdminBoardKind(adminBoardVO.getAdminBoardKind());
+		boardService.updateAdmin(adminBoardVO);
+		return "redirect:/resultAdminUpdate";
+	}
+	@GetMapping("/resultAdminUpdate")
+	public String resultAdminUpdate(Model model , HttpServletRequest request){
+		
+		HttpSession session = request.getSession(false);
+		String sort = request.getParameter("sort1");
+		String sorton = request.getParameter("sorton");
+		if(session.getAttribute("sorting")==null) {
+			if(sorton!=null) {
+				session.setAttribute("sorting", sort);
+			}else{
+				session.setAttribute("sorting", "date");
+			}
+		}
+		if(sorton!=null) {
+			session.setAttribute("sorting", sort);
+		}
+		String sort1 =(String) session.getAttribute("sorting");
+		ArrayList<AdminBoardVO> list0 = new ArrayList<AdminBoardVO>();
+		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
+		String pageNo = request.getParameter("pageNo");
+		Pagination pagination = null;
+		if(pageNo==null) {
+			pagination = new Pagination(boardService.getTotalPostCount());
+		}else {
+			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
+		}		
+		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
+		if(sort1.equals("id")) {
+			list0 = boardService.orderAdminById(pagination);
+		}else if(sort1.equals("title")) {
+			list0 = boardService.orderAdminByTitle(pagination);
+		}else if(sort1.equals("date")){
+			list0 = boardService.orderAdminByDate(pagination);
+		}
+		request.setAttribute("pagination", pagination);
+		request.setAttribute("list0", list0);
+		 
+		return "/board/contact";
 	}
 }

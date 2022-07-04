@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>AdminPostForm</title>
+</head>
+<div layout:fragment="main">
+	<form method="post" th:action="@{/board/postAdmin}"
+		enctype="multipart/form-data">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th class="col-sm-4"><select name="adminBoardKind"
+						id="adminBoardKind">
+							<option value="no">--정렬 방식을 선택해 주세요.--</option>
+							<option value="시스템오류">시스템오류</option>
+							<option value="부족한부분">부족한부분</option>
+					</select></th>
+					<th class="col-sm-4" th:text="${id}"></th>
+					<th class="col-sm-4"><input type="text" name="adminBoardTitle"
+						placeholder="제목" required="required"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="4"><textarea rows="10" class="form-control"
+							name="adminBoardContent" placeholder="본문내용" required="required"></textarea></td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="text-center">
+			<button type="submit" class="btn btn-success" onclick="post">확인</button>
+			<button type="button" class="btn btn-success"
+				th:onclick="|location.href='@{/board/contact}'|">뒤로가기</button>
+		</div>
+	</form>
+	<br>
+</div>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>Contact</title>
+</head>
+<div layout:fragment="main">
+	<div class="row">
+		<div class="col-sm-4" align="left">
+			<button type="button"
+				th:onclick="|location.href='@{/board/postContactForm}'|">글쓰기</button>
+		</div>
+		<div class="col-sm-4" align="center">
+			<h2>건의사항 게시판</h2>
+		</div>
+		<div class="col-sm-4" align="right">
+			<select name="sort" id="sort">
+				<option value="no">--정렬 방식을 선택해 주세요.--</option>
+				<option value="id">아이디순</option>
+				<option value="title">제목순</option>
+				<option value="date">작성날짜순</option>
+			</select>
+			<button type="submit" th:onclick="|javascript:sort()|"
+				class="btn btn-primary btn-outline-dark">정렬하기</button>
+		</div>
+	</div>
+			<table class="table table-bordered table-hover boardlist">
+				<thead>
+					<tr style="background-color: black">
+						<th style = "color:white">NO</th>
+						<th style = "color:white">ID</th>
+						<th style = "color:white">제목</th>
+						<th style = "color:white">내용</th>
+						<th style = "color:white">작성날짜</th>
+						<th style = "color:white">게시글종류</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="list0 : ${list0}">
+						<td th:text="${list0Stat.count}">NO</td>
+						<td th:text="${list0.memberVO.memberId}">ID</td>
+						<td th:text="${list0.adminBoardTitle}" th:onclick="|location.href='@{/board/adminDetail?adminBoardNo=}'+${list0.adminBoardNo}|">제목</td>
+						<td th:text="${list0.adminBoardContent}">내용</td>
+						<td th:text="${list0.adminBoardDate}">작성날짜</td>
+						<td th:text="${list0.adminBoardKind}">게시글종류</td>
+					</tr>
+				</tbody>
+			</table>
+
+	<a th:if="${pagination.previousPageGroup}" class="page-link" th:href="@{/board/orderAdmin?pageNo=}+${pagination.startPageOfPageGroup-1}">Previous</a>
+
+	<li th:each="idx , iterStat : ${#numbers.sequence(pagination.startPageOfPageGroup , pagination.endPageOfPageGroup)}">
+		<span th:if="${idx==pagination.nowPage}" th:text="${idx}"> 
+		</span> 
+		<span th:unless="${idx==pagination.nowPage}"> 
+		 <a class="page-link" th:href="@{/board/orderAdmin?pageNo=}+${idx}" th:text="${idx}"></a> 
+		 </span>
+	</li> 
+	<a th:if="${pagination.nextPageGroup}" class="page-link" th:href="@{/board/orderAdmin?pageNo=}+${pagination.endPageOfPageGroup+1}">Next</a>
+
+	<form id="sorting" th:action="@{/board/orderAdmin}" method="get">
+		<input type="hidden" name="sort1" value="">
+		 <input type="hidden" name="sorton" value="on">
+	</form>
+	<script type="text/javascript">
+		function sort() {
+			var sort = $("#sort").val();
+			if (sort == "no") {
+				alert("정렬 방식을 선택해 주세요.");
+				return false;
+			}
+			$('input[name=sort1]').attr('value', sort);
+			document.getElementById("sorting").submit();
+		}
+	</script>
+</div>
+</html>

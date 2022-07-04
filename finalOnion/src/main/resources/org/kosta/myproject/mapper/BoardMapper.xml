@@ -6,6 +6,11 @@
 		<result column="MEMBERID" property="memberVO.memberId"/>
 		<result column="tem" property="memberVO.tempVO.temp"/>
 	</resultMap>
+	<resultMap type="org.kosta.myproject.vo.AdminBoardVO" id="AdminBoardResultMap">
+		<result column="adminBoardContent" property="AdminBoardVO.adminBoardContent"/>
+		<result column="adminBoardTitle" property="AdminBoardVO.adminBoardTitle"/>
+		<result column="memberId" property="memberVO.memberId"/>
+	</resultMap>
 	<select id="getTotalPostCount" resultType="int">
 		SELECT COUNT(*) FROM TRADING_BOARD WHERE BOARD_KIND = '삽니다'
 	</select>
@@ -180,4 +185,54 @@
 	<select id="currentseq" resultType="int">
 		select FILE_NO_SEQ.currval from dual
 	</select>
+	<select id="orderByDate1Contact" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
+		select ADMINBOARD_NO, ADMINBOARD_TITLE, ADMINBOARD_CONTENT , rnum, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
+		from( 
+			select ROW_NUMBER() OVER(ORDER BY ADMINBOARD_DATE DESC) as rnum, 
+			ADMINBOARD_NO , ADMINBOARD_CONTENT , ADMINBOARD_TITLE, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
+			from ( 
+				select a.ADMINBOARD_NO , a.ADMINBOARD_CONTENT , a.ADMINBOARD_TITLE, a.ADMINBOARD_DATE, t.MEMBERID , a.ADMINBOARD_KIND
+				from T_MEMBER t inner join ADMINBOARD a on t.MEMBERID = a.MEMBERID
+			)
+		)
+		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
+	</select>
+	<insert id="posting2" parameterType = "org.kosta.myproject.vo.AdminBoardVO">
+		insert into ADMINBOARD (ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID) 
+		values(ADMINBOARD_SEQ.nextval , #{adminBoardTitle} , #{adminBoardContent} , SYSDATE , #{adminBoardKind} , #{memberVO.memberId})
+	</insert>
+	<select id="adminDetailByNo" resultType="org.kosta.myproject.vo.AdminBoardVO" parameterType="int">
+		SELECT * FROM ADMINBOARD WHERE ADMINBOARD_NO=#{adminBoardNo}
+	</select>
+	<delete id="deleteAdmin" parameterType="int">
+		delete from ADMINBOARD where ADMINBOARD_NO = #{adminBoardNo}
+	</delete>
+	<select id="orderAdminById" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
+		select ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID
+		from ADMINBOARD Order By MEMBERID desc
+	</select>
+	<select id="orderAdminByTitle" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
+		select ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID
+		from ADMINBOARD Order By ADMINBOARD_TITLE desc
+	</select>
+	<select id="orderAdminByDate" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
+		select ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID
+		from ADMINBOARD Order By ADMINBOARD_DATE desc
+	</select>
+	<select id="findAdminBoardByNo" resultType="org.kosta.myproject.vo.AdminBoardVO" parameterType="int">
+		select ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID
+		from ADMINBOARD where ADMINBOARD_NO = #{adminBoardNo}
+	</select>
+	<select id="findMemberIdByNo" parameterType="int"  resultType="String">
+		select a.MEMBERID from T_MEMBER t , ADMINBOARD a where t.MEMBERID = a.MEMBERID
+		and ADMINBOARD_NO = #{adminBoardNo}
+	</select>
+	<select id="findManagerId" resultType="String">
+		select memberId from AUTHORITY where AUTHORITY = 'ROLE_ADMIN'
+	</select>
+	<update id="updateAdmin" parameterType="org.kosta.myproject.vo.AdminBoardVO">
+		UPDATE ADMINBOARD
+		SET ADMINBOARD_TITLE=#{adminBoardTitle}, ADMINBOARD_CONTENT=#{adminBoardContent}, ADMINBOARD_KIND=#{adminBoardKind} , ADMINBOARD_DATE = SYSDATE
+		WHERE ADMINBOARD_NO= #{adminBoardNo}
+	</update>
 </mapper>

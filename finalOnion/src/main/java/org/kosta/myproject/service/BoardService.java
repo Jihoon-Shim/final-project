@@ -3,6 +3,7 @@ package org.kosta.myproject.service;
 import java.util.ArrayList;
 
 import org.kosta.myproject.vo.MemberVO;
+import org.kosta.myproject.vo.AdminBoardVO;
 import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
@@ -51,4 +52,26 @@ public interface BoardService {
 	void postpicture(FileVO fvo);
 
 	int currentseq();
+
+	ArrayList<AdminBoardVO> orderByDate1Contact(Pagination pagination);
+
+	void posting2(AdminBoardVO adminVO);
+
+	AdminBoardVO adminDetailByNo(int adminBoardNo);
+
+	void deleteAdmin(int adminBoardNo);
+
+	ArrayList<AdminBoardVO> orderAdminById(Pagination pagination);
+
+	ArrayList<AdminBoardVO> orderAdminByTitle(Pagination pagination);
+
+	ArrayList<AdminBoardVO> orderAdminByDate(Pagination pagination);
+
+	AdminBoardVO findAdminBoardByNo(int adminBoardNo);
+
+	void updateAdmin(AdminBoardVO adminBoardVO);
+
+	String findMemberIdByNo(int adminBoardNo);
+
+	String findManagerId();
 }

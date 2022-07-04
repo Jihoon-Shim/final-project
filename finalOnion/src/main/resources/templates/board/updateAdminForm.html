@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>AdminDetail</title>
+</head>
+<div layout:fragment="main">
+	<br> <input type="hidden" name="adminboardNo"
+		th:value="${avo.adminBoardNo}">
+	<form method="post" th:action="@{/board/updateAdmin}">
+		<table class="table table-bordered" style="overflow: auto;">
+			<thead>
+				<tr bgcolor="black">
+					<td><input type="hidden" th:text="${avo.adminBoardNo}"
+						name="adminBoardNo" th:value="${avo.adminBoardNo}"></td>
+					<td th:text="|아이디 : ${avo01}|" style="color: white" th:value="${avo01}">아이디</td>
+					<td colspan="3"><textarea rows="1" name="adminBoardTitle"
+							placeholder="제목" required="required"
+							th:value="${avo.adminBoardTitle}"
+							th:text="${avo.adminBoardTitle}"></textarea></td>
+					<td th:text="|작성날짜 : ${avo.adminBoardDate}|" style="color: white">작성날짜</td>
+					<td><select name="adminBoardKind" id="adminBoardKind"
+						required="required" th:value="${avo.adminBoardKind}">
+							<option value="시스템오류">--글 종류를 선택해 주세요.--</option>
+							<option value="시스템오류">시스템오류</option>
+							<option value="부족한부분">부족한부분</option>
+					</select></td>
+
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="12"><textarea rows="10" class="form-control"
+							name="adminBoardContent" placeholder="본문내용" required="required"
+							th:text="${avo.adminBoardContent}"
+							th:value="${avo.adminBoardContent}"></textarea></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="text-center">
+			<button type="submit"
+				th:onclick="|location.href='@{/board/updateAdmin?adminBoardNo=}'+${avo.adminBoardNo}|"
+				class="btn btn-success">확인</button>
+			<button type="reset" class="btn btn-success"
+				th:onclick="|location.href='@{/board/adminDetail?adminBoardNo=}'+${avo.adminBoardNo}|">취소</button>
+		</div>
+	</form>
+	<br>
+</div>
+
+</html>

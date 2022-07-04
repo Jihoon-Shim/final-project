@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.kosta.myproject.mapper.BoardMapper;
 import org.kosta.myproject.vo.MemberVO;
+import org.kosta.myproject.vo.AdminBoardVO;
 import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
@@ -147,4 +148,75 @@ public class BoardServiceImpl implements BoardService{
 		int seq = boardmapper.currentseq();
 		return seq;
 	}
+
+	@Override
+	public ArrayList<AdminBoardVO> orderByDate1Contact(Pagination pagination) {
+		ArrayList<AdminBoardVO> list = new ArrayList<AdminBoardVO>();
+		list = boardmapper.orderByDate1Contact(pagination);
+		return list;
+	}
+
+	@Override
+	public void posting2(AdminBoardVO adminVO) {
+		boardmapper.posting2(adminVO);
+	}
+
+	@Override
+	public AdminBoardVO adminDetailByNo(int adminBoardNo) {
+		AdminBoardVO avo = new AdminBoardVO();
+		avo = boardmapper.adminDetailByNo(adminBoardNo);
+		return avo;
+	}
+
+	@Override
+	public void deleteAdmin(int adminBoardNo) {
+		boardmapper.deleteAdmin(adminBoardNo);
+		
+	}
+
+	@Override
+	public ArrayList<AdminBoardVO> orderAdminById(Pagination pagination) {
+		ArrayList<AdminBoardVO> adminList = new ArrayList<AdminBoardVO>();
+		adminList = boardmapper.orderAdminById(pagination);
+		return adminList;
+	}
+
+	@Override
+	public ArrayList<AdminBoardVO> orderAdminByTitle(Pagination pagination) {
+		ArrayList<AdminBoardVO> adminList2 = new ArrayList<AdminBoardVO>();
+		adminList2 = boardmapper.orderAdminByTitle(pagination);
+		return adminList2;
+	}
+
+	@Override
+	public ArrayList<AdminBoardVO> orderAdminByDate(Pagination pagination) {
+		ArrayList<AdminBoardVO> adminList3 = new ArrayList<AdminBoardVO>();
+		adminList3 = boardmapper.orderAdminByDate(pagination);
+		return adminList3;
+	}
+
+	@Override
+	public AdminBoardVO findAdminBoardByNo(int adminBoardNo) {
+		AdminBoardVO avo = new AdminBoardVO();
+		avo = boardmapper.findAdminBoardByNo(adminBoardNo);
+		return avo;
+	}
+
+	@Override
+	public void updateAdmin(AdminBoardVO adminBoardVO) {
+		boardmapper.updateAdmin(adminBoardVO);
+	}
+
+	@Override
+	public String findMemberIdByNo(int adminBoardNo) {
+		String avo01 = boardmapper.findMemberIdByNo(adminBoardNo);
+		return avo01;
+	}
+
+	@Override
+	public String findManagerId() {
+		String adminManager = boardmapper.findManagerId();
+		return adminManager;
+	}
+
 }
