@@ -107,6 +107,7 @@ public class BoardController {
 			}
 			request.setAttribute("pagination", pagination);
 			request.setAttribute("list", list);
+			System.out.println(pagination);
 			return "board/buylist";
 		}
 		
