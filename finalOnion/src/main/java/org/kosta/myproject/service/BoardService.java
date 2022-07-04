@@ -97,12 +97,8 @@ public interface BoardService {
 	ArrayList<AdminBoardVO> fAQ();
 
 	AdminBoardVO adminpostdetail(int adminBoardNo);
-<<<<<<< HEAD
 
 	List<TradingBoardVO> findTradingBoardByMemberId(String myId);
 
 	void updatePostSoldOutByBoardNo(int boardNo);
-=======
-
->>>>>>> branch 'main' of https://github.com/Jihoon-Shim/final-project.git
 }
