@@ -25,11 +25,15 @@ public class HomeController {
 		//log.info("home "+SecurityContextHolder.getContext().getAuthentication().getPrincipal());	
 		//Principal(사전적 의미:본인 ) 객체는 인증된 회원 정보 객체를 말한다
 		//org.kosta.myproject.config.security.MemberAuthenticationProvider 에서 할당 
-		if(authentication!=null)
+		
+		if(authentication!=null) {
 		  log.info("Home: 인증받은 사용자 {} ",authentication.getPrincipal());
-		else
+		  model.addAttribute("message","양파마켓에 어서오세요!");	
+		}
+		else {
 			log.info("Home: 인증받지 않은 사용자");
-		model.addAttribute("message", "SpringBoot Security Thymeleaf");	
+			 model.addAttribute("message","로그인을 해주세요!");	
+		}
 		
 		//채팅 알림
 		if(memberVO!=null) {
