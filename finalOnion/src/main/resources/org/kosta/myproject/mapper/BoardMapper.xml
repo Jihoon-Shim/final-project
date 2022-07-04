@@ -313,7 +313,6 @@
 	<select id="currentseq" resultType="int">
 		select FILE_NO_SEQ.currval from dual
 	</select>
-<<<<<<< HEAD
 	<select id="orderByDate1Contact" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
 		select ADMINBOARD_NO, ADMINBOARD_TITLE, ADMINBOARD_CONTENT , rnum, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
 		from( 
@@ -364,7 +363,6 @@
 		SET ADMINBOARD_TITLE=#{adminBoardTitle}, ADMINBOARD_CONTENT=#{adminBoardContent}, ADMINBOARD_KIND=#{adminBoardKind} , ADMINBOARD_DATE = SYSDATE
 		WHERE ADMINBOARD_NO= #{adminBoardNo}
 	</update>
-=======
 	<select id="currentNo" resultType="int">
 		SELECT TRADING_BOARD_SEQ.currval FROM dual
 	</select>
@@ -376,5 +374,11 @@
 		SELECT COUNT(*) FROM TRADING_BOARD b, (SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 		WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND (b.BOARD_CONTENT LIKE  '%'||#{value}||'%' OR b.BOARD_TITLE LIKE '%'||#{value}||'%' OR t.TAG LIKE '%'||#{value}||'%')
 	</select>
->>>>>>> branch 'main' of https://github.com/Jihoon-Shim/final-project.git
+	<select id="findTradingBoardByMemberId" parameterType="string" resultType="org.kosta.myproject.vo.TradingBoardVO">
+		select * from Trading_Board where memberId = #{value}
+	</select>
+	<update id="updatePostSoldOutByBoardNo" parameterType="int">
+		update trading_board set trade_status = 0 where board_no=#{value}
+	</update>
+	
 </mapper>

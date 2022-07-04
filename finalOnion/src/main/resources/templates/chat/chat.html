@@ -6,6 +6,9 @@
 	>
 <head>
 <title>채팅</title>
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 </head>
     <th:block layout:fragment="main"> 
         <div class="container">
@@ -40,6 +43,14 @@
              		<option th:value="${postVO.boardNo}" th:text="${postVO.boardTitle}"></option>
              		</th:block>
              	</select>
+             	<br><br><br>
+             	<select id ="isSoldOut" >
+             		<option value="">거래 완료 후 확정해 주세요</option>
+             		<th:block th:each="boardVO:${boardList}">
+             		<option th:value="${boardVO.boardNo}" th:text="${boardVO.boardTitle}"></option>
+             		</th:block>
+             	</select>
+             	<button type="button" id ="soldOut">거래완료</button>
              </div>
              </div>
                 <div class="row">
@@ -137,13 +148,35 @@ $(document).ready(function(){
         str += "</div></div>";
         $("#msgArea").append(str);
 	});
-    
     var imgTitle = document.getElementById("imgTitle");
     imgTitle.addEventListener('mouseover', (event) => {
     	var str = "닉네임 : "+"[[${otherMemberVO.memberNickname}]]";
     	str += "\n나눔온도 : "+"[[${temp}]]"+" ℃";
     	str += "\n주소 : "+"[[${otherMemberVO.memberAddress}]]";
     	imgTitle.title = str;
+    });
+    var boardVO = $("#isSoldOut");
+    $("#soldOut").on("click", (e) => {
+    	if(boardVO.val()!=""){
+    		isSoldOut = confirm("위 글을 거래완료 처리하시겠습니까?");
+        	if(isSoldOut){
+        		let token = $("meta[name='_csrf']").attr("content"); 
+				let header = $("meta[name='_csrf_header']").attr("content");
+        		$.ajax({
+        			type:"post",
+        			url:"postSoldOut",
+        			data:{
+        				"boardNo":boardVO.val()
+        			},
+        			beforeSend : function(xhr){  
+	                    xhr.setRequestHeader(header,token);
+	                },
+        			success:function(result){
+        				alert(result);
+        			}
+        		});
+        	}
+    	}
     });
 });
 </script>

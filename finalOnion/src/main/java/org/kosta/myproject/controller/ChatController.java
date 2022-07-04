@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kosta.myproject.service.BoardService;
 import org.kosta.myproject.service.ChatService;
 import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.ChattingRoomVO;
@@ -15,6 +16,7 @@ import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -25,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 public class ChatController{
 	private final ChatService chatService;
 	private final MemberService memberService;
+	private final BoardService boardService;
 	
 	@RequestMapping("/goChat")
 	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherId, Model model, HttpServletRequest request) {
@@ -52,6 +55,16 @@ public class ChatController{
 			HttpSession session = request.getSession();
 			session.setAttribute("reception", reception);
 		}
+		//판매 완료가 아닌 내 글 가져오기
+		List<TradingBoardVO> List = boardService.findTradingBoardByMemberId(myId);
+		List<TradingBoardVO> boardList = new ArrayList<TradingBoardVO>();
+		for(TradingBoardVO tradingBoardVO : List) {
+			if(tradingBoardVO.getTradeStatus()==1) {
+				boardList.add(tradingBoardVO);
+			}
+		}
+		model.addAttribute("boardList",boardList);
+		
 		return "chat/chat";
 	}
 	@RequestMapping("/chatRecord")
@@ -91,7 +104,11 @@ public class ChatController{
 		model.addAttribute("chattingVOList",chattingVOList);
 		return "chat/chattingList";
 	}
-	
-	
+	@PostMapping("postSoldOut")
+	@ResponseBody
+	public String postSoldOut(int boardNo) {
+		boardService.updatePostSoldOutByBoardNo(boardNo);
+		return "거래완료 처리되었습니다.";
+	}
 }
 

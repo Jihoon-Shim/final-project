@@ -1,6 +1,7 @@
 package org.kosta.myproject.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.AdminBoardVO;
@@ -92,4 +93,8 @@ public interface BoardService {
 	ArrayList<TradingBoardVO> orderBySalePricesearch(Pagination pagination);
 
 	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
+
+	List<TradingBoardVO> findTradingBoardByMemberId(String myId);
+
+	void updatePostSoldOutByBoardNo(int boardNo);
 }

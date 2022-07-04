@@ -273,7 +273,7 @@ public class BoardController {
 			tradingBoardVO.setProductPicture( fileName);
 		}		
 		boardService.updating(tradingBoardVO);
-		return "board/updatePost";
+		return "redirect:board/updatePost";
 	}
 	@RequestMapping("/board/deletePost")
 	public String deletePost(int boardNo) {
@@ -474,4 +474,5 @@ public class BoardController {
 		 
 		return "/board/contact";
 	}
+	
 }

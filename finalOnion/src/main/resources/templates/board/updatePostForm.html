@@ -7,7 +7,7 @@
 <title>BuyForm</title>
 </head>
  <div layout:fragment="main">
- <form method="post" th:action="@{/board/updatePost}"  enctype="multipart/form-data"> 
+ <form method="post" th:action="@{/board/updatePost}" id="updatePost" enctype="multipart/form-data"> 
  	<input type="hidden" th:value="${tvo.boardNo}" name="boardNo"></input>	
  	<input type="hidden" th:value=${tvo.productPicture} name="productPicture">
  	<table class="table table-bordered">
@@ -16,8 +16,8 @@
 	 		<th>
 			<select name="boardKind" id="boardKind"> 
 			<option value="no">--글 종류를 선택해 주세요.--</option> 
-			<option value="삽니다">삽니다</option> 
-			<option value="팝니다">팝니다</option> 
+			<option value="삽니다">삽니다</option>
+			<option value="팝니다">팝니다</option>
 			</select>
 			</th>
 			<th><input type="file" name="updatefile" multiple="false"></th>
@@ -39,14 +39,15 @@
 	</div>
 </form>
 <script th:inline="javascript">
-function kindcheck(){
-	var kind =document.getElementById("boardKind").value;
-	if(kind=="no"){
-		alert("글 종류를 선택해 주세요.");
-		return false;
+	function kindcheck(){
+		var kind =document.getElementById("boardKind").value;
+		if(kind=="no"){
+			alert("글 종류를 선택해 주세요.");
+			return false;
+		}
 	}
-	var filename
-}
+
+
 </script>
  </div>
 </html>

@@ -14,9 +14,9 @@ CREATE TABLE T_MEMBER
     MEMBER_TEL         VARCHAR2(100)    NOT NULL, 
      PRIMARY KEY (MEMBERID)
 )
-select * from t_member where memberId='test3'
+select * from t_member where memberId='javaking'
 select * from FILEVO;
-
+delete from chattingRoom where chattingRoom_title like '%java2%'
 select * from chattingRoom
 select * from chatting
 
@@ -28,6 +28,7 @@ select distinct * from (
 select memberId from chatting where chattingRoom_No=1) where memberId not in 'java'
 
 select * from TRADING_BOARD where memberId = 'java' and trade_status = 1 and board_content like '%ㅇ%';
+select b.BOARD_title, t.board_no, t.tagid from BOARDTAG t, TRADING_BOARD b where t.board_no=b.board_no
 
 select distinct memberId from (
 	select distinct memberId from chatting where chattingRoom_title=4 )
@@ -60,7 +61,7 @@ select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingR
 where chattingRoom_title like '%bear%' and memberId != 'bear' and reception = 1
 and c.chattingRoom_no = r.chattingRoom_no 
 
-select * from TRADING_BOARD
+select chattingRoom_No, chattingRoom_title from chattingRoom where chattingRoom_No in ( select distinct chattingRoom_No from CHATTINGROOM where chattingRoom_title like '%java%')
 -- TAG Table Create SQL
 CREATE TABLE TAG
 (

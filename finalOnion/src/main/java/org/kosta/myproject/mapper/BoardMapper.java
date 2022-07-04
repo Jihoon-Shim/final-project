@@ -1,6 +1,7 @@
 package org.kosta.myproject.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.kosta.myproject.vo.MemberVO;
@@ -93,5 +94,9 @@ public interface BoardMapper {
 	ArrayList<TradingBoardVO> orderBySalePricesearch(Pagination pagination);
 
 	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
+
+	List<TradingBoardVO> findTradingBoardByMemberId(String myId);
+
+	void updatePostSoldOutByBoardNo(int boardNo);
 
 }

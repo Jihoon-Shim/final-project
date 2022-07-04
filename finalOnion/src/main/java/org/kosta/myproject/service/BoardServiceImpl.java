@@ -1,6 +1,7 @@
 package org.kosta.myproject.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.kosta.myproject.mapper.BoardMapper;
 import org.kosta.myproject.vo.MemberVO;
@@ -276,5 +277,16 @@ public class BoardServiceImpl implements BoardService{
 		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
 		list = boardmapper.orderBySaleDatesearch(pagination);
 		return list;
+	}
+
+	@Override
+	public List<TradingBoardVO> findTradingBoardByMemberId(String myId) {
+		return boardmapper.findTradingBoardByMemberId(myId);
+	}
+
+	@Override
+	public void updatePostSoldOutByBoardNo(int boardNo) {
+		boardmapper.updatePostSoldOutByBoardNo(boardNo);
+		
 	}
 }

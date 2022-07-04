@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		SELECT	MEMBERID,	MEMBER_PASSWORD,	MEMBER_NAME, MEMBER_ADDRESS, enabled , MEMBER_NICKNAME,MEMBER_PICTURE,MEMBER_TEL
 		FROM	T_MEMBER
 		WHERE 	MEMBERID=#{value}	
-		AND		enabled=1 		
+		AND		enabled=1
  	</select>
 	<!-- Spring Security에서 권한 체크를 위해 사용 -->
 	<select id="findAuthorityByUsername"  resultType="PowerVO">
