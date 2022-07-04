@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.myproject.service.BoardService;
-import org.kosta.myproject.vo.AdminBoardVO;
 import org.kosta.myproject.service.TagService;
+import org.kosta.myproject.vo.AdminBoardVO;
 import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
@@ -285,6 +285,18 @@ public class BoardController {
 	}
 	@RequestMapping("/board/deletePost")
 	public String deletePost(int boardNo) {
+		TradingBoardVO tradingBoardVO = new TradingBoardVO();
+		tradingBoardVO=boardService.findtradingboardbyno(boardNo);
+		File profile = new File(".");
+        String rootPath = profile.getAbsolutePath().substring(0,profile.getAbsolutePath().length()-2);
+		String imgUploadPath = rootPath + File.separator +"src"+ File.separator +"main"+ File.separator +"resources"+ File.separator + "static" + File.separator + "myweb" + File.separator + "images" + File.separator + "board";
+		File file=new File(imgUploadPath+File.separator+tradingBoardVO.getProductPicture());
+		File thumbfile=new File(imgUploadPath+File.separator+"s"+File.separator+tradingBoardVO.getProductPicture());
+		if(!file.getName().equals("iu.jpg")) {
+			file.delete();
+			thumbfile.delete();
+		}
+		
 		boardService.deletePost(boardNo);
 		return"board/deletePost";
 	}
