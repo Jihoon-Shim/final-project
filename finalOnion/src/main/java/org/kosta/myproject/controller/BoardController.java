@@ -226,18 +226,26 @@ public class BoardController {
 		 }
 		tradingBoardVO.setMemberVO(memberVO);
 		boardService.posting(tradingBoardVO);
+		int nullcount = 0;
 		for(int i=0;i<5;i++) {
-			String tag = request.getParameter(Integer.toString(i));
+			String tag = request.getParameter(Integer.toString(i));			
 			if(tag!=null) {
 				if(tagService.tagCheck(tag).equals("ok")) {
 					tagService.registTag(tag);
 				}else {
 					tagService.hitsTag(tag);
 				}
+				nullcount=nullcount+1;
 				int currentNo = boardService.currentNo();
 				int tagNo = tagService.findTagNoByTag(tag);
 				tagService.relateTag(tagNo,currentNo);
 			}
+		}
+		if(nullcount==0) {
+			tagService.registTag("이글에는태그가없습니다");
+			int currentNo = boardService.currentNo();
+			int tagNo = tagService.findTagNoByTag("이글에는태그가없습니다");
+			tagService.relateTag(tagNo, currentNo);
 		}
 		return "board/PostBuy";
 	}

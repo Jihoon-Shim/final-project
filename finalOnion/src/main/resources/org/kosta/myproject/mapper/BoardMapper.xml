@@ -43,7 +43,7 @@
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
-					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')			
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
@@ -310,10 +310,9 @@
 		INSERT INTO FILEVO(file_no,file_name,content_type)
 		VALUES(FILE_NO_SEQ.nextval,#{fileName},#{contentType})
 	</insert>	
-	<select id="currentseq" resultType="int">
+	<select id="currentseq" resultType="int" >
 		select FILE_NO_SEQ.currval from dual
 	</select>
-<<<<<<< HEAD
 	<select id="orderByDate1Contact" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
 		select ADMINBOARD_NO, ADMINBOARD_TITLE, ADMINBOARD_CONTENT , rnum, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
 		from( 
@@ -364,7 +363,6 @@
 		SET ADMINBOARD_TITLE=#{adminBoardTitle}, ADMINBOARD_CONTENT=#{adminBoardContent}, ADMINBOARD_KIND=#{adminBoardKind} , ADMINBOARD_DATE = SYSDATE
 		WHERE ADMINBOARD_NO= #{adminBoardNo}
 	</update>
-=======
 	<select id="currentNo" resultType="int">
 		SELECT TRADING_BOARD_SEQ.currval FROM dual
 	</select>
@@ -376,5 +374,4 @@
 		SELECT COUNT(*) FROM TRADING_BOARD b, (SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 		WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND (b.BOARD_CONTENT LIKE  '%'||#{value}||'%' OR b.BOARD_TITLE LIKE '%'||#{value}||'%' OR t.TAG LIKE '%'||#{value}||'%')
 	</select>
->>>>>>> branch 'main' of https://github.com/Jihoon-Shim/final-project.git
 </mapper>
