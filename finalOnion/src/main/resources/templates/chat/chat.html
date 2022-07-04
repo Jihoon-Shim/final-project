@@ -13,10 +13,18 @@
              <div class="row">
                 <div id="msgArea" class="col-sm-6" style="word-wrap: break-word; overflow-x:hidden; width:550px; height:450px">
              <th:block th:each="chat:${chattingList}">
-                <div class='col-6'>
-                <div class="alert alert-info">
+             <th:block th:if="${#authentication.principal.memberNickname==chat.MEMBER_NICKNAME}">
+             	<div class='col-6'>
+                <div class="alert alert-info" align="right">
                 	<b th:text="|${chat.MEMBER_NICKNAME} : ${chat.CHATTING}|"></b>
                 </div></div>
+             </th:block>
+             <th:block th:unless="${#authentication.principal.memberNickname==chat.MEMBER_NICKNAME}">
+             	<div class='col-6'>
+                <div class="alert alert-warning" align="left">
+                	<b th:text="|${chat.MEMBER_NICKNAME} : ${chat.CHATTING}|"></b>
+                </div></div>
+             </th:block>
                 </th:block>
                 </div>
                 <br><br>
