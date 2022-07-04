@@ -20,17 +20,17 @@
 	</thead>
 	<tbody>
 		<tr bgcolor="#FFFFFF">
-			<td><img th:src="@{/myweb/images/board/}+${tvo.productPicture}" width=400vw height=100%;>	</td>
+			<td><img th:src="@{/myweb/images/board/}+${tvo.productPicture}" width=350vw height=100%;>	</td>
 			<td colspan="3"><pre><font size="4" ><span class="box" th:text=${tvo.boardContent}></span></font></pre>
 			<form th:action="@{/goChat}" method="post">
 				<input type="hidden" name="otherId" th:value="${tvo.memberVO.memberId}">
 				<th:block th:if="${#authentication.getPrincipal().getMemberId()}!=${tvo.memberVO.memberId}">
-				<button type="submit" th:text="|${tvo.memberVO.memberNickname}님과 채팅|">작성자와 채팅</button>
+				<button type="submit" th:text="|${tvo.memberVO.memberNickname}님과 채팅|" class="btn btn-primary">작성자와 채팅</button>
 				</th:block>
 			</form>
 			</td>
 		</tr>
-		<tr>
+		<tr bgcolor="#DDDDDD">
 			<td>태그명</td>
 			<td>빈도수</td>
 		</tr>
@@ -40,8 +40,9 @@
 		</tr>
 	</tbody>
 </table>
-<button type="button" id="update" >수정</button>    
-<button type="button" id="delete">삭제</button>    
+<br>
+<button type="button" id="update" class="btn btn-warning" >수정</button>    
+<button type="button" id="delete" class="btn btn-danger">삭제</button>    
 <script  th:inline="javascript">
 	$(document).ready(function(){
 		let username = [[${#authentication.principal.memberId}]];
