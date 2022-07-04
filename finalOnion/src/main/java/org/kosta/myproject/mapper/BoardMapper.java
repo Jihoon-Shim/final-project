@@ -20,8 +20,6 @@ public interface BoardMapper {
 
 	ArrayList<TradingBoardVO> orderByPrice(Pagination pagination);
 
-
-
 	ArrayList<TradingBoardVO> orderByDate4(Pagination pagination);
 
 	ArrayList<TradingBoardVO> orderByDate3(Pagination pagination);
@@ -77,5 +75,23 @@ public interface BoardMapper {
 	String findMemberIdByNo(int adminBoardNo);
 
 	String findManagerId();
+	
+	int currentNo();
+
+	int getTotalPostCountBySearch(String searchword);
+
+	ArrayList<TradingBoardVO> orderByTempsearch(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderByPricesearch(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderByDate1search(Pagination pagination);
+
+	int getTotalSalePostCountBySearch(String searchword);
+
+	ArrayList<TradingBoardVO> orderBySaleTempsearch(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderBySalePricesearch(Pagination pagination);
+
+	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
 
 }

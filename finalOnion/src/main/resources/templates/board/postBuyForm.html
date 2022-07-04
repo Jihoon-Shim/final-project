@@ -7,7 +7,7 @@
 <title>BuyForm</title>
 </head>
  <div layout:fragment="main">
- <form method="post" th:action="@{/board/PostBuy}" enctype="multipart/form-data"> 
+ <form method="post" th:action="@{/board/PostBuy}" enctype="multipart/form-data" id="mainform"> 
 	<table class="table table-bordered">
 	 <thead>
 	 	<tr>
@@ -29,6 +29,12 @@
 		<tr>
 			<td colspan="4"><textarea rows="10" class="form-control" name="boardContent"	placeholder="본문내용" required="required"></textarea></td>
 		</tr>
+		<tr>
+			<td>
+			<h5>태그는 5개까지로 허용됩니다.</h5>
+			<div id="tagArea"></div>
+			</td>
+		</tr>
 	</tbody>		
 	</table>
 	<div class="text-center">
@@ -36,6 +42,110 @@
 		<button type="reset" class="btn btn-success">취소</button>
 	</div>
 </form>
+<form method="post" id="tagForm" th:action="@{/}">
+	<input type="text" name="tag" id="tag" placeholder="태그"><span id="tagCheckView"></span><br>	
+	<input type="submit" value="태그추가"><br>
+</form>
+<script  th:inline="javascript">
+	var count=0;
+	function removeDIV(result){
+		var delval = result.value;
+		var h1 = document.getElementById(delval);
+		var children = document.getElementById(delval).parentNode.childNodes;
+		h1.parentNode.innerHTML="";
+		count=count-1;		
+	};//function removeDIV
+$(document).ready(function(){	
+	$("#mainform").submit(function(){
+		let bkind = document.getElementById("boardKind").value;
+		if(bkind=="no"){
+			alert("게시글 종류를 선택해주세요!");
+			return false;
+		}
+	});
+	let checkResultTag="tag";		
+	//$("#tagForm")
+	$("#tagForm").submit(function(){		
+		if(checkResultTag=="tag"){
+		alert("태그 중복확인을 하세요");
+		return false;
+		}
+		if(checkResultTag==""){
+			alert("사용할 수 없는 태그입니다.");
+			return false;
+			}
+		if(count<5){
+			for(let i=0;i<count+1;i++){
+				if(document.getElementById(i)==null){
+					var str = "<div class='col-6'>";
+			        str += "<strong>" + $("#tagForm :input[name=tag]").val() + "</strong>";
+			        str += "<button type='button' onclick='return removeDIV(this)' value='"+i+"' id='"+i+"'>" + "삭제" + "</button>";
+			        str += "<input type='hidden' value='"+ $("#tagForm :input[name=tag]").val()+"' name='"+ i+"'>";
+			        str += "</div>";
+			        $("#tagArea").append(str);
+			        count=count+1;
+			        return false;
+				}	
+			}
+		}else{
+			alert("태그는 5개가 넘을 수 없습니다.");
+			return false;
+		}
+	});
+	//#tagForm :
+	$("input[name=tag]").keyup(function(){
+		 let tag=$(this).val();
+		 var str_space = /\s/;
+		 if(str_space.exec(tag)) { //공백 체크
+			var retext = $("#tagForm :input[name=tag]").val().slice(0,-1);
+      		alert("해당 항목에는 공백을 사용할수 없습니다.\n\n공백을 제거해 주세요.");      		
+      		$('input#tag').val(retext);
+		  }
+		 tag=$(this).val().trim();			
+		if(tag.length<0 || tag.length>10){
+			$("#tagCheckView").html("태그는 10자 이하여야 합니다.").css(
+					"background","pink");
+			checkResultTag="";
+			return;
+		}
+		$.ajax({
+			type:"get",
+			url:"/guest/tagcheckAjax",				
+			data:"tag="+tag,	
+			success:function(data){
+				var datalength = data.length;
+				var alldata = "";
+				if(datalength==0){
+				$("#tagCheckView").html(tag+"관련 검색어가 없습니다.").css("background","lime");
+					checkResultTag=tag;
+				}else{					
+					for(var q=0;q<datalength;q++){
+						alldata += data[q] + "<br>";						
+					}
+					$("#tagCheckView").html(tag+"를 포함한 태그입니다!<br>"+alldata).css("background","yellow");
+					checkResultTag=tag;
+				}					
+			}//callback			
+		});//ajax
+		/*
+		$.ajax({
+			type:"get",
+			url:"/guest/tagcheckAjax",				
+			data:"tag="+tag,	
+			success:function(data){
+				if(data=="fail"){
+				$("#tagCheckView").html(tag+" 이미 있는 태그입니다!").css("background","lime");
+					checkResultTag=tag;
+				}else{						
+					$("#tagCheckView").html(tag+" 없는 태그입니다!").css("background","yellow");		
+					checkResultTag=tag;
+				}					
+			}//callback			
+		});//ajax
+		*/
+	});//keyup
+})//ready
+</script>
  </div>
 
 </html>

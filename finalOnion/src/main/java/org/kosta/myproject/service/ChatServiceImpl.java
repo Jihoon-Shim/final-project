@@ -5,6 +5,7 @@ import java.util.List;
 import org.kosta.myproject.mapper.ChatMapper;
 import org.kosta.myproject.vo.ChattingRoomVO;
 import org.kosta.myproject.vo.MemberVO;
+import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public int checkChattingRoomNo(String myNick, String yourNick) {
 		return chatMapper.checkChattingRoomNo(myNick, yourNick);
-		
 	}
 	@Override
 	public void createChattingRoom(String myNick, String yourNick) {
@@ -40,8 +40,28 @@ public class ChatServiceImpl implements ChatService {
 		return chatMapper.findChattingRoomVOListByNickname(memberNickname);
 	}
 	@Override
-	public String findOtherIdByChattingRoomNo(int chattingRoomNo, String memberId) {
-		return chatMapper.findOtherIdByChattingRoomNo(chattingRoomNo, memberId);
+	public List<TradingBoardVO> getAllPostListNotSoldOutById(String otherId) {
+		return chatMapper.getAllPostListNotSoldOutById(otherId);
+	}
+	@Override
+	public String getLastMessage(String myId, String otherMemberId) {
+		return chatMapper.getLastMessage(myId, otherMemberId);
+	}
+	@Override
+	public String findChattingTitleByChattingNo(int chattingRoomNo) {
+		return chatMapper.findChattingTitleByChattingNo(chattingRoomNo);
+	}
+	@Override
+	public void readOtherChat(String myId, String otherId) {
+		chatMapper.readOtherChat(myId, otherId);
+	}
+	@Override
+	public int isReadOtherChat(String myId, String otherMemberId) {
+		return chatMapper.isReadOtherChat(myId, otherMemberId);
+	}
+	@Override
+	public int isReadChattingRoom(String myId) {
+		return chatMapper.isReadChattingRoom(myId);
 	}
 
 	

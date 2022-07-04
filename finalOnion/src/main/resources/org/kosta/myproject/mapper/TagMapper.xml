@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kosta.myproject.mapper.TagMapper">
+	<select id="tagCheck" resultType="string" parameterType="string">
+		<![CDATA[select TAG from TAG WHERE  TAG LIKE '%'||#{value}||'%' AND ROWNUM <= 5]]>
+	</select>
+	<insert id="registTag" parameterType="string">
+		INSERT INTO TAG(TAGID,TAG,TAGHITS)
+		VALUES(TAG_SEQ.nextval,#{value},1)
+	</insert>
+	<update id="hitsTag" parameterType="string">
+		UPDATE TAG SET TAGHITS=TAGHITS+1 WHERE TAG=#{VALUE}
+	</update>
+	<insert id="relateTag" parameterType="int">
+		INSERT INTO BOARDTAG(BOARD_NO,TAGID,TAGDATE)
+		VALUES(#{currentNo},#{tagNo},SYSDATE) 
+	</insert>
+	<select id="findTagNoByTag" resultType="int" parameterType="string">
+		SELECT TAGID FROM TAG WHERE TAG=#{value}
+	</select>
+	<select id="findTagByBoardNo" parameterType="int" resultType="org.kosta.myproject.vo.TagVO">
+		SELECT t.TAGID,t.TAG,t.TAGHITS 
+		FROM BOARDTAG b	, TAG t
+		WHERE  b.TAGID=t.TAGID(+) AND b.BOARD_NO=#{value}
+	</select>
+</mapper>

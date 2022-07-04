@@ -16,12 +16,10 @@
 	values(CHATTING_SEQ.nextval, #{chattingRoomVO.chattingRoomNo}, sysdate, 1, #{msg}, #{memberVO.memberId})
 </insert>
 <select id="getChattingList" parameterType="string" resultType="map">
-	select c.chatting ,m.MEMBER_NICKNAME FROM chatting c, T_MEMBER m where CHATTINGROOM_NO = (
-   select CHATTINGROOM_NO from CHATTINGROOM where
-   CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{otherNick}||'%'
-   )
-   AND
-   c.MEMBERID = m.MEMBERID
+	select c.chatting ,m.MEMBER_NICKNAME, t.temp, m.member_address FROM chatting c, T_MEMBER m, TEMP t
+	where CHATTINGROOM_NO = (select CHATTINGROOM_NO from CHATTINGROOM 
+	where CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{otherNick}||'%')
+   AND c.MEMBERID = m.MEMBERID AND c.MEMBERID = t.MEMBERID
    order by c.chatting_date
 </select>
 <select id="findChattingRoomVOListByNickname" parameterType="string" resultType="org.kosta.myproject.vo.ChattingRoomVO">
@@ -29,12 +27,45 @@
 	where chattingRoom_No in (
 	select distinct chattingRoom_No from CHATTINGROOM where chattingRoom_title like '%'||#{value}||'%')
 </select>
-<select id="findOtherIdByChattingRoomNo" resultType="string">
-	select chattingRoom_title from chattingRoom where chattingRoom_no=#{chattingRoomNo}
+<select id="getAllPostListNotSoldOutById" parameterType="string" resultType="org.kosta.myproject.vo.TradingBoardVO">
+	select * from TRADING_BOARD where memberId = #{value} and trade_status = 1
 </select>
-
-
-
+<select id="getLastMessage" parameterType="string" resultType="string">
+	<![CDATA[ 
+	select * from (
+	select chatting from chatting 
+	where chattingRoom_No in (
+	select distinct c.chattingRoom_No from chatting c, chattingRoom r where memberId= #{otherMemberId}
+	and chattingRoom_title like '%'||#{myId}||'%' and chattingRoom_title like '%'||#{otherMemberId}||'%'
+	and c.chattingRoom_no = r.chattingRoom_no)
+	order by chatting_no desc
+	) where rownum <=1
+	]]>
+</select>
+<select id="findChattingTitleByChattingNo" parameterType="int" resultType="string">
+	select chattingRoom_title from chattingRoom where chattingRoom_no = #{value}
+</select>
+<update id="readOtherChat" parameterType="string">
+	update (
+		select reception from (
+			select memberId, reception
+			FROM chatting
+			where CHATTINGROOM_NO = (
+			   select CHATTINGROOM_NO from CHATTINGROOM where
+			   chattingRoom_title like '%'||#{myId}||'%' and chattingRoom_title like '%'||#{otherId}||'%')
+		) where memberId= #{otherId} and reception = 1)
+	set reception = 0
+</update>
+<select id="isReadOtherChat" parameterType="string" resultType="int">
+	select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingRoom r 
+	where memberId= #{otherMemberId} and chattingRoom_title like '%'||#{myId}||'%' and chattingRoom_title like '%'||#{otherMemberId}||'%' 
+	and c.chattingRoom_no = r.chattingRoom_no and reception = 1
+</select>
+<select id="isReadChattingRoom" parameterType="string" resultType="int">
+	select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingRoom r 
+	where chattingRoom_title like '%'||#{myId}||'%' and memberId != #{myId} and reception = 1
+	and c.chattingRoom_no = r.chattingRoom_no 
+</select>
 
 
 </mapper>

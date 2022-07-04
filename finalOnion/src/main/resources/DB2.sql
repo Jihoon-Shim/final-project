@@ -14,7 +14,11 @@ CREATE TABLE T_MEMBER
     MEMBER_TEL         VARCHAR2(100)    NOT NULL, 
      PRIMARY KEY (MEMBERID)
 )
-select * from t_member
+select * from t_member where memberId='test3'
+select * from FILEVO;
+
+select * from chattingRoom
+select * from chatting
 
 select chattingRoom_No, chattingRoom_title from chattingRoom
 	where chattingRoom_No in (
@@ -23,7 +27,40 @@ select chattingRoom_No, chattingRoom_title from chattingRoom
 select distinct * from (
 select memberId from chatting where chattingRoom_No=1) where memberId not in 'java'
 
-select chattingRoom_title from chattingRoom where chattingRoom_no=2
+select * from TRADING_BOARD where memberId = 'java' and trade_status = 1 and board_content like '%ㅇ%';
+
+select distinct memberId from (
+	select distinct memberId from chatting where chattingRoom_title=4 )
+where not memberId = 'java'
+
+select * from (
+select chatting from chatting 
+	where chattingRoom_No in (
+	select distinct c.chattingRoom_No from chatting c, chattingRoom r where memberId='java'
+	and chattingRoom_title like '%java%' and chattingRoom_title like '%spring%'
+	and c.chattingRoom_no = r.chattingRoom_no)
+	order by chatting_no desc
+	) where rownum <=1
+update chatting set reception = 1
+update (
+select reception from (
+select memberId, reception
+FROM chatting
+where CHATTINGROOM_NO = (
+   select CHATTINGROOM_NO from CHATTINGROOM where
+   CHATTINGROOM_TITLE LIKE '%java%' and  CHATTINGROOM_TITLE like '%bear%'))
+   where memberId= 'java' and reception = 1)
+set reception = 0
+
+select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingRoom r 
+where memberId= 'java' and chattingRoom_title = 'java and bear' 
+and c.chattingRoom_no = r.chattingRoom_no and reception = 1
+
+select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingRoom r 
+where chattingRoom_title like '%bear%' and memberId != 'bear' and reception = 1
+and c.chattingRoom_no = r.chattingRoom_no 
+
+select * from TRADING_BOARD
 -- TAG Table Create SQL
 CREATE TABLE TAG
 (
@@ -63,9 +100,6 @@ ALTER TABLE TRADING_BOARD
         CREATE SEQUENCE TRADING_BOARD_SEQ;
         DROP SEQUENCE TRADING_BOARD_SEQ;
 
-
-select * from chattingRoom
-select * from chatting
 -- CHATTINGROOM Table Create SQL
 CREATE TABLE CHATTINGROOM
 (
@@ -235,3 +269,49 @@ ALTER TABLE REPORTINGBOARD
 			)
 		) 
 		where rnum BETWEEN 1 AND 4
+		
+		SELECT * FROM BOARDTAG
+		
+		t.TAGID,t.TAG,t.TAGHITS 
+		SELECT *
+		FROM BOARDTAG b		
+		INNER JOIN TAG t 
+		ON b.TAGID=t.TAGID;
+		WHERE b.BOARD_NO=106
+		
+		SELECT t.TAGID,t.TAG,t.TAGHITS 
+		FROM BOARDTAG b	, TAG t
+		WHERE  b.TAGID=t.TAGID(+) AND b.BOARD_NO=106;
+		
+		select TAG from TAG WHERE  TAG LIKE '%'||'다'||'%' AND ROWNUM<=6;
+		
+		INSERT INTO TAG(TAGID,TAG,TAGHITS) VALUES(TAG_SEQ.nextval,'다',0);
+		INSERT INTO TAG(TAGID,TAG,TAGHITS) VALUES(TAG_SEQ.nextval,'다라',0);
+		INSERT INTO TAG(TAGID,TAG,TAGHITS) VALUES(TAG_SEQ.nextval,'다라마',0);
+		INSERT INTO TAG(TAGID,TAG,TAGHITS) VALUES(TAG_SEQ.nextval,'나다',0);
+		INSERT INTO TAG(TAGID,TAG,TAGHITS) VALUES(TAG_SEQ.nextval,'가나다',0);
+		INSERT INTO TAG(TAGID,TAG,TAGHITS) VALUES(TAG_SEQ.nextval,'가다마',0);
+		
+		
+		SELECT COUNT(*) FROM TRADING_BOARD b, (SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
+		WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND (b.BOARD_CONTENT LIKE  '%'||'강'||'%' OR b.BOARD_TITLE LIKE '%'||'강'||'%' OR t.TAG LIKE '%'||'강'||'%')
+		
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		from( 
+			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			from (
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				from TEMP t 
+				right outer join (
+					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND
+					FROM TRADING_BOARD b, 
+						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
+					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
+					(b.BOARD_CONTENT LIKE  '%'||''||'%' OR b.BOARD_TITLE LIKE '%'||''||'%' OR t.TAG LIKE '%'||''||'%')
+				) b 
+				on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
+			)
+		)
+		where rnum BETWEEN 1 AND 10

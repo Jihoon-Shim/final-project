@@ -3,10 +3,15 @@ package org.kosta.myproject.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.kosta.myproject.service.ChatService;
+import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.ChattingRoomVO;
 import org.kosta.myproject.vo.ChattingVO;
 import org.kosta.myproject.vo.MemberVO;
+import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,19 +24,35 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ChatController{
 	private final ChatService chatService;
+	private final MemberService memberService;
 	
-	@RequestMapping("goChat")
-	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherNick, Model model) {
-		String myNick = myMemberVO.getMemberNickname();
-		ChattingRoomVO chattingRoomVO = chatService.findChattingRoom(myNick, otherNick);
+	@RequestMapping("/goChat")
+	public String getMemberId(@AuthenticationPrincipal MemberVO myMemberVO, String otherId, Model model, HttpServletRequest request) {
+		String myId = myMemberVO.getMemberId();
+		ChattingRoomVO chattingRoomVO = new ChattingRoomVO();
+		chattingRoomVO = chatService.findChattingRoom(myId, otherId);
 		if(chattingRoomVO==null) {
-			chatService.createChattingRoom(myNick, otherNick);
-			chattingRoomVO = chatService.findChattingRoom(myNick, otherNick);
+			chatService.createChattingRoom(myId, otherId);
+			chattingRoomVO = chatService.findChattingRoom(myId, otherId);
 		}
 		model.addAttribute("chattingRoomVO", chattingRoomVO);
-		List<String> list = chatService.getChattingList(myNick, otherNick);
-		model.addAttribute("chattingList", list);
-		return "member/chat";
+		//상대 채팅 읽음 처리
+		chatService.readOtherChat(myId,otherId);
+		List<String> chattingList = chatService.getChattingList(myId, otherId);
+		List<TradingBoardVO> postVOList = chatService.getAllPostListNotSoldOutById(otherId);
+		MemberVO otherMemberVO = memberService.findMemberById(otherId);
+		float temp = memberService.findTempById(otherId);
+		model.addAttribute("otherMemberVO", otherMemberVO);
+		model.addAttribute("temp", temp);
+		model.addAttribute("postVOList", postVOList);
+		model.addAttribute("chattingList", chattingList);
+		//채팅 알림
+		if(myMemberVO!=null) {
+			int reception = chatService.isReadChattingRoom(myMemberVO.getMemberId());
+			HttpSession session = request.getSession();
+			session.setAttribute("reception", reception);
+		}
+		return "chat/chat";
 	}
 	@RequestMapping("/chatRecord")
 	@ResponseBody
@@ -39,19 +60,32 @@ public class ChatController{
 		chatService.recordChatting(memberVO, chattingRoomVO, msg);
 		return "";
 	}
-	
 	@RequestMapping("/chattingRoomList")
 	public String chattingRoom(@AuthenticationPrincipal MemberVO memberVO, Model model) {
-		List<ChattingRoomVO> chattingRoomVOList = chatService.findChattingRoomVOListByNickname(memberVO.getMemberNickname());
+		String myId = memberVO.getMemberId();
+		List<ChattingRoomVO> chattingRoomVOList = chatService.findChattingRoomVOListByNickname(memberVO.getMemberId());
 		List<ChattingVO> chattingVOList = new ArrayList<ChattingVO>();
 		ChattingVO chattingVO = null;
+		MemberVO otherMemberVO = null;
 		for(ChattingRoomVO chattingRoomVO : chattingRoomVOList) {
 			chattingVO = new ChattingVO();
 			chattingVO.setChattingRoomVO(chattingRoomVO);
-			String otherNick= chattingRoomVO.getChattingRoomTitle().replace(memberVO.getMemberNickname(), "").replace(" and ", "");
-			MemberVO otherMemberVO = new MemberVO();
-			otherMemberVO.setMemberNickname(otherNick);
+			int chattingRoomNo = chattingRoomVO.getChattingRoomNo();
+			String ChattingTitle = chatService.findChattingTitleByChattingNo(chattingRoomNo);
+			String otherMemberId= ChattingTitle.replace(" and ", "").replace(memberVO.getMemberId(), "");
+			otherMemberVO = new MemberVO();
+			otherMemberVO = memberService.findMemberById(otherMemberId);
 			chattingVO.setMemberVO(otherMemberVO);
+			//마지막 채팅
+			String lastMessage = chatService.getLastMessage(myId, otherMemberId);
+			if(lastMessage==null) {
+				lastMessage="상대방의 채팅이 없습니다.";
+			}
+			chattingVO.setChatting(lastMessage);
+			//상대 채팅 읽음처리 확인
+			int reception = chatService.isReadOtherChat(myId, otherMemberId);
+			chattingVO.setReception(reception);
+			
 			chattingVOList.add(chattingVO);
 		}
 		model.addAttribute("chattingVOList",chattingVOList);

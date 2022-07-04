@@ -28,6 +28,7 @@
 		<option value="date">작성날짜순</option> 
 		<option value="price">가격순</option> 
 		</select>
+		<input type="text" placeholder="검색어" id="searchword">
 		<button type="submit" th:onclick="|javascript:sort()|" class="btn btn-primary btn-outline-dark" >정렬하기</button>
 	</div>
 	
@@ -35,7 +36,7 @@
 <table class="table table-bordered table-hover boardlist">
 	<thead>	
 		<tr style="background-color: #333333">
-            <th>사진</th>
+            <th>썸네일</th>
             <th>제목</th>
             <th>가격</th>           
             <th>열람수</th>
@@ -45,7 +46,7 @@
 	<tbody>	
 		<tr th:each="list : ${list}">
 			<td><button type="button" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list.boardNo}|">
-			<img th:src="@{/myweb/images/}+${list.productPicture}" height = "400" width = "400">
+			<img th:src="@{/myweb/images/board/s/}+${list.productPicture}" height = "400" width = "400">
 			</button></td>
 			<td th:text="${list.boardTitle}">제목</td>
 			<td th:text="${list.tradePrice}">가격</td>
@@ -70,15 +71,18 @@
 <form id="sorting" th:action="@{/board/ordersaleList}" method="get">
 	<input type="hidden" name="sort1" value="">
 	<input type="hidden" name="sorton" value="on">
+	<input type="hidden" name="searchword1" value="">
 </form>
 <script type="text/javascript">
 	function sort(){
 		var sort = $("#sort").val();
+		var searchword = $("#searchword").val();
 		if(sort=="no"){
 			alert("정렬 방식을 선택해 주세요.");
 			return false;
 		}
 		$('input[name=sort1]').attr('value',sort);
+		$('input[name=searchword1]').attr('value',searchword);
     document.getElementById("sorting").submit();
 }
 </script>
