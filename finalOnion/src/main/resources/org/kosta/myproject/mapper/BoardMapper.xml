@@ -11,6 +11,9 @@
 		<result column="adminBoardTitle" property="AdminBoardVO.adminBoardTitle"/>
 		<result column="memberId" property="memberVO.memberId"/>
 	</resultMap>
+	<resultMap type="org.kosta.myproject.vo.AdminBoardVO" id="AdminBoardVoMap">
+		<result column="MEMBERID" property="memberVO.memberId"/>
+	</resultMap>
 	<select id="getTotalPostCount" resultType="int">
 		SELECT COUNT(*) FROM TRADING_BOARD WHERE BOARD_KIND = '삽니다'
 	</select>
@@ -373,5 +376,9 @@
 	<select id="getTotalSalePostCountBySearch" resultType="int" parameterType="string">
 		SELECT COUNT(*) FROM TRADING_BOARD b, (SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 		WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND (b.BOARD_CONTENT LIKE  '%'||#{value}||'%' OR b.BOARD_TITLE LIKE '%'||#{value}||'%' OR t.TAG LIKE '%'||#{value}||'%')
+	</select>
+	<select id="fAQ" resultMap="AdminBoardVoMap">
+		SELECT ADMINBOARD_NO,ADMINBOARD_KIND,ADMINBOARD_TITLE,ADMINBOARD_CONTENT,ADMINBOARD_DATE,MEMBERID 
+		FROM ADMINBOARD WHERE ADMINBOARD_KIND='FAQ'
 	</select>
 </mapper>

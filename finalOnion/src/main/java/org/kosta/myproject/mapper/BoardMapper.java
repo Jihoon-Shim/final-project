@@ -94,4 +94,6 @@ public interface BoardMapper {
 
 	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
 
+	ArrayList<AdminBoardVO> fAQ();
+
 }

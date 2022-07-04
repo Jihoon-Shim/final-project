@@ -230,8 +230,8 @@ public class BoardController {
 		int nullcount = 0;
 		for(int i=0;i<5;i++) {
 			String tag = request.getParameter(Integer.toString(i));			
-			if(tag!=null) {
-				if(tagService.tagCheck(tag).equals("ok")) {
+			if(tag!=null) {				
+				if(tagService.tagCheckExact(tag).equals("ok")) {
 					tagService.registTag(tag);
 				}else {
 					tagService.hitsTag(tag);
@@ -494,5 +494,11 @@ public class BoardController {
 		request.setAttribute("list0", list0);
 		 
 		return "/board/contact";
+	}
+	@RequestMapping("/board/fAQ")
+	public String fAQ(Model model) {
+		ArrayList<AdminBoardVO> avolist = boardService.fAQ();
+		model.addAttribute("FAQ",avolist);
+		return "/board/fAQ";
 	}
 }

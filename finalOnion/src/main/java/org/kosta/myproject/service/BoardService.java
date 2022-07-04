@@ -92,4 +92,7 @@ public interface BoardService {
 	ArrayList<TradingBoardVO> orderBySalePricesearch(Pagination pagination);
 
 	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
+
+	ArrayList<AdminBoardVO> fAQ();
+
 }

@@ -20,10 +20,7 @@ public class TagServiceImpl implements TagService{
 		ArrayList<String> taglist =new ArrayList<String>(); 
 		taglist=tagMapper.tagCheck(tag);
 		return  taglist;
-		/*
-		int count = tagMapper.tagCheck(tag);
-		return (count == 0) ? "ok" : "fail";
-		*/
+
 	}
 
 	@Override
@@ -49,6 +46,12 @@ public class TagServiceImpl implements TagService{
 	@Override
 	public List<TagVO> findTagByBoardNo(int boardNo) {
 		return tagMapper.findTagByBoardNo(boardNo);
+	}
+
+	@Override
+	public String tagCheckExact(String tag) {
+		int count = tagMapper.tagCheckExact(tag);
+		return (count == 0) ? "ok" : "fail";
 	}
 
 }

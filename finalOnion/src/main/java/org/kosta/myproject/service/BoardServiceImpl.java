@@ -277,4 +277,10 @@ public class BoardServiceImpl implements BoardService{
 		list = boardmapper.orderBySaleDatesearch(pagination);
 		return list;
 	}
+
+	@Override
+	public ArrayList<AdminBoardVO> fAQ() {
+		ArrayList<AdminBoardVO> avolist = boardmapper.fAQ();
+		return avolist;
+	}
 }

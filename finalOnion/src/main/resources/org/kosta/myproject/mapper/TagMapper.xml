@@ -23,4 +23,7 @@
 		FROM BOARDTAG b	, TAG t
 		WHERE  b.TAGID=t.TAGID(+) AND b.BOARD_NO=#{value}
 	</select>
+	<select id="tagCheckExact" resultType="int" parameterType="string">
+		SELECT COUNT(*) FROM TAG WHERE TAG=#{value}
+	</select>
 </mapper>
