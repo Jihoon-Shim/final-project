@@ -21,5 +21,8 @@ public interface TagMapper {
 
 	List<TagVO> findTagByBoardNo(int boardNo);
 
+	int tagCheckExact(String tag);
+
+
 
 }

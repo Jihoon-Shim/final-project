@@ -385,6 +385,7 @@
 		SELECT ADMINBOARD_NO,ADMINBOARD_KIND,ADMINBOARD_TITLE,ADMINBOARD_CONTENT,ADMINBOARD_DATE,MEMBERID  
 		FROM ADMINBOARD WHERE ADMINBOARD_NO=#{value}
 	</select>
+<<<<<<< HEAD
 	<select id="findTradingBoardByMemberId" parameterType="string" resultType="org.kosta.myproject.vo.TradingBoardVO">
 		select * from Trading_Board where memberId = #{value}
 	</select>
@@ -392,4 +393,6 @@
 		update trading_board set trade_status = 0 where board_no=#{value}
 	</update>
 	
+=======
+>>>>>>> branch 'main' of https://github.com/Jihoon-Shim/final-project.git
 </mapper>

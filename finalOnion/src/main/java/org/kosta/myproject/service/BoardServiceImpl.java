@@ -288,6 +288,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public AdminBoardVO adminpostdetail(int adminBoardNo) {
 		return boardmapper.adminpostdetail(adminBoardNo);
+<<<<<<< HEAD
 	}
 
 	@Override
@@ -299,5 +300,7 @@ public class BoardServiceImpl implements BoardService{
 	public void updatePostSoldOutByBoardNo(int boardNo) {
 		boardmapper.updatePostSoldOutByBoardNo(boardNo);
 		
+=======
+>>>>>>> branch 'main' of https://github.com/Jihoon-Shim/final-project.git
 	}
 }
