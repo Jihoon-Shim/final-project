@@ -96,4 +96,6 @@ public interface BoardMapper {
 
 	ArrayList<AdminBoardVO> fAQ();
 
+	AdminBoardVO adminpostdetail(int adminBoardNo);
+
 }

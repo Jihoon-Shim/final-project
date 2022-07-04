@@ -12,7 +12,7 @@
 		<result column="memberId" property="memberVO.memberId"/>
 	</resultMap>
 	<resultMap type="org.kosta.myproject.vo.AdminBoardVO" id="AdminBoardVoMap">
-		<result column="MEMBERID" property="memberVO.memberId"/>
+		<result column="memberId" property="memberVO.memberId"/>
 	</resultMap>
 	<select id="getTotalPostCount" resultType="int">
 		SELECT COUNT(*) FROM TRADING_BOARD WHERE BOARD_KIND = '삽니다'
@@ -380,5 +380,9 @@
 	<select id="fAQ" resultMap="AdminBoardVoMap">
 		SELECT ADMINBOARD_NO,ADMINBOARD_KIND,ADMINBOARD_TITLE,ADMINBOARD_CONTENT,ADMINBOARD_DATE,MEMBERID 
 		FROM ADMINBOARD WHERE ADMINBOARD_KIND='FAQ'
+	</select>
+	<select id="adminpostdetail"  resultMap="AdminBoardVoMap" parameterType="int">
+		SELECT ADMINBOARD_NO,ADMINBOARD_KIND,ADMINBOARD_TITLE,ADMINBOARD_CONTENT,ADMINBOARD_DATE,MEMBERID  
+		FROM ADMINBOARD WHERE ADMINBOARD_NO=#{value}
 	</select>
 </mapper>

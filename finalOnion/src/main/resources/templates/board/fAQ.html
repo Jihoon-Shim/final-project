@@ -15,7 +15,7 @@
 	</thead>
 	<tbody>	
 		<tr th:each="list : ${FAQ}">
-			<td th:text="${list.adminBoardTitle}">제목</td>
+			<td><button type="button" th:onclick="|location.href='@{/board/adminpostdetail?adminBoardNo=}'+${list.adminBoardNo}|" th:text="${list.adminBoardTitle}"></button></td>
 		</tr>
 	</tbody>
 </table>	

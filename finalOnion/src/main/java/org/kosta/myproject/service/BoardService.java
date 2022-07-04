@@ -95,4 +95,6 @@ public interface BoardService {
 
 	ArrayList<AdminBoardVO> fAQ();
 
+	AdminBoardVO adminpostdetail(int adminBoardNo);
+
 }

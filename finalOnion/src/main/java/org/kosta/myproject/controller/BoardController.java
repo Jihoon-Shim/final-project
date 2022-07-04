@@ -501,4 +501,10 @@ public class BoardController {
 		model.addAttribute("FAQ",avolist);
 		return "/board/fAQ";
 	}
+	@RequestMapping("/board/adminpostdetail")
+	public String adminpostdetail(Model model,int adminBoardNo) {
+		AdminBoardVO avo = boardService.adminpostdetail(adminBoardNo);
+		model.addAttribute("avo",avo);
+		return "/board/adminpostdetail";
+	}
 }

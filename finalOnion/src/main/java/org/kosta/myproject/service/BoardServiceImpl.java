@@ -283,4 +283,9 @@ public class BoardServiceImpl implements BoardService{
 		ArrayList<AdminBoardVO> avolist = boardmapper.fAQ();
 		return avolist;
 	}
+
+	@Override
+	public AdminBoardVO adminpostdetail(int adminBoardNo) {
+		return boardmapper.adminpostdetail(adminBoardNo);
+	}
 }
