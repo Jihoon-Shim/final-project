@@ -14,9 +14,9 @@ CREATE TABLE T_MEMBER
     MEMBER_TEL         VARCHAR2(100)    NOT NULL, 
      PRIMARY KEY (MEMBERID)
 )
-select * from t_member where memberId='javaking'
+select * from t_member where memberId='test3'
 select * from FILEVO;
-delete from chattingRoom where chattingRoom_title like '%java2%'
+
 select * from chattingRoom
 select * from chatting
 
@@ -28,7 +28,6 @@ select distinct * from (
 select memberId from chatting where chattingRoom_No=1) where memberId not in 'java'
 
 select * from TRADING_BOARD where memberId = 'java' and trade_status = 1 and board_content like '%ㅇ%';
-select b.BOARD_title, t.board_no, t.tagid from BOARDTAG t, TRADING_BOARD b where t.board_no=b.board_no
 
 select distinct memberId from (
 	select distinct memberId from chatting where chattingRoom_title=4 )
@@ -61,7 +60,7 @@ select distinct nvl(max(c.reception), 0) as reception from chatting c, chattingR
 where chattingRoom_title like '%bear%' and memberId != 'bear' and reception = 1
 and c.chattingRoom_no = r.chattingRoom_no 
 
-select chattingRoom_No, chattingRoom_title from chattingRoom where chattingRoom_No in ( select distinct chattingRoom_No from CHATTINGROOM where chattingRoom_title like '%java%')
+select * from TRADING_BOARD
 -- TAG Table Create SQL
 CREATE TABLE TAG
 (
@@ -72,7 +71,9 @@ CREATE TABLE TAG
 )
 CREATE SEQUENCE TAG_SEQ
 DROP SEQUENCE TAG_SEQ
-
+SELECT * FROM TAG
+SELECT * FROM BOARDTAG
+SELECT * FROM TRADING_BOARD
 
 
 
@@ -91,7 +92,7 @@ CREATE TABLE TRADING_BOARD
     BOARD_DATE         DATE             NOT NULL, 
      PRIMARY KEY (BOARD_NO)
 )
-
+SELECT * FROM TRADING_BOARD
 
 ALTER TABLE TRADING_BOARD
     ADD CONSTRAINT FK_MEMBERID FOREIGN KEY (MEMBERID)
@@ -214,7 +215,7 @@ CREATE TABLE AUTHORITY
     AUTHORITY       VARCHAR2(100)    NOT NULL, 
      PRIMARY KEY (MEMBERID)
 )
-
+SELECT * FROm AUTHORITY
 ALTER TABLE AUTHORITY
     ADD CONSTRAINT FK_MEMBERID5 FOREIGN KEY (MEMBERID)
         REFERENCES T_MEMBER (MEMBERID)
@@ -305,14 +306,13 @@ ALTER TABLE REPORTINGBOARD
 				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
 				from TEMP t 
 				right outer join (
-					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND
-					FROM TRADING_BOARD b, 
-						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
-					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
-					(b.BOARD_CONTENT LIKE  '%'||''||'%' OR b.BOARD_TITLE LIKE '%'||''||'%' OR t.TAG LIKE '%'||''||'%')
-				) b 
+					SELECT BOARD_NO, BOARD_TITLE,BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, TRADE_STATUS, BOARD_KIND
+					FROM TRADING_BOARD					
+					WHERE BOARD_KIND = '삽니다' AND (BOARD_CONTENT LIKE  '%'||''||'%' OR BOARD_TITLE LIKE '%'||''||'%')
+										) b
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
 			)
 		)
 		where rnum BETWEEN 1 AND 10
+		

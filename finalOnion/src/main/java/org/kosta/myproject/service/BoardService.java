@@ -94,6 +94,10 @@ public interface BoardService {
 
 	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
 
+	ArrayList<AdminBoardVO> fAQ();
+
+	AdminBoardVO adminpostdetail(int adminBoardNo);
+
 	List<TradingBoardVO> findTradingBoardByMemberId(String myId);
 
 	void updatePostSoldOutByBoardNo(int boardNo);

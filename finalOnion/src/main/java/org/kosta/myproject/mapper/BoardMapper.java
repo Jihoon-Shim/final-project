@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.AdminBoardVO;
 import org.kosta.myproject.vo.FileVO;
+import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
 
@@ -94,6 +94,10 @@ public interface BoardMapper {
 	ArrayList<TradingBoardVO> orderBySalePricesearch(Pagination pagination);
 
 	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
+
+	ArrayList<AdminBoardVO> fAQ();
+
+	AdminBoardVO adminpostdetail(int adminBoardNo);
 
 	List<TradingBoardVO> findTradingBoardByMemberId(String myId);
 

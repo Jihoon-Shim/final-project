@@ -11,6 +11,9 @@
 		<result column="adminBoardTitle" property="AdminBoardVO.adminBoardTitle"/>
 		<result column="memberId" property="memberVO.memberId"/>
 	</resultMap>
+	<resultMap type="org.kosta.myproject.vo.AdminBoardVO" id="AdminBoardVoMap">
+		<result column="memberId" property="memberVO.memberId"/>
+	</resultMap>
 	<select id="getTotalPostCount" resultType="int">
 		SELECT COUNT(*) FROM TRADING_BOARD WHERE BOARD_KIND = '삽니다'
 	</select>
@@ -43,7 +46,7 @@
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
-					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')			
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
@@ -310,7 +313,7 @@
 		INSERT INTO FILEVO(file_no,file_name,content_type)
 		VALUES(FILE_NO_SEQ.nextval,#{fileName},#{contentType})
 	</insert>	
-	<select id="currentseq" resultType="int">
+	<select id="currentseq" resultType="int" >
 		select FILE_NO_SEQ.currval from dual
 	</select>
 	<select id="orderByDate1Contact" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
@@ -373,6 +376,14 @@
 	<select id="getTotalSalePostCountBySearch" resultType="int" parameterType="string">
 		SELECT COUNT(*) FROM TRADING_BOARD b, (SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 		WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND (b.BOARD_CONTENT LIKE  '%'||#{value}||'%' OR b.BOARD_TITLE LIKE '%'||#{value}||'%' OR t.TAG LIKE '%'||#{value}||'%')
+	</select>
+	<select id="fAQ" resultMap="AdminBoardVoMap">
+		SELECT ADMINBOARD_NO,ADMINBOARD_KIND,ADMINBOARD_TITLE,ADMINBOARD_CONTENT,ADMINBOARD_DATE,MEMBERID 
+		FROM ADMINBOARD WHERE ADMINBOARD_KIND='FAQ'
+	</select>
+	<select id="adminpostdetail"  resultMap="AdminBoardVoMap" parameterType="int">
+		SELECT ADMINBOARD_NO,ADMINBOARD_KIND,ADMINBOARD_TITLE,ADMINBOARD_CONTENT,ADMINBOARD_DATE,MEMBERID  
+		FROM ADMINBOARD WHERE ADMINBOARD_NO=#{value}
 	</select>
 	<select id="findTradingBoardByMemberId" parameterType="string" resultType="org.kosta.myproject.vo.TradingBoardVO">
 		select * from Trading_Board where memberId = #{value}

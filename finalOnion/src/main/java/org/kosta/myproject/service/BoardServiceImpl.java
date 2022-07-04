@@ -280,6 +280,17 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public ArrayList<AdminBoardVO> fAQ() {
+		ArrayList<AdminBoardVO> avolist = boardmapper.fAQ();
+		return avolist;
+	}
+
+	@Override
+	public AdminBoardVO adminpostdetail(int adminBoardNo) {
+		return boardmapper.adminpostdetail(adminBoardNo);
+	}
+
+	@Override
 	public List<TradingBoardVO> findTradingBoardByMemberId(String myId) {
 		return boardmapper.findTradingBoardByMemberId(myId);
 	}
