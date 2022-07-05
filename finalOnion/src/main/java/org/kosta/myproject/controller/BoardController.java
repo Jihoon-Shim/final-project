@@ -306,7 +306,20 @@ public class BoardController {
 		return"board/postBuyForm";
 	}
 	@RequestMapping("/board/postdetail")
-	public String postdetail(int boardNo, Model model) {
+	public String postdetail(int boardNo, Model model,HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(session.getAttribute("hitslist")==null) {
+			ArrayList<Integer> hitslist =new ArrayList<Integer>();
+			hitslist.add(0);
+			session.setAttribute("hitslist", hitslist);
+		}
+		ArrayList<Integer> newlist = (ArrayList<Integer>)session.getAttribute("hitslist");
+		if(!newlist.contains(boardNo)) {
+			System.out.println("조회수올라가는소리");
+			boardService.raisehits(boardNo);
+			newlist.add(boardNo);
+			session.setAttribute("hitslist",newlist);
+		}						
 		TradingBoardVO tvo = new TradingBoardVO();  
 		tvo = boardService.postdetail(boardNo);
 		

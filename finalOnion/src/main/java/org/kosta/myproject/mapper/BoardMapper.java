@@ -103,6 +103,8 @@ public interface BoardMapper {
 
 	void updatePostSoldOutByBoardNo(int boardNo);
 
+	void raisehits(int boardNo);
+
 	ArrayList<TradingBoardVO> orderByDate001(String memberId);
 	ArrayList<TradingBoardVO> orderByDate002(String memberId);
 	ArrayList<TradingBoardVO> orderByDate003(String memberId);

@@ -110,4 +110,6 @@ public interface BoardService {
 	List<TradingBoardVO> findTradingBoardByMemberId(String myId);
 
 	void updatePostSoldOutByBoardNo(int boardNo);
+
+	void raisehits(int boardNo);
 }
