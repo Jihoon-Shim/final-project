@@ -32,7 +32,7 @@ public class HomeController {
 		}
 		else {
 			log.info("Home: 인증받지 않은 사용자");
-			 model.addAttribute("message","로그인을 해주세요!");	
+			 model.addAttribute("message","로그인을 부탁드립니다!");	
 		}
 		
 		//채팅 알림
