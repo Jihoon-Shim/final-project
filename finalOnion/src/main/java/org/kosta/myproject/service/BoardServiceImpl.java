@@ -299,4 +299,9 @@ public class BoardServiceImpl implements BoardService{
 	public void updatePostSoldOutByBoardNo(int boardNo) {
 		boardmapper.updatePostSoldOutByBoardNo(boardNo);
 	}
+
+	@Override
+	public void raisehits(int boardNo) {
+		boardmapper.raisehits(boardNo);
+	}
 }

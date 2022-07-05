@@ -103,4 +103,6 @@ public interface BoardMapper {
 
 	void updatePostSoldOutByBoardNo(int boardNo);
 
+	void raisehits(int boardNo);
+
 }

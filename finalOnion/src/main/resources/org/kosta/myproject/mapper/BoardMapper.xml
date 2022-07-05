@@ -391,4 +391,7 @@
 	<update id="updatePostSoldOutByBoardNo" parameterType="int">
 		update trading_board set trade_status = 0 where board_no=#{value}
 	</update>
+	<update id="raisehits" parameterType="int">
+		update trading_board set HITS = HITS+1 WHERE board_no=#{value}
+	</update>
 </mapper>
