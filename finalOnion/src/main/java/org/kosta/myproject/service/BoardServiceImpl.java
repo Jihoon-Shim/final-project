@@ -1,6 +1,7 @@
 package org.kosta.myproject.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.kosta.myproject.mapper.BoardMapper;
 import org.kosta.myproject.vo.MemberVO;
@@ -279,57 +280,30 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<TradingBoardVO> orderByDate01(String memberId) {
-		ArrayList<TradingBoardVO> listFinal1 = new ArrayList<TradingBoardVO>();
-		listFinal1 = boardmapper.orderByDate01(memberId);
-		return listFinal1;
+	public ArrayList<TradingBoardVO> orderByDate001(String memberId) {
+		ArrayList<TradingBoardVO> list1 = new ArrayList<TradingBoardVO>();
+		list1 = boardmapper.orderByDate001(memberId);
+		return list1;
 	}
 	@Override
-	public ArrayList<TradingBoardVO> orderByDate02(String memberId) {
-		ArrayList<TradingBoardVO> listFinal2 = new ArrayList<TradingBoardVO>();
-		listFinal2 = boardmapper.orderByDate02(memberId);
-		return listFinal2;
+	public ArrayList<TradingBoardVO> orderByDate002(String memberId) {
+		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
+		list2 = boardmapper.orderByDate002(memberId);
+		return list2;
 	}
 	@Override
-	public ArrayList<TradingBoardVO> orderByDate03(String memberId) {
-		ArrayList<TradingBoardVO> listFinal3 = new ArrayList<TradingBoardVO>();
-		listFinal3 = boardmapper.orderByDate03(memberId);
-		return listFinal3;
+	public ArrayList<TradingBoardVO> orderByDate003(String memberId) {
+		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
+		list3 = boardmapper.orderByDate003(memberId);
+		return list3;
 	}
 	@Override
-	public ArrayList<TradingBoardVO> orderByDate04(String memberId) {
-		ArrayList<TradingBoardVO> listFinal4 = new ArrayList<TradingBoardVO>();
-		listFinal4 = boardmapper.orderByDate04(memberId);
-		return listFinal4;
-	}
-
-	@Override
-	public ArrayList<TradingBoardVO> adminOrder4(ArrayList<TradingBoardVO> listFinal4) {
+	public ArrayList<TradingBoardVO> orderByDate004(String memberId) {
 		ArrayList<TradingBoardVO> list4 = new ArrayList<TradingBoardVO>();
-		list4 = boardmapper.adminOrder4(listFinal4);
+		list4 = boardmapper.orderByDate004(memberId);
 		return list4;
 	}
 
-	@Override
-	public ArrayList<TradingBoardVO> adminOrder1(ArrayList<TradingBoardVO> listFinal1) {
-		ArrayList<TradingBoardVO> list1 = new ArrayList<TradingBoardVO>();
-		list1 = boardmapper.adminOrder1(listFinal1);
-		return list1;
-	}
-
-	@Override
-	public ArrayList<TradingBoardVO> adminOrder2(ArrayList<TradingBoardVO> listFinal2) {
-		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
-		list2 = boardmapper.adminOrder2(listFinal2);
-		return list2;
-	}
-
-	@Override
-	public ArrayList<TradingBoardVO> adminOrder3(ArrayList<TradingBoardVO> listFinal3) {
-		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
-		list3 = boardmapper.adminOrder3(listFinal3);
-		return list3;
-	}
 
 	@Override
 	public int getTotalAdminCount() {
@@ -342,5 +316,26 @@ public class BoardServiceImpl implements BoardService{
 		ArrayList<AdminBoardVO> adminList = new ArrayList<AdminBoardVO>();
 		adminList = boardmapper.orderAdminList(list0);
 		return adminList;
+	}
+	
+	@Override
+	public ArrayList<AdminBoardVO> fAQ() {
+		ArrayList<AdminBoardVO> avolist = boardmapper.fAQ();
+		return avolist;
+	}
+
+	@Override
+	public AdminBoardVO adminpostdetail(int adminBoardNo) {
+		return boardmapper.adminpostdetail(adminBoardNo);
+	}
+
+	@Override
+	public List<TradingBoardVO> findTradingBoardByMemberId(String myId) {
+		return boardmapper.findTradingBoardByMemberId(myId);
+	}
+
+	@Override
+	public void updatePostSoldOutByBoardNo(int boardNo) {
+		boardmapper.updatePostSoldOutByBoardNo(boardNo);
 	}
 }

@@ -9,7 +9,7 @@
 	select CHATTINGROOM_NO from CHATTINGROOM where CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{yourNick}||'%'
 </select>
 <select id="findChattingRoom" parameterType="string" resultType="org.kosta.myproject.vo.ChattingRoomVO">
-	select * from CHATTINGROOM where CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{yourNick}||'%'
+	select * from CHATTINGROOM where CHATTINGROOM_TITLE LIKE #{myNick}||' and '||#{yourNick} or  CHATTINGROOM_TITLE like #{yourNick}||' and '||#{myNick}
 </select>
 <insert id="recordChatting" parameterType="org.kosta.myproject.vo.ChattingRoomVO">
 	insert into CHATTING(CHATTING_NO, CHATTINGROOM_NO, CHATTING_DATE, RECEPTION, CHATTING, MEMBERID)
@@ -18,14 +18,14 @@
 <select id="getChattingList" parameterType="string" resultType="map">
 	select c.chatting ,m.MEMBER_NICKNAME, t.temp, m.member_address FROM chatting c, T_MEMBER m, TEMP t
 	where CHATTINGROOM_NO = (select CHATTINGROOM_NO from CHATTINGROOM 
-	where CHATTINGROOM_TITLE LIKE '%'||#{myNick}||'%' and  CHATTINGROOM_TITLE like '%'||#{otherNick}||'%')
+	where CHATTINGROOM_TITLE LIKE #{myNick}||' and '||#{otherNick} or CHATTINGROOM_TITLE like #{otherNick}||' and '||#{myNick})
    AND c.MEMBERID = m.MEMBERID AND c.MEMBERID = t.MEMBERID
    order by c.chatting_date
 </select>
 <select id="findChattingRoomVOListByNickname" parameterType="string" resultType="org.kosta.myproject.vo.ChattingRoomVO">
 	select chattingRoom_No, chattingRoom_title from chattingRoom
 	where chattingRoom_No in (
-	select distinct chattingRoom_No from CHATTINGROOM where chattingRoom_title like '%'||#{value}||'%')
+	select distinct chattingRoom_No from CHATTINGROOM where chattingRoom_title like '% and '||#{value} or chattingRoom_title like #{value}||' and %')
 </select>
 <select id="getAllPostListNotSoldOutById" parameterType="string" resultType="org.kosta.myproject.vo.TradingBoardVO">
 	select * from TRADING_BOARD where memberId = #{value} and trade_status = 1

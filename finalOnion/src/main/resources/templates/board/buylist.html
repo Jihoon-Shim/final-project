@@ -32,7 +32,7 @@
 		<button type="submit" th:onclick="|javascript:sort()|" class="btn btn-primary btn-outline-dark" >정렬하기</button>
 	</div>
 	</div>
-<table class="table table-bordered table-hover boardlist">
+<table class="table table-borderless table-hover boardlist">
 	<thead>	
 		<tr style="background-color: #333333">
             <th style="color: white">썸네일</th>
@@ -46,7 +46,7 @@
 	<tbody>	
 		<tr th:each="list : ${list}">
 			<td><button type="button" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list.boardNo}|">
-			<img th:src="@{/myweb/images/board/s/}+${list.productPicture}" height = "400" width = "400">
+			<img th:src="@{/myweb/images/board/s/}+${list.productPicture}" height = "100" width = "100">
 			</button></td>
 			<td th:text="${list.boardTitle}">제목</td>
 			<td th:text="${list.tradePrice}">가격</td>
@@ -61,7 +61,7 @@
 <li th:each="idx, iterStat : ${#numbers.sequence(pagination.startPageOfPageGroup,pagination.endPageOfPageGroup)}">
  	<span th:if="${idx==pagination.nowPage}" th:text="${idx}">
  	</span>
- 	<span th:unless="${idx==pagination.nowPage}">
+ 	<span th:if="${idx!=pagination.nowPage && pagination.totalPostCount!=0}">
  		<a class="page-link" th:href="@{board/orderbuyList?pageNo=}+${idx}" th:text="${idx}"></a>
  	</span>
 </li>

@@ -1,6 +1,7 @@
 package org.kosta.myproject.mapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.kosta.myproject.vo.MemberVO;
@@ -94,15 +95,18 @@ public interface BoardMapper {
 
 	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
 
-	ArrayList<TradingBoardVO> orderByDate01(String memberId);
-	ArrayList<TradingBoardVO> orderByDate02(String memberId);
-	ArrayList<TradingBoardVO> orderByDate03(String memberId);
-	ArrayList<TradingBoardVO> orderByDate04(String memberId);
+	ArrayList<AdminBoardVO> fAQ();
 
-	ArrayList<TradingBoardVO> adminOrder1(ArrayList<TradingBoardVO> listFinal1);
-	ArrayList<TradingBoardVO> adminOrder2(ArrayList<TradingBoardVO> listFinal2);
-	ArrayList<TradingBoardVO> adminOrder3(ArrayList<TradingBoardVO> listFinal3);
-	ArrayList<TradingBoardVO> adminOrder4(ArrayList<TradingBoardVO> listFinal4);
+	AdminBoardVO adminpostdetail(int adminBoardNo);
+
+	List<TradingBoardVO> findTradingBoardByMemberId(String myId);
+
+	void updatePostSoldOutByBoardNo(int boardNo);
+
+	ArrayList<TradingBoardVO> orderByDate001(String memberId);
+	ArrayList<TradingBoardVO> orderByDate002(String memberId);
+	ArrayList<TradingBoardVO> orderByDate003(String memberId);
+	ArrayList<TradingBoardVO> orderByDate004(String memberId);
 
 	int getTotalAdminCount();
 

@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.myproject.service.BoardService;
-import org.kosta.myproject.vo.AdminBoardVO;
 import org.kosta.myproject.service.TagService;
+import org.kosta.myproject.vo.AdminBoardVO;
 import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.Pagination;
@@ -107,6 +107,7 @@ public class BoardController {
 			}
 			request.setAttribute("pagination", pagination);
 			request.setAttribute("list", list);
+			System.out.println(pagination);
 			return "board/buylist";
 		}
 		
@@ -223,18 +224,26 @@ public class BoardController {
 		 }
 		tradingBoardVO.setMemberVO(memberVO);
 		boardService.posting(tradingBoardVO);
+		int nullcount = 0;
 		for(int i=0;i<5;i++) {
-			String tag = request.getParameter(Integer.toString(i));
-			if(tag!=null) {
-				if(tagService.tagCheck(tag).equals("ok")) {
+			String tag = request.getParameter(Integer.toString(i));			
+			if(tag!=null) {				
+				if(tagService.tagCheckExact(tag).equals("ok")) {
 					tagService.registTag(tag);
 				}else {
 					tagService.hitsTag(tag);
 				}
+				nullcount=nullcount+1;
 				int currentNo = boardService.currentNo();
 				int tagNo = tagService.findTagNoByTag(tag);
 				tagService.relateTag(tagNo,currentNo);
 			}
+		}
+		if(nullcount==0) {
+			tagService.registTag("이글에는태그가없습니다");
+			int currentNo = boardService.currentNo();
+			int tagNo = tagService.findTagNoByTag("이글에는태그가없습니다");
+			tagService.relateTag(tagNo, currentNo);
 		}
 		return "board/PostBuy";
 	}
@@ -274,6 +283,18 @@ public class BoardController {
 	}
 	@RequestMapping("/board/deletePost")
 	public String deletePost(int boardNo) {
+		TradingBoardVO tradingBoardVO = new TradingBoardVO();
+		tradingBoardVO=boardService.findtradingboardbyno(boardNo);
+		File profile = new File(".");
+        String rootPath = profile.getAbsolutePath().substring(0,profile.getAbsolutePath().length()-2);
+		String imgUploadPath = rootPath + File.separator +"src"+ File.separator +"main"+ File.separator +"resources"+ File.separator + "static" + File.separator + "myweb" + File.separator + "images" + File.separator + "board";
+		File file=new File(imgUploadPath+File.separator+tradingBoardVO.getProductPicture());
+		File thumbfile=new File(imgUploadPath+File.separator+"s"+File.separator+tradingBoardVO.getProductPicture());
+		if(!file.getName().equals("iu.jpg")) {
+			file.delete();
+			thumbfile.delete();
+		}
+		
 		boardService.deletePost(boardNo);
 		return"board/deletePost";
 	}
@@ -512,5 +533,17 @@ public class BoardController {
 		request.setAttribute("adminList", adminList);
 		 
 		return "/board/contact";
+	}
+	@RequestMapping("/board/fAQ")
+	public String fAQ(Model model) {
+		ArrayList<AdminBoardVO> avolist = boardService.fAQ();
+		model.addAttribute("FAQ",avolist);
+		return "/board/fAQ";
+	}
+	@RequestMapping("/board/adminpostdetail")
+	public String adminpostdetail(Model model,int adminBoardNo) {
+		AdminBoardVO avo = boardService.adminpostdetail(adminBoardNo);
+		model.addAttribute("avo",avo);
+		return "/board/adminpostdetail";
 	}
 }

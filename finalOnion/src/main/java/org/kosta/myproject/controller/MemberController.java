@@ -10,7 +10,6 @@ import org.kosta.myproject.service.BoardService;
 import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.MemberVO;
-import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
 import org.kosta.myproject.vo.UpLoadFileUtils;
 import org.springframework.security.core.Authentication;
@@ -111,21 +110,13 @@ public class MemberController {
 		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
 		ArrayList<TradingBoardVO> list4 = new ArrayList<TradingBoardVO>();
 		
-		ArrayList<TradingBoardVO> listFinal1 = new ArrayList<TradingBoardVO>();
-		listFinal1 = boardService.orderByDate01(memberVO.getMemberId());
-		ArrayList<TradingBoardVO> listFinal2 = new ArrayList<TradingBoardVO>();
-		listFinal2 = boardService.orderByDate02(memberVO.getMemberId());
-		ArrayList<TradingBoardVO> listFinal3 = new ArrayList<TradingBoardVO>();
-		listFinal3 = boardService.orderByDate03(memberVO.getMemberId());
-		ArrayList<TradingBoardVO> listFinal4 = new ArrayList<TradingBoardVO>();
-		listFinal4 = boardService.orderByDate04(memberVO.getMemberId());
+		list1 = boardService.orderByDate001(memberVO.getMemberId());
+		list2 = boardService.orderByDate002(memberVO.getMemberId());
+		list3 = boardService.orderByDate003(memberVO.getMemberId());
+		list4 = boardService.orderByDate004(memberVO.getMemberId());
 		
-		list1 = boardService.adminOrder1(listFinal1);
-		list2 = boardService.adminOrder2(listFinal2);
 		model.addAttribute("list1",list1);
 		model.addAttribute("list2",list2);
-		list3 = boardService.adminOrder3(listFinal3);
-		list4 = boardService.adminOrder4(listFinal4);
 		model.addAttribute("list3",list3);
 		model.addAttribute("list4",list4);
 		

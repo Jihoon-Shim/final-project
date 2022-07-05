@@ -46,7 +46,7 @@
 	<tbody>	
 		<tr th:each="list : ${list}">
 			<td><button type="button" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list.boardNo}|">
-			<img th:src="@{/myweb/images/board/s/}+${list.productPicture}" height = "400" width = "400">
+			<img th:src="@{/myweb/images/board/s/}+${list.productPicture}" height = "100" width = "100">
 			</button></td>
 			<td th:text="${list.boardTitle}">제목</td>
 			<td th:text="${list.tradePrice}">가격</td>
@@ -61,7 +61,7 @@
 <li th:each="idx,iterStat : ${#numbers.sequence(pagination.startPageOfPageGroup,pagination.endPageOfPageGroup)}">
  	<span th:if="${idx==pagination.nowPage}" th:text="${idx}">
  	</span>
- 	<span th:unless="${idx==pagination.nowPage}">
+ 	<span th:if="${idx!=pagination.nowPage && pagination.totalPostCount!=0}">
  		<a class="page-link" th:href="@{board/orderbuyList?pageNo=}+${idx}" th:text="${idx}"></a>
  	</span>
 </li>

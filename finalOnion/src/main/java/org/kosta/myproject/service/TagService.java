@@ -19,6 +19,8 @@ public interface TagService {
 
 	List<TagVO> findTagByBoardNo(int boardNo);
 
+	String tagCheckExact(String tag);
+
 		
 
 }
