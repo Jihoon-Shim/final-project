@@ -13,6 +13,7 @@
 
 <div layout:fragment="main">
 	<h4 th:text="${message}" align="center">home</h4>
+	
 	<th:block sec:authorize="isAuthenticated()">
 		<div class="row">
 			<div class="col-sm-4">
