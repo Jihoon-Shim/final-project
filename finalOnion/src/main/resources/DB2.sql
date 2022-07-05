@@ -1,5 +1,7 @@
 -- 테이블 순서는 관계를 고려하여 한 번에 실행해도 에러가 발생하지 않게 정렬되었습니다.
 
+select count(*) from T_MEMBER
+
 -- T_MEMBER Table Create SQL
 CREATE TABLE T_MEMBER
 (
@@ -16,7 +18,7 @@ CREATE TABLE T_MEMBER
 )
 select * from t_member where memberId='test3'
 select * from FILEVO;
-select * from TRADING_BOARD
+
 select * from chattingRoom
 select * from chatting
 
@@ -216,7 +218,6 @@ CREATE TABLE AUTHORITY
      PRIMARY KEY (MEMBERID)
 )
 SELECT * FROm AUTHORITY
-update AUTHORITY set AUTHORITY = 'ROLE_ADMIN' where memberId='javaking'
 ALTER TABLE AUTHORITY
     ADD CONSTRAINT FK_MEMBERID5 FOREIGN KEY (MEMBERID)
         REFERENCES T_MEMBER (MEMBERID)
