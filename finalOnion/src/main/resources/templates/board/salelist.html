@@ -61,7 +61,7 @@
 <li th:each="idx,iterStat : ${#numbers.sequence(pagination.startPageOfPageGroup,pagination.endPageOfPageGroup)}">
  	<span th:if="${idx==pagination.nowPage}" th:text="${idx}">
  	</span>
- 	<span th:unless="${idx==pagination.nowPage}">
+ 	<span th:if="${idx!=pagination.nowPage && pagination.totalPostCount!=0}">
  		<a class="page-link" th:href="@{board/orderbuyList?pageNo=}+${idx}" th:text="${idx}"></a>
  	</span>
 </li>
