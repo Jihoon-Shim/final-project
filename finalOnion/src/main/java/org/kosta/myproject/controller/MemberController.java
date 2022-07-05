@@ -10,7 +10,6 @@ import org.kosta.myproject.service.BoardService;
 import org.kosta.myproject.service.MemberService;
 import org.kosta.myproject.vo.FileVO;
 import org.kosta.myproject.vo.MemberVO;
-import org.kosta.myproject.vo.Pagination;
 import org.kosta.myproject.vo.TradingBoardVO;
 import org.kosta.myproject.vo.UpLoadFileUtils;
 import org.springframework.security.core.Authentication;
@@ -110,19 +109,14 @@ public class MemberController {
 		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
 		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
 		ArrayList<TradingBoardVO> list4 = new ArrayList<TradingBoardVO>();
-		String pageNo =(String) model.getAttribute("pageNo");
-		Pagination pagination = null;
-		if(pageNo==null) {
-			pagination = new Pagination(boardService.getTotalPostCount());
-		}else {
-			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
-		}
-		list1 = boardService.orderByDate1(pagination);
-		list2 = boardService.orderBySaleDate(pagination);
+		
+		list1 = boardService.orderByDate001(memberVO.getMemberId());
+		list2 = boardService.orderByDate002(memberVO.getMemberId());
+		list3 = boardService.orderByDate003(memberVO.getMemberId());
+		list4 = boardService.orderByDate004(memberVO.getMemberId());
+		
 		model.addAttribute("list1",list1);
 		model.addAttribute("list2",list2);
-		list3 = boardService.orderByDate3(pagination);
-		list4 = boardService.orderByDate4(pagination);
 		model.addAttribute("list3",list3);
 		model.addAttribute("list4",list4);
 		

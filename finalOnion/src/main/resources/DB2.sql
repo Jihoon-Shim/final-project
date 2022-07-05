@@ -267,10 +267,10 @@ ALTER TABLE REPORTINGBOARD
 			from ( 
 				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
-				WHERE b.BOARD_KIND = '삽니다'
+				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
 			)
-		) 
-		where rnum BETWEEN 1 AND 4
+		)
+		where MEMBERID = 'java' and ROWNUM <= 5;
 		
 		SELECT * FROM BOARDTAG
 		
@@ -311,8 +311,7 @@ ALTER TABLE REPORTINGBOARD
 					WHERE BOARD_KIND = '삽니다' AND (BOARD_CONTENT LIKE  '%'||''||'%' OR BOARD_TITLE LIKE '%'||''||'%')
 										) b
 				on t.MEMBERID = b.MEMBERID
-				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
+				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
 			)
-		)
-		where rnum BETWEEN 1 AND 10
+		
 		
