@@ -118,5 +118,4 @@ public interface BoardService {
 	List<TradingBoardVO> getReviewablePosts(String myId);
 
 	void reviewedPost(int boardNo, String otherId);
-
 }

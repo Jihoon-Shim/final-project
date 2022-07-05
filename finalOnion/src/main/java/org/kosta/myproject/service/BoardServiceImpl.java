@@ -342,6 +342,7 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void raisehits(int boardNo) {
 		boardmapper.raisehits(boardNo);
+
 	}
 
 	@Override
@@ -358,5 +359,4 @@ public class BoardServiceImpl implements BoardService{
 	public void reviewedPost(int boardNo, String otherId) {
 		boardmapper.reviewedPost(boardNo, otherId);
 	}
-
 }

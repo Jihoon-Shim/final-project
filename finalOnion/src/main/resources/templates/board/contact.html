@@ -14,7 +14,7 @@
 		<div class="col-sm-4" align="center">
 			<h2>건의사항 게시판</h2>
 		</div>
-		<div class="col-sm-4" align="right">
+		<!-- <div class="col-sm-4" align="right">
 			<select name="sort" id="sort">
 				<option value="no">--정렬 방식을 선택해 주세요.--</option>
 				<option value="id">아이디순</option>
@@ -23,7 +23,7 @@
 			</select>
 			<button type="submit" th:onclick="|javascript:sort()|"
 				class="btn btn-primary btn-outline-dark">정렬하기</button>
-		</div>
+		</div> -->
 	</div>
 			<table class="table table-bordered table-hover boardlist">
 				<thead>
@@ -37,14 +37,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="list0 : ${list0}">
-						<td th:text="${list0Stat.count}">NO</td>
-						<td th:text="${list0.memberVO.memberId}">ID</td>
-						<td th:text="${list0.adminBoardTitle}" th:onclick="|location.href='@{/board/adminDetail?adminBoardNo=}'+${list0.adminBoardNo}|">제목</td>
-						<td th:text="${list0.adminBoardContent}">내용</td>
-						<td th:text="${list0.adminBoardDate}">작성날짜</td>
-						<td th:text="${list0.adminBoardKind}">게시글종류</td>
-					</tr>
+					<tr th:each="adminList : ${adminList}">
+						<td th:text="${adminListStat.count}">NO</td>
+						<td th:text="${adminList.memberVO.memberId}">ID</td>
+						<td th:text="${adminList.adminBoardTitle}" th:onclick="|location.href='@{/board/adminDetail?adminBoardNo=}'+${adminList.adminBoardNo}|">제목</td>
+						<td th:text="${adminList.adminBoardContent}">내용</td>
+						<td th:text="${adminList.adminBoardDate}">작성날짜</td>
+						<td th:text="${adminList.adminBoardKind}">게시글종류</td>
+					</tr> 
 				</tbody>
 			</table>
 
