@@ -107,15 +107,13 @@ public class BoardController {
 			}
 			request.setAttribute("pagination", pagination);
 			request.setAttribute("list", list);
-			System.out.println(pagination);
 			return "board/buylist";
 		}
 		
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
 		
 	}
-	
-	@RequestMapping("/board/salelist")
+@RequestMapping("/board/salelist")
 	public String salelist(Model model) {
 		ArrayList<TradingBoardVO> list = new ArrayList<TradingBoardVO>();
 		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
