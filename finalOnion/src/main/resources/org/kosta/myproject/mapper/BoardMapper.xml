@@ -38,15 +38,15 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
 	<select id="orderByDate1search" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from (
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t 
 				right outer join (
-					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND
+					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
@@ -59,15 +59,15 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
 	<select id="orderBySaleDatesearch" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from (
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t 
 				right outer join (
-					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND
+					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND 
@@ -80,12 +80,12 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
 	<select id="orderBySaleDate" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from ( 
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
 			)
@@ -93,12 +93,12 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
 	<select id="orderByTemp" parameterType="org.kosta.myproject.vo.Pagination" resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from ( 
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다'
 			)
@@ -106,15 +106,15 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
 	<select id="orderByTempsearch" parameterType="org.kosta.myproject.vo.Pagination" resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from (
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t 
 				right outer join (
-					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND
+					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
@@ -127,15 +127,15 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
 	<select id="orderBySaleTempsearch" parameterType="org.kosta.myproject.vo.Pagination" resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from (
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t 
 				right outer join (
-					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND
+					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND 
@@ -149,12 +149,12 @@
 	</select>
 
 	<select id="orderByDate2" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from ( 
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
 			)
@@ -162,12 +162,12 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
 	<select id="orderByDate3" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from ( 
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 0
 			)
@@ -175,12 +175,12 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
 	<select id="orderByDate4" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from ( 
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 0
 			)
@@ -188,12 +188,12 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
 	<select id="orderByPrice" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY TRADE_PRICE ASC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from ( 
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다'
 			)
@@ -201,15 +201,15 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>	
 	<select id="orderByPricesearch" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY TRADE_PRICE ASC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from (
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t 
 				right outer join (
-					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND
+					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
@@ -222,15 +222,15 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>	
 	<select id="orderBySalePricesearch" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY TRADE_PRICE ASC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from (
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t 
 				right outer join (
-					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND
+					SELECT b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND 
@@ -243,12 +243,12 @@
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>	
 	<select id="orderBySaleTemp" parameterType="org.kosta.myproject.vo.Pagination" resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from ( 
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다'
 			)
@@ -257,12 +257,12 @@
 	</select>
 
 	<select id="orderBySalePrice" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY TRADE_PRICE ASC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from ( 
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,b.HITS
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다'
 			)
@@ -332,6 +332,18 @@
 		)
 		where rnum BETWEEN #{startRowNumber} AND #{endRowNumber}
 	</select>
+	<select id="orderAdminList" resultMap="AdminBoardResultMap">
+	select ADMINBOARD_NO, ADMINBOARD_TITLE, ADMINBOARD_CONTENT , rnum, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
+	from( 
+			select ROW_NUMBER() OVER(ORDER BY ADMINBOARD_DATE DESC) as rnum, 
+			ADMINBOARD_NO , ADMINBOARD_CONTENT , ADMINBOARD_TITLE, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
+			from ( 
+				select a.ADMINBOARD_NO , a.ADMINBOARD_CONTENT , a.ADMINBOARD_TITLE, a.ADMINBOARD_DATE, t.MEMBERID , a.ADMINBOARD_KIND
+				from T_MEMBER t inner join ADMINBOARD a on t.MEMBERID = a.MEMBERID
+			)
+		)where ADMINBOARD_KIND != 'FAQ'
+	</select>
+	
 	<insert id="posting2" parameterType = "org.kosta.myproject.vo.AdminBoardVO">
 		insert into ADMINBOARD (ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID) 
 		values(ADMINBOARD_SEQ.nextval , #{adminBoardTitle} , #{adminBoardContent} , SYSDATE , #{adminBoardKind} , #{memberVO.memberId})
@@ -342,18 +354,6 @@
 	<delete id="deleteAdmin" parameterType="int">
 		delete from ADMINBOARD where ADMINBOARD_NO = #{adminBoardNo}
 	</delete>
-	<select id="orderAdminById" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
-		select ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID
-		from ADMINBOARD Order By MEMBERID desc
-	</select>
-	<select id="orderAdminByTitle" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
-		select ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID
-		from ADMINBOARD Order By ADMINBOARD_TITLE desc
-	</select>
-	<select id="orderAdminByDate" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="AdminBoardResultMap">
-		select ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID
-		from ADMINBOARD Order By ADMINBOARD_DATE desc
-	</select>
 	<select id="findAdminBoardByNo" resultType="org.kosta.myproject.vo.AdminBoardVO" parameterType="int">
 		select ADMINBOARD_NO , ADMINBOARD_TITLE , ADMINBOARD_CONTENT , ADMINBOARD_DATE , ADMINBOARD_KIND , MEMBERID
 		from ADMINBOARD where ADMINBOARD_NO = #{adminBoardNo}
@@ -381,6 +381,62 @@
 		SELECT COUNT(*) FROM TRADING_BOARD b, (SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 		WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND (b.BOARD_CONTENT LIKE  '%'||#{value}||'%' OR b.BOARD_TITLE LIKE '%'||#{value}||'%' OR t.TAG LIKE '%'||#{value}||'%')
 	</select>
+	<select id="orderByDate001" parameterType="String" resultMap="tradingboardResultMap" >
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		from( 
+			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			from ( 
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
+			)
+		)
+		where MEMBERID =#{memberId}
+		<![CDATA[ and ROWNUM <= 5]]>
+	</select>
+	<select id="orderByDate002" parameterType="String" resultMap="tradingboardResultMap" >
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		from( 
+			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			from ( 
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
+			)
+		)
+		where MEMBERID =#{memberId}
+		<![CDATA[ and ROWNUM <= 5]]>
+	</select>
+	<select id="orderByDate003" parameterType="String" resultMap="tradingboardResultMap" >
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		from( 
+			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			from ( 
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 0
+			)
+		)
+		where MEMBERID =#{memberId}
+		<![CDATA[ and ROWNUM <= 5]]>
+	</select>
+	<select id="orderByDate004" parameterType="String" resultMap="tradingboardResultMap" >
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		from( 
+			select ROW_NUMBER() OVER(ORDER BY tem DESC) as rnum, 
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			from ( 
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
+				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 0
+			)
+		)
+		where MEMBERID =#{memberId}
+		<![CDATA[ and ROWNUM <= 5]]>
+	</select>
 	<select id="fAQ" resultMap="AdminBoardVoMap">
 		SELECT ADMINBOARD_NO,ADMINBOARD_KIND,ADMINBOARD_TITLE,ADMINBOARD_CONTENT,ADMINBOARD_DATE,MEMBERID 
 		FROM ADMINBOARD WHERE ADMINBOARD_KIND='FAQ'
@@ -394,6 +450,9 @@
 	</select>
 	<update id="updatePostSoldOutByBoardNo" parameterType="int">
 		update trading_board set trade_status = 0 where board_no=#{value}
+	</update>
+	<update id="raisehits" parameterType="int">
+		update trading_board set HITS = HITS+1 WHERE board_no=#{value}
 	</update>
 	<update id="setAuthorityThatReview">
 		update trading_board set board_kind = 
