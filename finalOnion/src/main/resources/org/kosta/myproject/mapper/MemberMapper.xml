@@ -72,6 +72,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into TEMP(MEMBERID,TEMP,TEMPCOUNT)
 		VALUES(#{memberId},36.5,1)
 	</insert>
+	<update id="setTemp">
+		update temp set temp=(temp+#{setTemp})/(tempcount+1) , tempcount =tempcount+1 where memberid= #{otherId}
+	</update>
 </mapper>
 
 

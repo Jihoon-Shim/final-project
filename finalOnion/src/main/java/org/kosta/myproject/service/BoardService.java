@@ -94,6 +94,15 @@ public interface BoardService {
 
 	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
 
+	ArrayList<TradingBoardVO> orderByDate001(String memberId);
+	ArrayList<TradingBoardVO> orderByDate002(String memberId);
+	ArrayList<TradingBoardVO> orderByDate003(String memberId);
+	ArrayList<TradingBoardVO> orderByDate004(String memberId); // 자기 아이디로 게시판 묶음 갖오기 , 개수 제한
+
+	int getTotalAdminCount();
+
+	ArrayList<AdminBoardVO> orderAdminList(ArrayList<AdminBoardVO> list0);
+	
 	ArrayList<AdminBoardVO> fAQ();
 
 	AdminBoardVO adminpostdetail(int adminBoardNo);
@@ -101,4 +110,12 @@ public interface BoardService {
 	List<TradingBoardVO> findTradingBoardByMemberId(String myId);
 
 	void updatePostSoldOutByBoardNo(int boardNo);
+
+	void raisehits(int boardNo);
+
+	void setAuthorityThatReview(int boardNo, String otherId);
+
+	List<TradingBoardVO> getReviewablePosts(String myId);
+
+	void reviewedPost(int boardNo, String otherId);
 }

@@ -26,4 +26,24 @@
 	<select id="tagCheckExact" resultType="int" parameterType="string">
 		SELECT COUNT(*) FROM TAG WHERE TAG=#{value}
 	</select>
+	<select id="trendsearch" resultType="org.kosta.myproject.vo.TagVO">
+		SELECT TAG, TAGHITS FROM(	
+			SELECT TAG, TAGHITS, RANK() OVER (PARTITION BY TAG ORDER BY TO_CHAR(TAGDATE, 'YYYYMMDDHHMMSS') DESC) AS RNK
+			FROM (
+				SELECT t.TAG,t.TAGHITS, b.TAGDATE
+				FROM TAG t, BOARDTAG b
+				WHERE t.TAGID = b.TAGID	
+			)			
+			WHERE <![CDATA[ TAGHITS >= 3]]>
+		)
+		WHERE RNK=1
+	</select>
+	<select id="toplistsearch" resultType="org.kosta.myproject.vo.TagVO">
+		SELECT TAG, TAGHITS 
+		FROM(
+			SELECT ROW_NUMBER() OVER(ORDER BY TAGHITS DESC) as rnum, TAG, TAGHITS
+			FROM TAG
+		)
+		WHERE <![CDATA[ rnum <= 3]]>
+	</select>
 </mapper>
