@@ -31,7 +31,7 @@
 						<tr th:each="list1 : ${list1}">
 							<td th:text="${list1Stat.count}">0000</td>
 							<td th:text="${list1.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list1.boardNo}|"></td>
-							<td th:text="${list1.boardDate}" th:onclick="|location.href='@{/profile?boardNo=}'+${list1.boardNo}|">2020.06.24</td>
+							<td th:text="${list1.boardDate}">2020.06.24</td>
 							<td th:text="${list1.tradePrice}">100</td>
 						</tr>
 					</tbody>
@@ -49,11 +49,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="list2 : ${list2}">
-							<td th:text="${list2Stat.count}">0000</td>
-							<td th:text="${list2.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list2.boardNo}|">제목</td>
-							<td th:text="${list2.boardDate}">2020.06.24</td>
-							<td th:text="${list2.tradePrice}">100</td>
+						<tr th:each="listFinal2 : ${listFinal2}">
+							<td th:text="${listFinal2Stat.count}">0000</td>
+							<td th:text="${listFinal2.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${listFinal2.boardNo}|">제목</td>
+							<td th:text="${listFinal2.boardDate}">2020.06.24</td>
+							<td th:text="${listFinal2.tradePrice}">100</td>
 						</tr>
 					</tbody>
 				</table>
@@ -70,11 +70,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="list3 : ${list3}">
-							<td th:text="${list3Stat.count}">0000</td>
-							<td th:text="${list3.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list3.boardNo}|">제목</td>
-							<td th:text="${list3.boardDate}">2020.06.24</td>
-							<td th:text="${list3.tradePrice}">100</td>
+						<tr th:each="listFinal3 : ${listFinal3}">
+							<td th:text="${listFinal3Stat.count}">0000</td>
+							<td th:text="${listFinal3.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${listFinal3.boardNo}|">제목</td>
+							<td th:text="${listFinal3.boardDate}">2020.06.24</td>
+							<td th:text="${listFinal3.tradePrice}">100</td>
 						</tr>
 					</tbody>
 				</table>
@@ -91,11 +91,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="list4 : ${list4}">
-							<td th:text="${list4Stat.count}">0000</td>
-							<td th:text="${list4.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list4.boardNo}|">제목</td>
-							<td th:text="${list4.boardDate}">2020.06.24</td>
-							<td th:text="${list4.tradePrice}">100</td>
+						<tr th:each="listFinal4 : ${listFinal4}">
+							<td th:text="${listFinal4Stat.count}">0000</td>
+							<td th:text="${listFinal4.boardTitle}" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${listFinal4.boardNo}|">제목</td>
+							<td th:text="${listFinal4.boardDate}">2020.06.24</td>
+							<td th:text="${listFinal4.tradePrice}">100</td>
 						</tr>
 					</tbody>
 				</table>

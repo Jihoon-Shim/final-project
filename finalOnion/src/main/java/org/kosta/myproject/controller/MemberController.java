@@ -110,19 +110,22 @@ public class MemberController {
 		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
 		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
 		ArrayList<TradingBoardVO> list4 = new ArrayList<TradingBoardVO>();
-		String pageNo =(String) model.getAttribute("pageNo");
-		Pagination pagination = null;
-		if(pageNo==null) {
-			pagination = new Pagination(boardService.getTotalPostCount());
-		}else {
-			pagination=new Pagination(boardService.getTotalPostCount(),Integer.parseInt(pageNo));
-		}
-		list1 = boardService.orderByDate1(pagination);
-		list2 = boardService.orderBySaleDate(pagination);
+		
+		ArrayList<TradingBoardVO> listFinal1 = new ArrayList<TradingBoardVO>();
+		listFinal1 = boardService.orderByDate01(memberVO.getMemberId());
+		ArrayList<TradingBoardVO> listFinal2 = new ArrayList<TradingBoardVO>();
+		listFinal2 = boardService.orderByDate02(memberVO.getMemberId());
+		ArrayList<TradingBoardVO> listFinal3 = new ArrayList<TradingBoardVO>();
+		listFinal3 = boardService.orderByDate03(memberVO.getMemberId());
+		ArrayList<TradingBoardVO> listFinal4 = new ArrayList<TradingBoardVO>();
+		listFinal4 = boardService.orderByDate04(memberVO.getMemberId());
+		
+		list1 = boardService.adminOrder1(listFinal1);
+		list2 = boardService.adminOrder2(listFinal2);
 		model.addAttribute("list1",list1);
 		model.addAttribute("list2",list2);
-		list3 = boardService.orderByDate3(pagination);
-		list4 = boardService.orderByDate4(pagination);
+		list3 = boardService.adminOrder3(listFinal3);
+		list4 = boardService.adminOrder4(listFinal4);
 		model.addAttribute("list3",list3);
 		model.addAttribute("list4",list4);
 		

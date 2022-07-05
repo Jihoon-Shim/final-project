@@ -277,4 +277,70 @@ public class BoardServiceImpl implements BoardService{
 		list = boardmapper.orderBySaleDatesearch(pagination);
 		return list;
 	}
+
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate01(String memberId) {
+		ArrayList<TradingBoardVO> listFinal1 = new ArrayList<TradingBoardVO>();
+		listFinal1 = boardmapper.orderByDate01(memberId);
+		return listFinal1;
+	}
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate02(String memberId) {
+		ArrayList<TradingBoardVO> listFinal2 = new ArrayList<TradingBoardVO>();
+		listFinal2 = boardmapper.orderByDate02(memberId);
+		return listFinal2;
+	}
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate03(String memberId) {
+		ArrayList<TradingBoardVO> listFinal3 = new ArrayList<TradingBoardVO>();
+		listFinal3 = boardmapper.orderByDate03(memberId);
+		return listFinal3;
+	}
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate04(String memberId) {
+		ArrayList<TradingBoardVO> listFinal4 = new ArrayList<TradingBoardVO>();
+		listFinal4 = boardmapper.orderByDate04(memberId);
+		return listFinal4;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> adminOrder4(ArrayList<TradingBoardVO> listFinal4) {
+		ArrayList<TradingBoardVO> list4 = new ArrayList<TradingBoardVO>();
+		list4 = boardmapper.adminOrder4(listFinal4);
+		return list4;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> adminOrder1(ArrayList<TradingBoardVO> listFinal1) {
+		ArrayList<TradingBoardVO> list1 = new ArrayList<TradingBoardVO>();
+		list1 = boardmapper.adminOrder1(listFinal1);
+		return list1;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> adminOrder2(ArrayList<TradingBoardVO> listFinal2) {
+		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
+		list2 = boardmapper.adminOrder2(listFinal2);
+		return list2;
+	}
+
+	@Override
+	public ArrayList<TradingBoardVO> adminOrder3(ArrayList<TradingBoardVO> listFinal3) {
+		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
+		list3 = boardmapper.adminOrder3(listFinal3);
+		return list3;
+	}
+
+	@Override
+	public int getTotalAdminCount() {
+		int result = boardmapper.getTotalAdminCount();
+		return result;
+	}
+
+	@Override
+	public ArrayList<AdminBoardVO> orderAdminList(ArrayList<AdminBoardVO> list0) {
+		ArrayList<AdminBoardVO> adminList = new ArrayList<AdminBoardVO>();
+		adminList = boardmapper.orderAdminList(list0);
+		return adminList;
+	}
 }

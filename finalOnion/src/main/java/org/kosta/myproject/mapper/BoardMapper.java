@@ -94,4 +94,17 @@ public interface BoardMapper {
 
 	ArrayList<TradingBoardVO> orderBySaleDatesearch(Pagination pagination);
 
+	ArrayList<TradingBoardVO> orderByDate01(String memberId);
+	ArrayList<TradingBoardVO> orderByDate02(String memberId);
+	ArrayList<TradingBoardVO> orderByDate03(String memberId);
+	ArrayList<TradingBoardVO> orderByDate04(String memberId);
+
+	ArrayList<TradingBoardVO> adminOrder1(ArrayList<TradingBoardVO> listFinal1);
+	ArrayList<TradingBoardVO> adminOrder2(ArrayList<TradingBoardVO> listFinal2);
+	ArrayList<TradingBoardVO> adminOrder3(ArrayList<TradingBoardVO> listFinal3);
+	ArrayList<TradingBoardVO> adminOrder4(ArrayList<TradingBoardVO> listFinal4);
+
+	int getTotalAdminCount();
+
+	ArrayList<AdminBoardVO> orderAdminList(ArrayList<AdminBoardVO> list0);
 }
