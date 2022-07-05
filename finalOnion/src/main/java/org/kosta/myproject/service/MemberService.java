@@ -35,5 +35,7 @@ public interface MemberService {
 
 	void deleteMember(String memberId);
 
+	void setTemp(String otherId, int setTemp);
+
 
 }

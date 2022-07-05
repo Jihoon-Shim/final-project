@@ -44,13 +44,26 @@
              		</th:block>
              	</select>
              	<br><br><br>
-             	<select id ="isSoldOut" >
+             	<select id ="isSoldOut">
              		<option value="">거래 완료 후 확정해 주세요</option>
              		<th:block th:each="boardVO:${boardList}">
-             		<option th:value="${boardVO.boardNo}" th:text="${boardVO.boardTitle}"></option>
+             		<option th:if="${boardVO.tradeStatus==1}" th:value="${boardVO.boardNo}" th:text="${boardVO.boardTitle}"></option>
              		</th:block>
              	</select>
              	<button type="button" id ="soldOut">거래완료</button>
+             	<br><br><br>
+             	<th:block th:if="${soldOutBoardList.size!=0}">
+             		<select id ="setReviewTitle">
+             		<option value="">거래는 만족하셨나요?</option>
+             		<th:block th:each="soldBoardVO:${soldOutBoardList}">
+             		<option th:value="${soldBoardVO.boardNo}" th:text="${soldBoardVO.boardTitle}"></option>
+             		</th:block>
+             	</select>
+             	<div class="bar-container" id = "bar-container">
+             		<input type="range" min="0" max="100" id="temp" style="color : #F28646;">
+				</div>
+             	<button type="button" id ="setReview">평가하기</button>
+				</th:block>
              </div>
              </div>
                 <div class="row">
@@ -67,6 +80,8 @@
 $(document).ready(function(){
     const username = "[[${#authentication.principal.memberNickname}]]";
     let msg = document.getElementById("msg");
+    let token = $("meta[name='_csrf']").attr("content"); 
+	let header = $("meta[name='_csrf_header']").attr("content");
     
     $("#button-send").on("click", (e) => {
     	recordMsg();
@@ -160,13 +175,12 @@ $(document).ready(function(){
     	if(boardVO.val()!=""){
     		isSoldOut = confirm("위 글을 거래완료 처리하시겠습니까?");
         	if(isSoldOut){
-        		let token = $("meta[name='_csrf']").attr("content"); 
-				let header = $("meta[name='_csrf_header']").attr("content");
         		$.ajax({
         			type:"post",
         			url:"postSoldOut",
         			data:{
-        				"boardNo":boardVO.val()
+        				"boardNo":boardVO.val(),
+        				"otherId":"[[${otherMemberVO.memberId}]]"
         			},
         			beforeSend : function(xhr){  
 	                    xhr.setRequestHeader(header,token);
@@ -178,6 +192,33 @@ $(document).ready(function(){
         	}
     	}
     });
+    var setReview = $("#setReviewTitle");
+    var temp = $("#temp");
+    $("#setReview").on("click", e => {
+    	 if(setReview.val()!=""){
+    		 isReview = confirm(temp.val()+"℃로 평가하시겠습니까?");
+    		 if(isReview){
+				$.ajax({
+	    			type:"post",
+	    			url:"review",
+	    			data:{
+	    				"boardNo":setReview.val(),
+	    				"setTemp":temp.val(),
+	    				"otherId":"[[${otherMemberVO.memberId}]]"
+	    			},
+	    			beforeSend : function(xhr){  
+	                    xhr.setRequestHeader(header,token);
+	                },
+	    			success:function(result){
+	    				alert(result);
+	    			}
+				});
+    		}
+    	}else{
+    		alert("거래 글을 골라주세요");
+    	}
+    });
+    
 });
 </script>
 </th:block>

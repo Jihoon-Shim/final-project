@@ -103,4 +103,10 @@ public interface BoardMapper {
 
 	void updatePostSoldOutByBoardNo(int boardNo);
 
+	void setAuthorityThatReview(int boardNo, String otherId);
+
+	List<TradingBoardVO> getReviewablePosts(String myId);
+
+	void reviewedPost(int boardNo, String otherId);
+
 }

@@ -391,4 +391,15 @@
 	<update id="updatePostSoldOutByBoardNo" parameterType="int">
 		update trading_board set trade_status = 0 where board_no=#{value}
 	</update>
+	<update id="setAuthorityThatReview">
+		update trading_board set board_kind = 
+		(select board_kind from TRADING_BOARD where board_no = #{boardNo})||#{otherId} 
+		where board_no=#{boardNo}
+	</update>
+	<select id="getReviewablePosts" parameterType="string" resultType="org.kosta.myproject.vo.TradingBoardVO">
+		select * from trading_board where board_kind like '%'||#{myId} and trade_status=0
+	</select>
+	<update id="reviewedPost">
+		update trading_board set trade_status =2 where memberId=#{otherId} and board_no=#{boardNo}
+	</update>
 </mapper>

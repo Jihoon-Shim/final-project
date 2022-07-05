@@ -110,4 +110,9 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.deleteMember(memberId);
 	}
 
+	@Override
+	public void setTemp(String otherId, int setTemp) {
+		memberMapper.setTemp(otherId,setTemp);
+	}
+
 }
