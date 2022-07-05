@@ -112,8 +112,6 @@ public interface BoardService {
 	void updatePostSoldOutByBoardNo(int boardNo);
 
 	void raisehits(int boardNo);
-	
-	void updatePostSoldOutByBoardNo(int boardNo);
 
 	void setAuthorityThatReview(int boardNo, String otherId);
 
