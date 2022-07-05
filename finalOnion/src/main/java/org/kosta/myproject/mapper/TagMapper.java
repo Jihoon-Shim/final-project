@@ -23,6 +23,10 @@ public interface TagMapper {
 
 	int tagCheckExact(String tag);
 
+	ArrayList<TagVO> trendsearch();
+
+	ArrayList<TagVO> toplistsearch();
+
 
 
 }
