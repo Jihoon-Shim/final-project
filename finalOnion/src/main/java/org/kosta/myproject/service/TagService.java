@@ -21,6 +21,10 @@ public interface TagService {
 
 	String tagCheckExact(String tag);
 
+	ArrayList<TagVO> trendsearch();
+
+	ArrayList<TagVO> toplistsearch();
+
 		
 
 }

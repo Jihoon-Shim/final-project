@@ -18,6 +18,15 @@
 	background-color: #f1f1f1;
 	height: 100%;
 }
+#myCarousel.carousel.slide{
+	margin-left: 25%;
+	width : 50%;
+}
+ .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+    width: 50%;
+    margin: auto;
+  }
 
 /* Set black background color, white text and some padding */
 footer {
