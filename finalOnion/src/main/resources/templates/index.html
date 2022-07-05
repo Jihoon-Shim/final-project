@@ -11,9 +11,32 @@
 	layout:decorate="~{layouts/layout}"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<meta id="_csrf" name="_csrf" th:content="${_csrf.token}"/>
+<meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
+
 <div layout:fragment="main">
 	<h4 th:text="${message}" align="center">home</h4>
-	
+
+
+	<input type="button" value="총회원수보기(get)" id="countBtn"> <span
+		id="countView"></span>
+
+
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#countBtn").click(function() {
+				$.ajax({
+					type : "get",
+					url : "guest/getMemberTotalCount",
+					success : function(result) {
+						$("#countView").html(result + "명");
+					}
+				});//ajax
+			});//click
+		});//ready
+	</script>
+
+
 	<th:block sec:authorize="isAuthenticated()">
 		<div class="row">
 			<div class="col-sm-4">
@@ -34,7 +57,7 @@
 				<h4>건의사항</h4>
 				<br>
 				<button type="submit" th:onclick="location.href='/board/contact'">
-				 <img th:src="@{/myweb/images/Chat.PNG}" height="400" width="400">
+					<img th:src="@{/myweb/images/Chat.PNG}" height="400" width="400">
 				</button>
 			</div>
 		</div>
