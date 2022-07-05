@@ -113,4 +113,10 @@ public interface BoardMapper {
 	int getTotalAdminCount();
 
 	ArrayList<AdminBoardVO> orderAdminList(ArrayList<AdminBoardVO> list0);
+
+	void setAuthorityThatReview(int boardNo, String otherId);
+
+	List<TradingBoardVO> getReviewablePosts(String myId);
+
+	void reviewedPost(int boardNo, String otherId);
 }

@@ -342,5 +342,21 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void raisehits(int boardNo) {
 		boardmapper.raisehits(boardNo);
+
+	}
+
+	@Override
+	public void setAuthorityThatReview(int boardNo, String otherId) {
+		boardmapper.setAuthorityThatReview(boardNo, otherId);
+	}
+
+	@Override
+	public List<TradingBoardVO> getReviewablePosts(String myId) {
+		return boardmapper.getReviewablePosts(myId);
+	}
+
+	@Override
+	public void reviewedPost(int boardNo, String otherId) {
+		boardmapper.reviewedPost(boardNo, otherId);
 	}
 }

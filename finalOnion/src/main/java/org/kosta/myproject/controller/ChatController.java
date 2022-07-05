@@ -15,6 +15,7 @@ import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.TradingBoardVO;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +56,7 @@ public class ChatController{
 			HttpSession session = request.getSession();
 			session.setAttribute("reception", reception);
 		}
-		//판매 완료가 아닌 내 글 가져오기
+		//내 글 가져오기
 		List<TradingBoardVO> List = boardService.findTradingBoardByMemberId(myId);
 		List<TradingBoardVO> boardList = new ArrayList<TradingBoardVO>();
 		for(TradingBoardVO tradingBoardVO : List) {
@@ -64,6 +65,16 @@ public class ChatController{
 			}
 		}
 		model.addAttribute("boardList",boardList);
+		//상대가 내게 거래완료 표시한 글
+		List<TradingBoardVO> List2 = boardService.getReviewablePosts(myId);
+		List<TradingBoardVO> soldOutBoardList = new ArrayList<TradingBoardVO>();
+		for(TradingBoardVO tradingBoardVO : List2) {
+			String containsMyId = tradingBoardVO.getBoardKind().substring(3);
+			if(containsMyId.equals(myId)) {
+				soldOutBoardList.add(tradingBoardVO);
+			}
+		}
+		model.addAttribute("soldOutBoardList", soldOutBoardList);
 		
 		return "chat/chat";
 	}
@@ -89,7 +100,6 @@ public class ChatController{
 			otherMemberVO = new MemberVO();
 			otherMemberVO = memberService.findMemberById(otherMemberId);
 			chattingVO.setMemberVO(otherMemberVO);
-			System.out.println(otherMemberVO);
 			//마지막 채팅
 			String lastMessage = chatService.getLastMessage(myId, otherMemberId);
 			if(lastMessage==null) {
@@ -106,9 +116,18 @@ public class ChatController{
 	}
 	@PostMapping("postSoldOut")
 	@ResponseBody
-	public String postSoldOut(int boardNo) {
+	public String postSoldOut(int boardNo, String otherId) {
 		boardService.updatePostSoldOutByBoardNo(boardNo);
-		return "거래완료 처리되었습니다.";
+		boardService.setAuthorityThatReview(boardNo, otherId);
+		return otherId+"거래완료 처리되었습니다.";
+	}
+	@PostMapping("review")
+	@ResponseBody
+	@Transactional
+	public String review(int boardNo, int setTemp, String otherId) {
+		memberService.setTemp(otherId, setTemp);
+		boardService.reviewedPost(boardNo,otherId);
+		return "평가해주셔서 감사합니다";
 	}
 }
 

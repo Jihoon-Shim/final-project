@@ -54,4 +54,14 @@ public class TagServiceImpl implements TagService{
 		return (count == 0) ? "ok" : "fail";
 	}
 
+	@Override
+	public ArrayList<TagVO> trendsearch() {
+		return tagMapper.trendsearch();
+	}
+
+	@Override
+	public ArrayList<TagVO> toplistsearch() {
+		return tagMapper.toplistsearch();
+	}
+
 }

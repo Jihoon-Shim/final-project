@@ -9,6 +9,12 @@
 				</button>
 				<button type="button" onclick="location.href='/'"><img th:src="@{/myweb/images/양파마켓.gif}"></button>				
 			</div>
+			<div id="trend" align = "center">
+				<button type="button">
+				오늘의 트렌드 키워드는?
+				</button>
+				<div id="trendArea"></div>
+			</div>
 			<div class="collapse navbar-collapse" id="myNavbar" align = "right">
 				<form th:action="@{/login}"   action="/login" method="post" id="loginForm" sec:authorize="isAuthenticated()==false">
 					<input type="text" name="id" size="10" placeholder="아이디"><br>
@@ -43,8 +49,38 @@
 				let reception = "[[${session.reception}]]";
 				if(reception==0)
 					document.getElementById("alarm").style.display="none";
-			}
-		});
+			}//click
+			$("div[id=trend]").mouseenter(function(){				
+				$.ajax({
+					type:"get",
+					url:"/guest/trendsearch",
+					success:function(data){						
+						var str = "<div class='col-6' align='center'><div class='alert alert-warning'><b>가장 많은 인기의 태그 TOP3입니다.</b></div></div>";
+						var str2 = "<div class='col-6' align='center'>";
+							str2 += "<div class='alert alert-warning'>";
+							 str2 += "<b>TOP1 : "+data[0].tag + " " +data[0].tagHits + " / TOP2 : " + data[1].tag + " " +data[1].tagHits +" / TOP3 : "+ data[2].tag +" " + data[2].tagHits +"</b>";
+							str2 += "</div></div>";
+						var str3 = "<div class='col-6' align='center'><div class='alert alert-warning'><b>가장 최근 인기의 태그 TOP3입니다.</b></div></div>";
+						var str4 = "<div class='col-6' align='center'>";
+							str4 += "<div class='alert alert-warning'>";
+							str4 += "<b>";
+							for(let j=0;j<data.length-3;j++){
+							str4 += "TOP"+(j+1)+" : " +data[j+3].tag + " " +data[j+3].tagHits + " /";
+							}							
+							str4 +="</b>";
+							str4 += "</div></div>";
+						$("#trendArea").append(str);
+						$("#trendArea").append(str2);
+						$("#trendArea").append(str3);
+						$("#trendArea").append(str4);
+					}//callback			
+				});//ajax
+			})//mouseenter
+			$("div[id=trend]").mouseout(function(){				
+				var reset = document.getElementById("trendArea");
+				reset.innerHTML="<div id='trendArea'></div>";
+			})//mouseenter
+		});//function
 	</script>	
 </header>
 </html>
