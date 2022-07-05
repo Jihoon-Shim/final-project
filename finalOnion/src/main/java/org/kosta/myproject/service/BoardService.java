@@ -19,7 +19,6 @@ public interface BoardService {
 
 	ArrayList<TradingBoardVO> orderByPrice(Pagination pagination);
 
-
 	ArrayList<TradingBoardVO> orderByDate3(Pagination pagination);
 
 	ArrayList<TradingBoardVO> orderByDate4(Pagination pagination);
@@ -117,5 +116,5 @@ public interface BoardService {
 
 	List<TradingBoardVO> getReviewablePosts(String myId);
 
-	void reviewedPost(int boardNo, String otherId);
+	void reviewedPost(int boardNo);
 }

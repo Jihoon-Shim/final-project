@@ -356,7 +356,7 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void reviewedPost(int boardNo, String otherId) {
-		boardmapper.reviewedPost(boardNo, otherId);
+	public void reviewedPost(int boardNo) {
+		boardmapper.reviewedPost(boardNo);
 	}
 }

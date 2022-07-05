@@ -16,7 +16,7 @@ CREATE TABLE T_MEMBER
 )
 select * from t_member where memberId='test3'
 select * from FILEVO;
-
+select * from TRADING_BOARD
 select * from chattingRoom
 select * from chatting
 
@@ -216,6 +216,7 @@ CREATE TABLE AUTHORITY
      PRIMARY KEY (MEMBERID)
 )
 SELECT * FROm AUTHORITY
+update AUTHORITY set AUTHORITY = 'ROLE_ADMIN' where memberId='javaking'
 ALTER TABLE AUTHORITY
     ADD CONSTRAINT FK_MEMBERID5 FOREIGN KEY (MEMBERID)
         REFERENCES T_MEMBER (MEMBERID)
