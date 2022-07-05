@@ -9,6 +9,7 @@
 	<resultMap type="org.kosta.myproject.vo.AdminBoardVO" id="AdminBoardResultMap">
 		<result column="adminBoardContent" property="AdminBoardVO.adminBoardContent"/>
 		<result column="adminBoardTitle" property="AdminBoardVO.adminBoardTitle"/>
+		<result column="adminBoardKind" property="AdminBoardVO.adminBoardKind"/>
 		<result column="memberId" property="memberVO.memberId"/>
 	</resultMap>
 	<resultMap type="org.kosta.myproject.vo.AdminBoardVO" id="AdminBoardVoMap">
@@ -17,16 +18,19 @@
 	<select id="getTotalPostCount" resultType="int">
 		SELECT COUNT(*) FROM TRADING_BOARD WHERE BOARD_KIND = '삽니다'
 	</select>
+	<select id="getTotalAdminCount" resultType="int">
+		SELECT COUNT(*) FROM ADMINBOARD
+	</select>
 	<select id="getTotalSalePostCount" resultType="int">
 		SELECT COUNT(*) FROM TRADING_BOARD WHERE BOARD_KIND = '팝니다'
 	</select>
 	<select id="orderByDate1" parameterType="org.kosta.myproject.vo.Pagination"  resultMap="tradingboardResultMap">
-		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem
+		select BOARD_NO, BOARD_TITLE,  rnum, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID,tem,HITS
 		from( 
 			select ROW_NUMBER() OVER(ORDER BY BOARD_DATE DESC) as rnum, 
-			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem
+			BOARD_NO, BOARD_TITLE, BOARD_DATE, TRADE_PRICE, PRODUCT_PICTURE, MEMBERID, tem,HITS
 			from ( 
-				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
+				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID,HITS
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
 			)

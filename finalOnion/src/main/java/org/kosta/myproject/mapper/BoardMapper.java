@@ -103,6 +103,17 @@ public interface BoardMapper {
 
 	void updatePostSoldOutByBoardNo(int boardNo);
 
+	void raisehits(int boardNo);
+
+	ArrayList<TradingBoardVO> orderByDate001(String memberId);
+	ArrayList<TradingBoardVO> orderByDate002(String memberId);
+	ArrayList<TradingBoardVO> orderByDate003(String memberId);
+	ArrayList<TradingBoardVO> orderByDate004(String memberId);
+
+	int getTotalAdminCount();
+
+	ArrayList<AdminBoardVO> orderAdminList(ArrayList<AdminBoardVO> list0);
+
 	void setAuthorityThatReview(int boardNo, String otherId);
 
 	List<TradingBoardVO> getReviewablePosts(String myId);

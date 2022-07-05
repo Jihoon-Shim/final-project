@@ -280,6 +280,45 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public ArrayList<TradingBoardVO> orderByDate001(String memberId) {
+		ArrayList<TradingBoardVO> list1 = new ArrayList<TradingBoardVO>();
+		list1 = boardmapper.orderByDate001(memberId);
+		return list1;
+	}
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate002(String memberId) {
+		ArrayList<TradingBoardVO> list2 = new ArrayList<TradingBoardVO>();
+		list2 = boardmapper.orderByDate002(memberId);
+		return list2;
+	}
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate003(String memberId) {
+		ArrayList<TradingBoardVO> list3 = new ArrayList<TradingBoardVO>();
+		list3 = boardmapper.orderByDate003(memberId);
+		return list3;
+	}
+	@Override
+	public ArrayList<TradingBoardVO> orderByDate004(String memberId) {
+		ArrayList<TradingBoardVO> list4 = new ArrayList<TradingBoardVO>();
+		list4 = boardmapper.orderByDate004(memberId);
+		return list4;
+	}
+
+
+	@Override
+	public int getTotalAdminCount() {
+		int result = boardmapper.getTotalAdminCount();
+		return result;
+	}
+
+	@Override
+	public ArrayList<AdminBoardVO> orderAdminList(ArrayList<AdminBoardVO> list0) {
+		ArrayList<AdminBoardVO> adminList = new ArrayList<AdminBoardVO>();
+		adminList = boardmapper.orderAdminList(list0);
+		return adminList;
+	}
+	
+	@Override
 	public ArrayList<AdminBoardVO> fAQ() {
 		ArrayList<AdminBoardVO> avolist = boardmapper.fAQ();
 		return avolist;
@@ -298,6 +337,11 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void updatePostSoldOutByBoardNo(int boardNo) {
 		boardmapper.updatePostSoldOutByBoardNo(boardNo);
+	}
+
+	@Override
+	public void raisehits(int boardNo) {
+		boardmapper.raisehits(boardNo);
 	}
 
 	@Override
