@@ -2,6 +2,7 @@ package org.kosta.myproject.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.kosta.myproject.vo.MemberVO;
 import org.kosta.myproject.vo.AdminBoardVO;
@@ -53,8 +54,6 @@ public interface BoardService {
 
 	int currentseq();
 
-	ArrayList<AdminBoardVO> orderByDate1Contact(Pagination pagination);
-
 	void posting2(AdminBoardVO adminVO);
 
 	AdminBoardVO adminDetailByNo(int adminBoardNo);
@@ -97,10 +96,6 @@ public interface BoardService {
 	ArrayList<TradingBoardVO> orderByDate002(String memberId);
 	ArrayList<TradingBoardVO> orderByDate003(String memberId);
 	ArrayList<TradingBoardVO> orderByDate004(String memberId); // 자기 아이디로 게시판 묶음 갖오기 , 개수 제한
-
-	int getTotalAdminCount();
-
-	ArrayList<AdminBoardVO> orderAdminList(ArrayList<AdminBoardVO> list0);
 	
 	ArrayList<AdminBoardVO> fAQ();
 
@@ -117,9 +112,16 @@ public interface BoardService {
 	List<TradingBoardVO> getReviewablePosts(String myId);
 
 	void reviewedPost(int boardNo);
-
-	ArrayList<AdminBoardVO> findContactListById(String memberId);
 	
 	void deleteBoardTag(int boardNo);
+
+	//ArrayList<AdminBoardVO> orderByDate1Contact(Map<String, Object> map);
+
+	ArrayList<AdminBoardVO> orderByDate2Contact(String memberId);
+
+
+	int getTotalAdminCountById(String memberId);
+
+	ArrayList<AdminBoardVO> orderByDate1Contact(Pagination pagination);
 
 }
