@@ -335,8 +335,7 @@ public class BoardController {
 	}
 	@RequestMapping("/board/contact")
 	public String contact(Model model , @AuthenticationPrincipal MemberVO memberVO) {
-		ArrayList<AdminBoardVO> list0 = new ArrayList<AdminBoardVO>();
-		ArrayList<AdminBoardVO> adminList = new ArrayList<AdminBoardVO>();
+		
 		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
 		String pageNo =(String) model.getAttribute("pageNo");
 		Pagination pagination = null;
@@ -346,8 +345,7 @@ public class BoardController {
 			pagination=new Pagination(boardService.getTotalAdminCount(),Integer.parseInt(pageNo));
 		}
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
-		list0 = boardService.orderByDate1Contact(pagination);
-		adminList = boardService.orderAdminList(list0);
+		
 		
 		
 		ArrayList<AdminBoardVO> MyContactList = new ArrayList<AdminBoardVO>();
