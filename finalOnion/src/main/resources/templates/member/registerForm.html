@@ -19,7 +19,7 @@
 <input type="text" name="memberName" placeholder="이름"  required="required"><br>
 <input type="text" name="memberAddress" placeholder="주소"  required="required"><br>
 <input type="text" name="memberNickname" placeholder="별명"  required="required"><br>
-<input type="text" name="memberTel" placeholder="전화번호"  required="required"><br>
+<input type="number" name="memberTel" placeholder="전화번호"  required="required"><span id="telCheckView"></span><br>
 <input type="hidden" name="onionPoint" value="0">
 <input accept="*" type="file" id="inputGroupFile01" name="file" class="custom-file-input"
                     aria-describedby="inputGroupFileAddon01" multiple="false">
@@ -54,8 +54,13 @@
 <script type="text/javascript">
  	$(document).ready(function(){
 		let checkResultId="memberId";		
+		let checkResultTel="memberTel";		
 		$("#regForm").submit(function(){				
 			if(checkResultId=="memberId"){
+				alert("아이디 중복확인을 하세요");
+				return false;
+			}
+			if(checkResultId=="memberTel"){
 				alert("아이디 중복확인을 하세요");
 				return false;
 			}		
@@ -80,6 +85,30 @@
 						$("#idCheckView").html(id+" 사용가능!").css(
 								"background","yellow");		
 						checkResultId=id;
+					}					
+				}//callback			
+			});//ajax
+		});//keyup
+		$("#regForm :input[name=memberTel]").keyup(function(){
+			let tel=$(this).val().trim();
+			if(tel.length<10 || tel.length>11){
+				$("#telCheckView").html("전화번호는 10~11자여야 함!").css(
+						"background","pink");
+				checkResultTel="";
+				return;
+			}
+			$.ajax({
+				type:"get",
+				url:"/guest/telcheckAjax",				
+				data:"memberTel="+tel,	
+				success:function(data){						
+					if(data=="fail"){
+					$("#telCheckView").html(tel+" 사용불가!").css("background","red");
+						checkResultId="";
+					}else{						
+						$("#telCheckView").html(tel+" 사용가능!").css(
+								"background","yellow");		
+						checkResultTel=tel;
 					}					
 				}//callback			
 			});//ajax

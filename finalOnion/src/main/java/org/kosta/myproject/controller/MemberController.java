@@ -134,6 +134,11 @@ public class MemberController {
 	public String idcheckAjax(String memberId) {
 		return memberService.idcheck(memberId);
 	}
+	@RequestMapping("guest/telcheckAjax")
+	@ResponseBody
+	public String telcheckAjax(String memberTel) {
+		return memberService.telcheck(memberTel);
+	}
 	@GetMapping("guest/getMemberTotalCount")	
 	@ResponseBody
 	public int getMemberTotalCount() {
