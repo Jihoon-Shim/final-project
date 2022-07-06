@@ -2,6 +2,7 @@ package org.kosta.myproject.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.kosta.myproject.mapper.BoardMapper;
 import org.kosta.myproject.vo.MemberVO;
@@ -151,13 +152,6 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public ArrayList<AdminBoardVO> orderByDate1Contact(Pagination pagination) {
-		ArrayList<AdminBoardVO> list = new ArrayList<AdminBoardVO>();
-		list = boardmapper.orderByDate1Contact(pagination);
-		return list;
-	}
-
-	@Override
 	public void posting2(AdminBoardVO adminVO) {
 		boardmapper.posting2(adminVO);
 	}
@@ -303,20 +297,6 @@ public class BoardServiceImpl implements BoardService{
 		list4 = boardmapper.orderByDate004(memberId);
 		return list4;
 	}
-
-
-	@Override
-	public int getTotalAdminCount() {
-		int result = boardmapper.getTotalAdminCount();
-		return result;
-	}
-
-	@Override
-	public ArrayList<AdminBoardVO> orderAdminList(ArrayList<AdminBoardVO> list0) {
-		ArrayList<AdminBoardVO> adminList = new ArrayList<AdminBoardVO>();
-		adminList = boardmapper.orderAdminList(list0);
-		return adminList;
-	}
 	
 	@Override
 	public ArrayList<AdminBoardVO> fAQ() {
@@ -359,16 +339,39 @@ public class BoardServiceImpl implements BoardService{
 	public void reviewedPost(int boardNo) {
 		boardmapper.reviewedPost(boardNo);
 	}
-
-	@Override
-	public ArrayList<AdminBoardVO> findContactListById(String memberId) {
-		ArrayList<AdminBoardVO> MyContactList = new ArrayList<AdminBoardVO>();
-		MyContactList = boardmapper.findContactListById(memberId);
-		return MyContactList;
-	}
 	@Override
 	public void deleteBoardTag(int boardNo) {
 		boardmapper.deleteBoardTag(boardNo);
 
 	}
+
+	/*
+	 * @Override public ArrayList<AdminBoardVO> orderByDate1Contact(Map<String,
+	 * Object> map) { ArrayList<AdminBoardVO> adminList = new
+	 * ArrayList<AdminBoardVO>(); adminList = boardmapper.orderByDate1Contact(map);
+	 * return adminList; }
+	 */
+
+	@Override
+	public ArrayList<AdminBoardVO> orderByDate2Contact(String memberId) {
+		ArrayList<AdminBoardVO> adminList = new ArrayList<AdminBoardVO>();
+		adminList = boardmapper.orderByDate2Contact(memberId);
+		return adminList;
+	}
+
+	@Override
+	public int getTotalAdminCountById(String memberId) {
+		int result = boardmapper.getTotalAdminCountById(memberId);
+		return result;
+	}
+
+	@Override
+	public ArrayList<AdminBoardVO> orderByDate1Contact(Pagination pagination) {
+		ArrayList<AdminBoardVO> adminList = new ArrayList<AdminBoardVO>();
+		adminList = boardmapper.orderByDate1Contact(pagination);
+		return adminList;
+	}
+
+
+	
 }

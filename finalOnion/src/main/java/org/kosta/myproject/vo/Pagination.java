@@ -22,6 +22,12 @@ public class Pagination {
 		this.totalPostCount=totalPostCount;
 		this.searchword=searchword;
 	}
+	public Pagination(int totalPostCount,int startRowNumber,int endRowNumber,String searchword) {
+		this.totalPostCount=totalPostCount;
+		this.searchword=searchword;
+		this.startRowNumber=startRowNumber;
+		this.endRowNumber=endRowNumber;
+	}
 	public Pagination(int totalPostCount,int nowPage) {
 		this.totalPostCount=totalPostCount;
 		this.nowPage=nowPage;

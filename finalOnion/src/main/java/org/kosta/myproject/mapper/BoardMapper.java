@@ -2,6 +2,7 @@ package org.kosta.myproject.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.kosta.myproject.vo.MemberVO;
@@ -16,8 +17,6 @@ public interface BoardMapper {
 	int getTotalPostCount();
 
 	ArrayList<TradingBoardVO> orderByTemp(Pagination pagination);
-	
-	ArrayList<TradingBoardVO> orderByDate1(Pagination pagination);
 
 	ArrayList<TradingBoardVO> orderByPrice(Pagination pagination);
 
@@ -54,8 +53,6 @@ public interface BoardMapper {
 	void postpicture(FileVO fvo);
 
 	int currentseq();
-
-	ArrayList<AdminBoardVO> orderByDate1Contact(Pagination pagination);
 
 	void posting2(AdminBoardVO adminVO);
 
@@ -112,17 +109,22 @@ public interface BoardMapper {
 
 	int getTotalAdminCount();
 
-	ArrayList<AdminBoardVO> orderAdminList(ArrayList<AdminBoardVO> list0);
-
 	void setAuthorityThatReview(int boardNo, String otherId);
 
 	List<TradingBoardVO> getReviewablePosts(String myId);
 
 	void reviewedPost(int boardNo);
 
-
-	ArrayList<AdminBoardVO> findContactListById(String memberId);
-
 	void deleteBoardTag(int boardNo);
+
+	ArrayList<TradingBoardVO> orderByDate1(Pagination pagination);
+
+	// ArrayList<AdminBoardVO> orderByDate1Contact(Map<String, Object> map);
+
+	ArrayList<AdminBoardVO> orderByDate2Contact(String memberId);
+
+	int getTotalAdminCountById(String memberId);
+
+	ArrayList<AdminBoardVO> orderByDate1Contact(Pagination pagination);
 
 }

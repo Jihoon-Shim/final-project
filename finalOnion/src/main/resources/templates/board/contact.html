@@ -37,13 +37,15 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="MyContactList : ${MyContactList}">
-						<td th:text="${MyContactListStat.count}">NO</td>
-						<td th:text="${memberId}">ID</td>
-						<td th:text="${MyContactList.adminBoardTitle}" th:onclick="|location.href='@{/board/adminDetail?adminBoardNo=}'+${MyContactList.adminBoardNo}|">제목</td>
-						<td th:text="${MyContactList.adminBoardContent}">내용</td>
-						<td th:text="${MyContactList.adminBoardDate}">작성날짜</td>
-						<td th:text="${MyContactList.adminBoardKind}">게시글종류</td>
+					<tr th:each="adminList : ${adminList}" >
+					<th:block th:if = "${adminList.memberVO.memberId} == ${#authentication.principal.memberId}">
+						<td th:text="${adminListStat.count}">NO</td>
+						<td th:text="${adminList.memberVO.memberId}">ID</td>
+						<td th:text="${adminList.adminBoardTitle}" th:onclick="|location.href='@{/board/adminDetail?adminBoardNo=}'+${adminList.adminBoardNo}|">제목</td>
+						<td th:text="${adminList.adminBoardContent}">내용</td>
+						<td th:text="${adminList.adminBoardDate}">작성날짜</td>
+						<td th:text="${adminList.adminBoardKind}">게시글종류</td>
+						</th:block>
 					</tr> 
 				</tbody>
 			</table>
@@ -58,10 +60,11 @@
 		 </span>
 	</li> 
 	<a th:if="${pagination.nextPageGroup}" class="page-link" th:href="@{/board/orderAdmin?pageNo=}+${pagination.endPageOfPageGroup+1}">Next</a>
-
+	
 	<form id="sorting" th:action="@{/board/orderAdmin}" method="get">
 		<input type="hidden" name="sort1" value="">
 		 <input type="hidden" name="sorton" value="on">
+		 <input type="hidden" name="searchword1" value="">
 	</form>
 	<script type="text/javascript">
 		function sort() {
