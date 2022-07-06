@@ -81,10 +81,8 @@ $(document).ready(function(){
     const username = "[[${#authentication.principal.memberNickname}]]";
     let msg = document.getElementById("msg");
     var f = 0;
-    
     let token = $("meta[name='_csrf']").attr("content"); 
 	let header = $("meta[name='_csrf_header']").attr("content");
-    
     $("#button-send").on("click", (e) => {
     	if($("#msg").val()!=""){
     		recordMsg();
@@ -112,7 +110,6 @@ $(document).ready(function(){
         websocket.send(username + ":" + msg.value);
         msg.value = '';
     }
-    
     //채팅창에 들어왔을 때
     function onOpen(evt) {
         var str = username + ": 님이 입장하셨습니다.";
@@ -122,7 +119,6 @@ $(document).ready(function(){
         var str = username + ": 님이 나가셨습니다.";
         websocket.send(str);
     }
-
     function onMessage(msg) {
     	var data = msg.data;
         var sessionId = null;
