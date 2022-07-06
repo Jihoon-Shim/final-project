@@ -37,13 +37,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="adminList : ${adminList}">
-						<td th:text="${adminListStat.count}">NO</td>
-						<td th:text="${adminList.memberVO.memberId}">ID</td>
-						<td th:text="${adminList.adminBoardTitle}" th:onclick="|location.href='@{/board/adminDetail?adminBoardNo=}'+${adminList.adminBoardNo}|">제목</td>
-						<td th:text="${adminList.adminBoardContent}">내용</td>
-						<td th:text="${adminList.adminBoardDate}">작성날짜</td>
-						<td th:text="${adminList.adminBoardKind}">게시글종류</td>
+					<tr th:each="MyContactList : ${MyContactList}">
+						<td th:text="${MyContactListStat.count}">NO</td>
+						<td th:text="${memberId}">ID</td>
+						<td th:text="${MyContactList.adminBoardTitle}" th:onclick="|location.href='@{/board/adminDetail?adminBoardNo=}'+${MyContactList.adminBoardNo}|">제목</td>
+						<td th:text="${MyContactList.adminBoardContent}">내용</td>
+						<td th:text="${MyContactList.adminBoardDate}">작성날짜</td>
+						<td th:text="${MyContactList.adminBoardKind}">게시글종류</td>
 					</tr> 
 				</tbody>
 			</table>

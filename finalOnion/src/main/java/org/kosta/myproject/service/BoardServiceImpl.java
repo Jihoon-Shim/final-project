@@ -359,4 +359,11 @@ public class BoardServiceImpl implements BoardService{
 	public void reviewedPost(int boardNo) {
 		boardmapper.reviewedPost(boardNo);
 	}
+
+	@Override
+	public ArrayList<AdminBoardVO> findContactListById(String memberId) {
+		ArrayList<AdminBoardVO> MyContactList = new ArrayList<AdminBoardVO>();
+		MyContactList = boardmapper.findContactListById(memberId);
+		return MyContactList;
+	}
 }

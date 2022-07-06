@@ -335,7 +335,7 @@ public class BoardController {
 		return"board/postdetail";
 	}
 	@RequestMapping("/board/contact")
-	public String contact(Model model) {
+	public String contact(Model model , @AuthenticationPrincipal MemberVO memberVO) {
 		ArrayList<AdminBoardVO> list0 = new ArrayList<AdminBoardVO>();
 		ArrayList<AdminBoardVO> adminList = new ArrayList<AdminBoardVO>();
 		//클라이언트로부터 페이지번호를 전달받는다. Pagination(dao.getTotalPostCount(),nowPage);
@@ -351,8 +351,13 @@ public class BoardController {
 		adminList = boardService.orderAdminList(list0);
 		
 		
+		ArrayList<AdminBoardVO> MyContactList = new ArrayList<AdminBoardVO>();
+		MyContactList = boardService.findContactListById(memberVO.getMemberId());
 		model.addAttribute("pagination",pagination);
-		model.addAttribute("adminList" , adminList);
+		model.addAttribute("MyContactList" , MyContactList);
+		model.addAttribute("memberId" , memberVO.getMemberId());
+
+		
 		return "board/contact";
 	}
 	@RequestMapping("/board/postContactForm")
@@ -462,7 +467,7 @@ public class BoardController {
 			pagination = new Pagination(boardService.getTotalAdminCount());
 		}else {
 			pagination=new Pagination(boardService.getTotalAdminCount(),Integer.parseInt(pageNo));
-		}		
+		}
 		
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
 		

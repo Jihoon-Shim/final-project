@@ -7,6 +7,7 @@
 		<result column="tem" property="memberVO.tempVO.temp"/>
 	</resultMap>
 	<resultMap type="org.kosta.myproject.vo.AdminBoardVO" id="AdminBoardResultMap">
+	<result column="adminBoardNo" property="AdminBoardVO.adminBoardNo"/>
 		<result column="adminBoardContent" property="AdminBoardVO.adminBoardContent"/>
 		<result column="adminBoardTitle" property="AdminBoardVO.adminBoardTitle"/>
 		<result column="adminBoardKind" property="AdminBoardVO.adminBoardKind"/>
@@ -465,4 +466,15 @@
 	<update id="reviewedPost">
 		update trading_board set trade_status =2 where board_no=#{boardNo}
 	</update>
+	<select id="findContactListById" resultMap="AdminBoardResultMap">
+		select ADMINBOARD_NO, ADMINBOARD_TITLE, ADMINBOARD_CONTENT , rnum, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
+	from( 
+			select ROW_NUMBER() OVER(ORDER BY ADMINBOARD_DATE DESC) as rnum, 
+			ADMINBOARD_NO , ADMINBOARD_CONTENT , ADMINBOARD_TITLE, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
+			from ( 
+				select a.ADMINBOARD_NO , a.ADMINBOARD_CONTENT , a.ADMINBOARD_TITLE, a.ADMINBOARD_DATE, t.MEMBERID , a.ADMINBOARD_KIND
+				from T_MEMBER t inner join ADMINBOARD a on t.MEMBERID = a.MEMBERID
+			)
+		)where MEMBERID = #{memberId}
+	</select>
 </mapper>
