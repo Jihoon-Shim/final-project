@@ -40,4 +40,6 @@ public interface MemberMapper {
 
 	void setTemp(String otherId, int setTemp);
 
+	int telcheck(String memberTel);
+
 }

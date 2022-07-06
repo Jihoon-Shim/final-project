@@ -37,5 +37,7 @@ public interface MemberService {
 
 	void setTemp(String otherId, int setTemp);
 
+	String telcheck(String memberTel);
+
 
 }

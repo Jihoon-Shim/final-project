@@ -129,6 +129,11 @@ public class MemberController {
 	public String telcheckAjax(String memberTel) {
 		return memberService.telcheck(memberTel);
 	}
+	@RequestMapping("guest/telcheckAjax")
+	@ResponseBody
+	public String telcheckAjax(String memberTel) {
+		return memberService.telcheck(memberTel);
+	}
 	@GetMapping("guest/getMemberTotalCount")	
 	@ResponseBody
 	public int getMemberTotalCount() {
