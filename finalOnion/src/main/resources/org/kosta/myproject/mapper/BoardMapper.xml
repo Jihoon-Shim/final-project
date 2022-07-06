@@ -290,6 +290,9 @@
 	<delete id="deletePost" parameterType="int">
 	DELETE FROM TRADING_BOARD WHERE BOARD_NO=#{value}
 	</delete>
+	<delete id="deleteBoardTag" parameterType="int">
+		delete from boardtag where board_no=#{value}
+	</delete>
 	<select id="findAllList" resultType="org.kosta.myproject.vo.MemberVO">
 		select t.MEMBERID , t.MEMBER_NAME , t.MEMBER_ADDRESS , t.MEMBER_NICKNAME , t.MEMBER_TEL
 		from T_MEMBER t

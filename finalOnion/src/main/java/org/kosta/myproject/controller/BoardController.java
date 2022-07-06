@@ -292,7 +292,7 @@ public class BoardController {
 			file.delete();
 			thumbfile.delete();
 		}
-		
+		boardService.deleteBoardTag(boardNo);
 		boardService.deletePost(boardNo);
 		return"board/deletePost";
 	}

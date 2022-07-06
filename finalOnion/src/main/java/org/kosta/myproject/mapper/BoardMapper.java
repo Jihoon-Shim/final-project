@@ -119,4 +119,6 @@ public interface BoardMapper {
 	List<TradingBoardVO> getReviewablePosts(String myId);
 
 	void reviewedPost(int boardNo);
+
+	void deleteBoardTag(int boardNo);
 }

@@ -65,7 +65,7 @@ $(document).ready(function(){
 	});
 	let checkResultTag="tag";		
 	//$("#tagForm")
-	$("#tagForm").submit(function(){		
+	$("#tagForm").submit(function(){
 		if(checkResultTag=="tag"){
 		alert("태그 중복확인을 하세요");
 		return false;
@@ -73,7 +73,7 @@ $(document).ready(function(){
 		if(checkResultTag==""){
 			alert("사용할 수 없는 태그입니다.");
 			return false;
-			}
+		}
 		if(count<5){
 			for(let i=0;i<count+1;i++){
 				if(document.getElementById(i)==null){
@@ -110,7 +110,7 @@ $(document).ready(function(){
 		}
 		$.ajax({
 			type:"get",
-			url:"/guest/tagcheckAjax",				
+			url:"/guest/tagcheckAjax",
 			data:"tag="+tag,	
 			success:function(data){
 				var datalength = data.length;
@@ -118,7 +118,7 @@ $(document).ready(function(){
 				if(datalength==0){
 				$("#tagCheckView").html(tag+"관련 검색어가 없습니다.").css("background","lime");
 					checkResultTag=tag;
-				}else{					
+				}else{
 					for(var q=0;q<datalength;q++){
 						alldata += data[q] + "<br>";						
 					}

@@ -359,4 +359,9 @@ public class BoardServiceImpl implements BoardService{
 	public void reviewedPost(int boardNo) {
 		boardmapper.reviewedPost(boardNo);
 	}
+
+	@Override
+	public void deleteBoardTag(int boardNo) {
+		boardmapper.deleteBoardTag(boardNo);
+	}
 }
