@@ -417,7 +417,7 @@
 			from ( 
 				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
-				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 0
+				WHERE b.BOARD_KIND like '삽니다%' and b.TRADE_STATUS = 0
 			)
 		)
 		where MEMBERID =#{memberId}
@@ -431,7 +431,7 @@
 			from ( 
 				select NVL(t.TEMP,0) as tem, b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID
 				from TEMP t right outer join TRADING_BOARD b on t.MEMBERID = b.MEMBERID
-				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 0
+				WHERE b.BOARD_KIND like '팝니다%' and b.TRADE_STATUS = 0 or b.TRADE_STATUS =2
 			)
 		)
 		where MEMBERID =#{memberId}
@@ -463,6 +463,6 @@
 		select * from trading_board where board_kind like '%'||#{myId} and trade_status=0
 	</select>
 	<update id="reviewedPost">
-		update trading_board set trade_status =2 where memberId=#{otherId} and board_no=#{boardNo}
+		update trading_board set trade_status =2 where board_no=#{boardNo}
 	</update>
 </mapper>
