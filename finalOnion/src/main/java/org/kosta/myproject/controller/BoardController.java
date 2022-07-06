@@ -316,7 +316,6 @@ public class BoardController {
 		@SuppressWarnings("unchecked")
 		ArrayList<Integer> newlist = (ArrayList<Integer>)session.getAttribute("hitslist");
 		if(!newlist.contains(boardNo)) {
-			System.out.println("조회수올라가는소리");
 			boardService.raisehits(boardNo);
 			newlist.add(boardNo);
 			session.setAttribute("hitslist",newlist);
@@ -382,8 +381,6 @@ public class BoardController {
 		//list.jsp에서 페이징처리를 하기위해 Pagination객체를 공유한다.
 		list0 = boardService.orderByDate1Contact(pagination);
 		adminList = boardService.orderAdminList(list0);
-		
-		
 		model.addAttribute("pagination",pagination);
 		model.addAttribute("adminList",adminList);
 		return "/board/contact";
