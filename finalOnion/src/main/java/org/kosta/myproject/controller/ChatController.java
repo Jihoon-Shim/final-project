@@ -119,7 +119,7 @@ public class ChatController{
 	public String postSoldOut(int boardNo, String otherId) {
 		boardService.updatePostSoldOutByBoardNo(boardNo);
 		boardService.setAuthorityThatReview(boardNo, otherId);
-		return otherId+"거래완료 처리되었습니다.";
+		return "거래완료 처리되었습니다.";
 	}
 	@PostMapping("review")
 	@ResponseBody
