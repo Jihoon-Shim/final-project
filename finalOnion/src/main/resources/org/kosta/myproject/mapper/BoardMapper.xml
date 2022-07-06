@@ -7,6 +7,7 @@
 		<result column="tem" property="memberVO.tempVO.temp"/>
 	</resultMap>
 	<resultMap type="org.kosta.myproject.vo.AdminBoardVO" id="AdminBoardResultMap">
+	<result column="adminBoardNo" property="AdminBoardVO.adminBoardNo"/>
 		<result column="adminBoardContent" property="AdminBoardVO.adminBoardContent"/>
 		<result column="adminBoardTitle" property="AdminBoardVO.adminBoardTitle"/>
 		<result column="adminBoardKind" property="AdminBoardVO.adminBoardKind"/>
@@ -50,7 +51,8 @@
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
-					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')			
+					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS			
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
@@ -72,6 +74,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
@@ -119,6 +122,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
@@ -140,6 +144,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
@@ -214,6 +219,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
@@ -235,6 +241,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
@@ -468,4 +475,15 @@
 	<update id="reviewedPost">
 		update trading_board set trade_status =2 where board_no=#{boardNo}
 	</update>
+	<select id="findContactListById" resultMap="AdminBoardResultMap">
+		select ADMINBOARD_NO, ADMINBOARD_TITLE, ADMINBOARD_CONTENT , rnum, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
+	from( 
+			select ROW_NUMBER() OVER(ORDER BY ADMINBOARD_DATE DESC) as rnum, 
+			ADMINBOARD_NO , ADMINBOARD_CONTENT , ADMINBOARD_TITLE, ADMINBOARD_DATE, MEMBERID , ADMINBOARD_KIND
+			from ( 
+				select a.ADMINBOARD_NO , a.ADMINBOARD_CONTENT , a.ADMINBOARD_TITLE, a.ADMINBOARD_DATE, t.MEMBERID , a.ADMINBOARD_KIND
+				from T_MEMBER t inner join ADMINBOARD a on t.MEMBERID = a.MEMBERID
+			)
+		)where MEMBERID = #{memberId}
+	</select>
 </mapper>

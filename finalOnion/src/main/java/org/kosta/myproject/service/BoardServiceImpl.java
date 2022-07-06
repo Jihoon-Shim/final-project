@@ -361,7 +361,14 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
+	public ArrayList<AdminBoardVO> findContactListById(String memberId) {
+		ArrayList<AdminBoardVO> MyContactList = new ArrayList<AdminBoardVO>();
+		MyContactList = boardmapper.findContactListById(memberId);
+		return MyContactList;
+	}
+	@Override
 	public void deleteBoardTag(int boardNo) {
 		boardmapper.deleteBoardTag(boardNo);
+
 	}
 }
