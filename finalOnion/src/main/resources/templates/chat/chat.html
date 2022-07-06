@@ -32,7 +32,7 @@
                 </div>
                 <br><br>
                 <div class="col-sm-3" id="imgTitle">
-                	<img style="border: 3px solid gold; border-radius: 70px; -moz-border-radius: 70px;
+                	<img style="width:200px; height:100%; border: 3px solid gold; border-radius: 70px; -moz-border-radius: 70px;
 						-khtml-border-radius: 70px; -webkit-border-radius:70px;"
 						th:src="|@{myweb/images/member/}${otherMemberVO.memberPicture}|"/>
                 </div><br><br><br><br>
@@ -80,15 +80,30 @@
 $(document).ready(function(){
     const username = "[[${#authentication.principal.memberNickname}]]";
     let msg = document.getElementById("msg");
+    var f = 0;
+    
     let token = $("meta[name='_csrf']").attr("content"); 
 	let header = $("meta[name='_csrf_header']").attr("content");
     
     $("#button-send").on("click", (e) => {
-    	recordMsg();
-    	send();
+    	if($("#msg").val()!=""){
+    		recordMsg();
+    		send();
+    	}
     });
+	$("#title").change(function() {
+		var title = $('#title option:selected').text();
+        var boardNo = $(this).val();
+		if(boardNo!=""){
+        	var str = "<div class='col-6' align='left'>";
+            str += "<div class='alert alert-success'>";
+            str += "<a href='/board/postdetail?boardNo="+boardNo+"'>제목 참조 : " + title + "</a>";
+            str += "</div></div>";
+            $("#msgArea").append(str);
+		}
+	});
     const websocket = new WebSocket("ws://localhost:7777/ws/chat");
-
+    
     websocket.onmessage = onMessage;
     websocket.onopen = onOpen;
     websocket.onclose = onClose;
@@ -109,31 +124,33 @@ $(document).ready(function(){
     }
 
     function onMessage(msg) {
-        var data = msg.data;
+    	var data = msg.data;
         var sessionId = null;
         //데이터를 보낸 사람
         var message = null;
         var arr = data.split(":");
         var cur_session = username;
+        
         //현재 세션에 로그인 한 사람
         sessionId = arr[0];
         message = arr[1];
-        let focus = document.querySelector("#msgArea");
-        //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
-        if(sessionId == cur_session){
-            var str = "<div class='col-6' align='right'>";
-            str += "<div class='alert alert-info'>"; 
-            str += "<b>" + sessionId + " : " + message + "</b>";
-            str += "</div></div>";
-            $("#msgArea").append(str);
-        }
-        else{
-            var str = "<div class='col-6' align='left'>";
-            str += "<div class='alert alert-warning'>";
-            str += "<b>" + sessionId + " : " + message + "</b>";
-            str += "</div></div>";
-            $("#msgArea").append(str);
-        }
+    	let focus = document.querySelector("#msgArea");
+            //로그인 한 클라이언트와 타 클라이언트를 분류하기 위함
+            if(sessionId == cur_session){
+                var str = "<div class='col-6' align='right'>";
+                str += "<div class='alert alert-info'>"; 
+                str += "<b>" + sessionId + " : " + message + "</b>";
+                str += "</div></div>";
+                $("#msgArea").append(str);
+            }
+            else{
+                var str = "<div class='col-6' align='left'>";
+                str += "<div class='alert alert-warning'>";
+                str += "<b>" + sessionId + " : " + message + "</b>";
+                str += "</div></div>";
+                $("#msgArea").append(str);
+            }
+    	
         focus.scrollTop = focus.scrollHeight;
     }
     function recordMsg(){
@@ -154,15 +171,9 @@ $(document).ready(function(){
     		}
     	});
     }
-    $("#title").change(function() {
-    	var title = $('#title option:selected').text();
-    	let boardNo = $(this).val();
-    	var str = "<div class='col-6' align='left'>";
-        str += "<div class='alert alert-warning'>";
-        str += "<a href='/board/postdetail?boardNo="+boardNo+"'>제목 참조 : " + title + "</a>";
-        str += "</div></div>";
-        $("#msgArea").append(str);
-	});
+    
+    
+    
     var imgTitle = document.getElementById("imgTitle");
     imgTitle.addEventListener('mouseover', (event) => {
     	var str = "닉네임 : "+"[[${otherMemberVO.memberNickname}]]";

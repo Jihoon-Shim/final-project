@@ -313,13 +313,14 @@ public class BoardController {
 			hitslist.add(0);
 			session.setAttribute("hitslist", hitslist);
 		}
+		@SuppressWarnings("unchecked")
 		ArrayList<Integer> newlist = (ArrayList<Integer>)session.getAttribute("hitslist");
 		if(!newlist.contains(boardNo)) {
 			System.out.println("조회수올라가는소리");
 			boardService.raisehits(boardNo);
 			newlist.add(boardNo);
 			session.setAttribute("hitslist",newlist);
-		}						
+		}
 		TradingBoardVO tvo = new TradingBoardVO();  
 		tvo = boardService.postdetail(boardNo);
 		

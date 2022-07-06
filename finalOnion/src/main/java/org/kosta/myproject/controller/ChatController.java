@@ -126,7 +126,7 @@ public class ChatController{
 	@Transactional
 	public String review(int boardNo, int setTemp, String otherId) {
 		memberService.setTemp(otherId, setTemp);
-		boardService.reviewedPost(boardNo,otherId);
+		boardService.reviewedPost(boardNo);
 		return "평가해주셔서 감사합니다";
 	}
 }
