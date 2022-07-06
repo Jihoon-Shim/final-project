@@ -71,10 +71,6 @@ public class MemberAuthenticationProvider implements AuthenticationProvider{
 			throw new UsernameNotFoundException("회원 아이디가 존재하지 않습니다");
 		}
 		String password=(String)authentication.getCredentials();//사용자가 입력한 패스워드 반환 
-		//3.패스워드 비교
-		/*if(!password.equals(member.getPassword())){//패스워드가 틀리면
-			throw new BadCredentialsException("패스워드가 틀립니다.");
-		}*/
 		/* 
 		   비밀번호 암호화를 이용할 경우 
 		   이용자가 로그인 폼에서 입력한 비밀번호와 DB로부터 가져온 암호화된 비밀번호를 비교한다
