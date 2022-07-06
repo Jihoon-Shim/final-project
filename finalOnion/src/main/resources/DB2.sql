@@ -18,7 +18,6 @@ CREATE TABLE T_MEMBER
 )
 select * from t_member where memberId='test3'
 select * from FILEVO;
-
 select * from chattingRoom
 select * from chatting
 

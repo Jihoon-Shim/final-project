@@ -8,12 +8,12 @@
 </head>
 <div layout:fragment="main">
 	<th:block sec:authorize="isAuthenticated()">
-		<h3><span sec:authentication="principal.memberName" style = "color:steelblue">강하늘</span> 관리자님 Admin main 입니다<br>
-		이 페이지는 블랙 리스트 관리 페이지 입니다.</h3>
+		<h3><span sec:authentication="principal.memberName" style = "color:steelblue">닉네임</span> 관리자님 Admin main 입니다<br>
+		이 페이지는 회원 관리 페이지 입니다.</h3>
 	</th:block>
 	<form method = "post" th:action = "@{/blackListForm}"  id = "blackListForm" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">
-		<input type="text" size="20" name = "memberId" placeholder="블랙리스트 아이디 입력" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">
-		<button type="submit" id = "blackListAction" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">블랙 리스트 지정</button>
+		<input type="text" size="20" name = "memberId" placeholder="제재할 계정 아이디 입력" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">
+		<button type="submit" id = "blackListAction" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">회원권 박탈</button>
 	</form>
 	<form method = "post" th:action = "@{/restoreListForm}" id = "restoreListForm" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">
 		<input type="text" size="20" name = "memberId" placeholder="계정 복귀 아이디 입력" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_MEMBER')">

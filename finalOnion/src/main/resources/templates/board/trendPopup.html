@@ -25,7 +25,7 @@
 	</thead>
 	<tbody>
 		<tr th:each="toplist : ${toplist}">
-			<td th:text="${toplistStat.index}"></td>
+			<td th:text="${toplistStat.count}"></td>
 			<td th:text="${toplist.tag}"></td>
 			<td th:text="${toplist.tagHits}"></td>
 		</tr>
@@ -45,7 +45,7 @@
 	</thead>
 	<tbody>
 		<tr th:each="trendlist : ${trendlist}">
-			<td th:text="${trendlistStat.index}"></td>
+			<td th:text="${trendlistStat.count}"></td>
 			<td th:text="${trendlist.tag}"></td>
 			<td th:text="${trendlist.tagHits}"></td>
 		</tr>
