@@ -99,10 +99,6 @@ public class MemberController {
 	}
     //spring security에서 로그인 , 로그아웃 처리를 하므로 login , logout 관련 메서드는 필요없다  
 	//guest/ 가 아닌 모든 컨트롤러는 인증이 되어야 한다. 비인증 상태에서 접근할 경우 로그인 폼이 있는 home으로 redirect 됨 
-	@RequestMapping("enterCafe")
-	public String enterCafe() {
-		return "member/ajax-cafe";
-	}
 	@RequestMapping("mypage")
 	public String mypage(@AuthenticationPrincipal MemberVO memberVO , Model model) {
 		ArrayList<TradingBoardVO> list1 = new ArrayList<TradingBoardVO>();
@@ -134,17 +130,18 @@ public class MemberController {
 	public String idcheckAjax(String memberId) {
 		return memberService.idcheck(memberId);
 	}
+	
+	@RequestMapping("guest/telcheckAjax")
+	@ResponseBody
+	public String telcheckAjax(String memberTel) {
+		return memberService.telcheck(memberTel);
+	}
+	
 	@GetMapping("guest/getMemberTotalCount")	
 	@ResponseBody
 	public int getMemberTotalCount() {
 		return memberService.getMemberCount();
 	}
-	@PostMapping("postAjaxTest")
-	@ResponseBody
-	public String postAjaxTest(String message) {
-		//log.debug("post ajax 는 csrf token 이 필요합니다 {}",message);
-		return message+" ajax 요청에 대한 응답입니다";
-	}	
 	
 	@RequestMapping("updateForm")
 	//@AuthenticationPrincipal : Spring Security를 통해 로그인한 인증정보를 받아오는 어노테이션 

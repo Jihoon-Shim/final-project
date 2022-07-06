@@ -366,4 +366,9 @@ public class BoardServiceImpl implements BoardService{
 		MyContactList = boardmapper.findContactListById(memberId);
 		return MyContactList;
 	}
+	@Override
+	public void deleteBoardTag(int boardNo) {
+		boardmapper.deleteBoardTag(boardNo);
+
+	}
 }

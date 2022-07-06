@@ -120,5 +120,9 @@ public interface BoardMapper {
 
 	void reviewedPost(int boardNo);
 
+
 	ArrayList<AdminBoardVO> findContactListById(String memberId);
+
+	void deleteBoardTag(int boardNo);
+
 }

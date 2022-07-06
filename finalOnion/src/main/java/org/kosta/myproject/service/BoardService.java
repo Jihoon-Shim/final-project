@@ -119,4 +119,7 @@ public interface BoardService {
 	void reviewedPost(int boardNo);
 
 	ArrayList<AdminBoardVO> findContactListById(String memberId);
+	
+	void deleteBoardTag(int boardNo);
+
 }

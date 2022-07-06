@@ -115,4 +115,10 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.setTemp(otherId,setTemp);
 	}
 
+	@Override
+	public String telcheck(String memberTel) {
+		int count = memberMapper.telcheck(memberTel);
+		return (count == 0) ? "ok" : "fail";
+	}
+
 }
