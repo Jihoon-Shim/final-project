@@ -124,6 +124,13 @@ public class MemberController {
 		
 		return "member/mypage.html";
 	}
+	
+	@RequestMapping("guest/idcheckAjax")
+	@ResponseBody
+	public String idcheckAjax(String memberId) {
+		return memberService.idcheck(memberId);
+	}
+	
 	@RequestMapping("guest/telcheckAjax")
 	@ResponseBody
 	public String telcheckAjax(String memberTel) {
