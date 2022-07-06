@@ -50,7 +50,8 @@
 					FROM TRADING_BOARD b, 
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
-					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')			
+					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS			
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
@@ -72,6 +73,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
@@ -119,6 +121,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
@@ -140,6 +143,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
@@ -214,6 +218,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '삽니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '삽니다' and b.TRADE_STATUS = 1
@@ -235,6 +240,7 @@
 						(SELECT x.TAG , y.BOARD_NO FROM TAG x, BOARDTAG y WHERE x.TAGID=y.TAGID) t
 					WHERE b.BOARD_KIND = '팝니다' AND b.BOARD_NO = t.BOARD_NO AND 
 					(b.BOARD_CONTENT LIKE  '%'||#{searchword}||'%' OR b.BOARD_TITLE LIKE '%'||#{searchword}||'%' OR t.TAG LIKE '%'||#{searchword}||'%')
+					GROUP BY b.BOARD_NO, b.BOARD_TITLE, b.BOARD_DATE, b.TRADE_PRICE, b.PRODUCT_PICTURE, b.MEMBERID, b.TRADE_STATUS, b.BOARD_KIND,b.HITS
 				) b 
 				on t.MEMBERID = b.MEMBERID
 				WHERE b.BOARD_KIND = '팝니다' and b.TRADE_STATUS = 1
