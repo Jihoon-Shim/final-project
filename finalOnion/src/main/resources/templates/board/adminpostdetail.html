@@ -8,21 +8,22 @@
 <title>BuyForm</title>
 </head>
  <div layout:fragment="main"> 
-<table class="table" style="overflow:auto;">
+ <div>
+<table class="table table-bordered table-hover boardlist ">
 	<thead>
 		<tr bgcolor="#DDDDDD">
 			<td th:text="${avo.adminBoardTitle}">제목</td>	
 			<td th:text="${avo.adminBoardDate}">작성날짜</td>
-			<td th:text="${avo.memberVO.memberNickname}">작성자</td>
 		</tr>
 	</thead>
 	<tbody>
 		<tr bgcolor="#FFFFFF">			
-			<td colspan="3"><pre><font size="4" ><span class="box" th:text=${avo.adminBoardContent}></span></font></pre>
+			<td colspan="2" style="text-align: left;"><pre><font size="4" ><span class="box" th:text=${avo.adminBoardContent} style="white-space: pre-line;"></span></font></pre>
 			</td>
 		</tr>		
 	</tbody>
 </table>
+</div>
 <br>
  </div>
 </html>

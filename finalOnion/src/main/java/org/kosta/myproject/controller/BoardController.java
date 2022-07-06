@@ -318,7 +318,6 @@ public class BoardController {
 		@SuppressWarnings("unchecked")
 		ArrayList<Integer> newlist = (ArrayList<Integer>)session.getAttribute("hitslist");
 		if(!newlist.contains(boardNo)) {
-			System.out.println("조회수올라가는소리");
 			boardService.raisehits(boardNo);
 			newlist.add(boardNo);
 			session.setAttribute("hitslist",newlist);
@@ -394,6 +393,7 @@ public class BoardController {
 		adminList = boardService.orderByDate1Contact(pagination);
 		
 		model.addAttribute("memberId" , memberVO.getMemberId());
+
 		model.addAttribute("pagination",pagination);
 		model.addAttribute("adminList",adminList);
 		

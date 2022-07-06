@@ -36,8 +36,8 @@
 						-khtml-border-radius: 70px; -webkit-border-radius:70px;"
 						th:src="|@{myweb/images/member/}${otherMemberVO.memberPicture}|"/>
                 </div><br><br><br><br>
-                <div class="col-sm-3 offset-sm-1">
-             	<select id ="title" >
+                <div class="col-sm-3 offset-sm-1" >
+             	<select id ="title" class="form-select form-select-lg mb-3" >
              		<option value="">상대방의 글 제목 불러오기</option>
              		<th:block th:each="postVO:${postVOList}">
              		<option th:value="${postVO.boardNo}" th:text="${postVO.boardTitle}"></option>
@@ -50,7 +50,7 @@
              		<option th:if="${boardVO.tradeStatus==1}" th:value="${boardVO.boardNo}" th:text="${boardVO.boardTitle}"></option>
              		</th:block>
              	</select>
-             	<button type="button" id ="soldOut">거래완료</button>
+             	<button type="button" id ="soldOut" class="btn btn-warning">거래완료</button>
              	<br><br><br>
              	<th:block th:if="${soldOutBoardList.size!=0}">
              		<select id ="setReviewTitle">
@@ -60,9 +60,9 @@
              		</th:block>
              	</select>
              	<div class="bar-container" id = "bar-container">
-             		<input type="range" min="0" max="100" id="temp" style="color : #F28646;">
+             		<input type="range" min="0" max="100" id="temp">
 				</div>
-             	<button type="button" id ="setReview">평가하기</button>
+             	<button type="button" id ="setReview" class="btn btn-warning">평가하기</button>
 				</th:block>
              </div>
              </div>
@@ -81,10 +81,8 @@ $(document).ready(function(){
     const username = "[[${#authentication.principal.memberNickname}]]";
     let msg = document.getElementById("msg");
     var f = 0;
-    
     let token = $("meta[name='_csrf']").attr("content"); 
 	let header = $("meta[name='_csrf_header']").attr("content");
-    
     $("#button-send").on("click", (e) => {
     	if($("#msg").val()!=""){
     		recordMsg();
@@ -112,7 +110,6 @@ $(document).ready(function(){
         websocket.send(username + ":" + msg.value);
         msg.value = '';
     }
-    
     //채팅창에 들어왔을 때
     function onOpen(evt) {
         var str = username + ": 님이 입장하셨습니다.";
@@ -122,7 +119,6 @@ $(document).ready(function(){
         var str = username + ": 님이 나가셨습니다.";
         websocket.send(str);
     }
-
     function onMessage(msg) {
     	var data = msg.data;
         var sessionId = null;
