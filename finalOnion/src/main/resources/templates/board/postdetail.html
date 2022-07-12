@@ -10,7 +10,7 @@
  <div layout:fragment="main"> 
 <table class="table" style="overflow:auto;">
 	<thead>
-		<tr bgcolor="#DDDDDD">
+		<tr bgcolor="#FFA500"; style="color:white;">
 			<td th:text="${tvo.boardTitle}">제목</td>	
 			<td th:text="${tvo.boardDate}">작성날짜</td>	
 			<td th:text="${tvo.tradePrice}">가격</td>
@@ -19,7 +19,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		<tr bgcolor="#FFFFFF">
+		<tr bgcolor="#FFFFCC">
 			<td><img th:src="@{/myweb/images/board/}+${tvo.productPicture}" width=350vw height=100%;>	</td>
 			<td colspan="3"><pre><font size="4" ><span class="box" th:text=${tvo.boardContent}></span></font></pre>
 			<form th:action="@{/goChat}" method="post">
@@ -30,13 +30,13 @@
 			</form>
 			</td>
 		</tr>
-		<tr bgcolor="#DDDDDD">
+		<tr bgcolor="#FFA500" style="color:white;">
 			<td>태그명</td>
-			<td>빈도수</td>
+			<td colspan="4">빈도수</td>
 		</tr>
 		<tr th:each="tlist : ${tlist}">	
 			<td th:text="${tlist.tag}">태그명</td>
-			<td th:text="${tlist.tagHits}">사용된 횟수</td>
+			<td th:text="${tlist.tagHits}" colspan="4">사용된 횟수</td>
 		</tr>
 	</tbody>
 </table>

@@ -13,6 +13,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 --> 
 <title>BuyList</title>
+
 </head>
  <div layout:fragment="main">
  	<div class = "row">
@@ -34,9 +35,9 @@
 	</div>
 <table class="table table-borderless table-hover boardlist">
 	<thead>	
-		<tr style="background-color: #333333">
-            <th style="color: white">썸네일</th>
-            <th style="color: white">제목</th>
+		<tr style="background-color: #333333;">
+            <th style="color: white;">썸네일</th>
+            <th style="color: white;">제목</th>
             <th style="color: white">가격</th>           
             <th style="color: white">열람수</th>
             <th style="color: white">나눔온도</th>
@@ -48,7 +49,7 @@
 			<td><button type="button" th:onclick="|location.href='@{/board/postdetail?boardNo=}'+${list.boardNo}|">
 			<img th:src="@{/myweb/images/board/s/}+${list.productPicture}" height = "100" width = "100">
 			</button></td>
-			<td th:text="${list.boardTitle}">제목</td>
+			<td th:text="${list.boardTitle}" >제목</td>
 			<td th:text="${list.tradePrice}">가격</td>
 			<td th:text="${list.hits}">열람수</td>
 			<td th:text="${list.memberVO.tempVO.temp}">나눔온도</td>

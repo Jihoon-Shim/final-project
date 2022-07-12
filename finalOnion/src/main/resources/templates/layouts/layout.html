@@ -14,9 +14,16 @@
 <link rel="stylesheet" type="text/css" th:href="@{/myweb/css/home.css}">
 <script th:src="@{/myweb/js/myproject.js}"></script>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+	*{font-family: 'Jua', sans-serif;
+	font-size:20px;	
+	}
+</style>
 </head>
-<body>
+<body style="background-color : #FFFFCC">
 	<!--/* fragments 디렉토리 내 html 의 fragment(조각) 요소를 가지고 와서 사용  
 ::fragment id를 명시(여러개 중에 하나를 선택할 수 있음)    */-->
 	<header th:replace="fragments/header :: headerFragment"></header>

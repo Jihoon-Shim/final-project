@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<header th:fragment="headerFragment">
-	<nav class="navbar navbar-inverse">
+
+<header th:fragment="headerFragment" style="background-color : #C3EBAE">
+
+	<nav class="navbar navbar-inverse" style="background-color : #C3EBAE">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -9,9 +11,7 @@
 				</button>
 				<button type="button" onclick="location.href='/'"><img th:src="@{/myweb/images/양파마켓.gif}"></button>				
 			</div>
-				<button type="button" id="trend">
-				오늘의 트렌드 키워드는?
-				</button>
+				
 			<div class="collapse navbar-collapse" id="myNavbar" align = "right">
 				<form th:action="@{/login}"   action="/login" method="post" id="loginForm" sec:authorize="isAuthenticated()==false">
 					<input type="text" name="id" size="10" placeholder="아이디"><br>
@@ -21,10 +21,12 @@
 				<a th:href="@{/guest/registerForm}" sec:authorize="isAuthenticated()==false" style = "color:white">회원가입</a>
 				<a th:href="@{/guest/findIdForm}" sec:authorize="isAuthenticated()==false" style = "color:white">아이디 찾기</a>
 				<a th:href="@{/guest/findPasswordForm}" sec:authorize="isAuthenticated()==false" style = "color:white">비밀번호 찾기</a>				
-				
+				<br><br>
 				<th:block sec:authorize="isAuthenticated()">
-					<span sec:authentication="principal.memberName" style = "color:white"></span>
-					<h4 style = "color:white"> 님이 로그인 하셨습니다.</h4><br>
+				
+					<span sec:authentication="principal.memberName" style = "color:white; font-weight:bolder"></span>
+					
+					<span style = "color:white">님 어서오세요.</span><br>
 					<a href="#" id="logoutAction" style = "color:white">로그아웃</a><br>
 					<form id="logoutForm" th:action="@{/logout}" method="post" style="display: none"></form>
 					<a th:href="@{/updateForm}" style = "color:white">회원정보수정</a><br>
@@ -32,6 +34,9 @@
 					<a th:href="@{/chattingRoomList}" style = "color:white">대화 목록 <b id="alarm">&#128140;</b></a><br>
 					<a th:href="@{/admin/main}" sec:authorize="hasRole('ROLE_ADMIN')" style = "color:white">관리자모드</a><br>	
 				</th:block>
+				<button type="button" id="trend" class="btn btn-warning" style="font-size:2.5vw">
+				오늘의 트렌드 키워드는?
+				</button>
 			</div>
 		</div>
 	</nav>	

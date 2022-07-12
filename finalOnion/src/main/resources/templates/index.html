@@ -15,7 +15,7 @@
 <meta id="_csrf_header" name="_csrf_header" th:content="${_csrf.headerName}"/>
 
 <div layout:fragment="main">
-	<h4 th:text="${message}" align="center">home</h4>
+	<a th:text="${message}" align="center">home</a>
 
 <th:block sec:authorize="isAnonymous()">
 	<input type="button" value="총회원수보기" id="countBtn"> <span
@@ -40,21 +40,21 @@
 	<th:block sec:authorize="isAuthenticated()">
 		<div class="row">
 			<div class="col-sm-4">
-				<h4>삽니다 게시판</h4>
+				<a>삽니다 게시판</a>
 				<br>
 				<button type="submit" th:onclick="location.href='/board/buylist'">
 					<img th:src="@{/myweb/images/Buy.PNG}" height="400" width="400">
 				</button>
 			</div>
 			<div class="col-sm-4">
-				<h4>팝니다 게시판</h4>
+				<a>팝니다 게시판</a>
 				<br>
 				<button type="submit" th:onclick="location.href='/board/salelist'">
 					<img th:src="@{/myweb/images/SALE.PNG}" height="400" width="400">
 				</button>
 			</div>
 			<div class="col-sm-4">
-				<h4>건의사항</h4>
+				<a>건의사항</a>
 				<br>
 				<button type="submit" th:onclick="location.href='/board/contact'">
 					<img th:src="@{/myweb/images/Chat.PNG}" height="400" width="400">

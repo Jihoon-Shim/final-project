@@ -28,14 +28,13 @@
     margin: auto;
   }
 
-/* Set black background color, white text and some padding */
+/* Set #C3EBAE background color, white text and some padding */
 footer {
-	background-color: black;
+	background-color: #C3EBAE;
 	color: white;
 	padding: 15px;
 	text-align: center;
 }
-
 table, tr, th, td {
 	text-align: center;
 }
@@ -50,7 +49,7 @@ table, tr, th, td {
 	}
 }
 select{
-	width: 200px; padding: .3em .5em; border: 1px solid #999;font-family: inherit; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none;appearance: none;
+	width: 260px; padding: .3em .5em; border: 1px solid #999;font-family: inherit; border-radius: 0px; -webkit-appearance: none; -moz-appearance: none;appearance: none;
 }
 input[type="range"] {
     overflow: hidden;
